@@ -40,6 +40,7 @@
             // GelirGiderEkle
             // 
             GelirGiderEkle.Dock = System.Windows.Forms.DockStyle.Top;
+            GelirGiderEkle.Enabled = false;
             GelirGiderEkle.Location = new System.Drawing.Point(0, 88);
             GelirGiderEkle.Name = "GelirGiderEkle";
             GelirGiderEkle.Size = new System.Drawing.Size(346, 44);
@@ -51,6 +52,7 @@
             // Cari
             // 
             Cari.Dock = System.Windows.Forms.DockStyle.Top;
+            Cari.Enabled = false;
             Cari.Location = new System.Drawing.Point(0, 44);
             Cari.Name = "Cari";
             Cari.Size = new System.Drawing.Size(346, 44);
@@ -73,6 +75,7 @@
             // Ayarlar
             // 
             Ayarlar.Dock = System.Windows.Forms.DockStyle.Top;
+            Ayarlar.Enabled = false;
             Ayarlar.Location = new System.Drawing.Point(0, 132);
             Ayarlar.Name = "Ayarlar";
             Ayarlar.Size = new System.Drawing.Size(346, 44);

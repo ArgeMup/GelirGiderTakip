@@ -14,19 +14,28 @@ namespace Gelir_Gider_Takip
             InitializeComponent();
 
             Önyüz.AnaEkran = this;
+            bool YeniYazılımKontrolünüYap = false;
 
             if (Önyüz.İlkAçılışAyarları == null)
             {
                 Activated += AnaEkran_Activated;
                 Deactivate += AnaEkran_Deactivate;
                 Shown += AnaEkran_Shown;
+                YeniYazılımKontrolünüYap = true;
             }
             else
             {
                 switch (Önyüz.İlkAçılışAyarları.Kullanıcı_Komut)
                 {
-                    case Banka1.İlkAçılışAyarları_Komut_.Sayfa_Ayarlar: Önyüz.Aç(new Ayarlar()); break;
-                    case Banka1.İlkAçılışAyarları_Komut_.Sayfa_CariDöküm: Önyüz.Aç(new Cari_Döküm()); break;
+                    case Banka1.İlkAçılışAyarları_Komut_.Sayfa_Ayarlar:
+                        YeniYazılımKontrolünüYap = true;
+                        Önyüz.Aç(new Ayarlar()); 
+                        break;
+
+                    case Banka1.İlkAçılışAyarları_Komut_.Sayfa_CariDöküm:
+                        YeniYazılımKontrolünüYap = true; 
+                        Önyüz.Aç(new Cari_Döküm()); 
+                        break;
                     
                     case Banka1.İlkAçılışAyarları_Komut_.Sayfa_GelirGiderEkle:
                         Rectangle rr = Screen.PrimaryScreen.WorkingArea;
@@ -41,6 +50,30 @@ namespace Gelir_Gider_Takip
                     default: throw new Exception("İlkAçılışAyarları.Kullanıcı_Komut (" + Önyüz.İlkAçılışAyarları.Kullanıcı_Komut + ")");
                 }
             }
+
+#if DEBUG || RELEASE
+            Ortak.YeniYazılımKontrolü.Durdur();
+#else
+            if (YeniYazılımKontrolünüYap)
+            {
+                if (!System.IO.File.Exists(Ortak.Klasör_KullanıcıDosyaları + "YeniSurumuKontrolEtme.txt"))
+                {
+                    Ortak.YeniYazılımKontrolü.Başlat(new Uri("https://github.com/ArgeMup/GelirGiderTakip/blob/main/bin/Yay%C4%B1nla/Gelir%20Gider%20Takip.exe?raw=true"), _YeniYazılımKontrolü_GeriBildirim_);
+
+                    void _YeniYazılımKontrolü_GeriBildirim_(bool Sonuç, string Açıklama)
+                    {
+                        if (Açıklama.Contains("github")) Önyüz.SürümKontrolMesajı = "Bağlantı kurulamadı";
+                        else Önyüz.SürümKontrolMesajı = Açıklama;
+
+                        Invoke(new Action(() =>
+                        {
+                            Text = Text.Replace("Yeni sürüm kontrol ediliyor", Önyüz.SürümKontrolMesajı);
+                        }));
+                    }
+                }
+                else Ortak.YeniYazılımKontrolü.Durdur();
+            }
+#endif  
         }
         private void AnaEkran_Load(object sender, EventArgs e)
         {

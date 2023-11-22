@@ -15,6 +15,7 @@ namespace Gelir_Gider_Takip.Ekranlar
     {
         public static Banka1.İlkAçılışAyarları_ İlkAçılışAyarları = null;
         public static Form AnaEkran;
+        public static string SürümKontrolMesajı = "Yeni sürüm kontrol ediliyor";
         static List<Form> Önyüzler = new List<Form>();
 
         public static bool Öndeki_ParolaGirişEkranıMı
@@ -49,7 +50,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Önyüzler.Add(Önyüz);
 
-            AnaEkran.Text = Kendi.Adı + " V" + Kendi.Sürümü_Dosya + " Kullanıcı : " + (Ortak.Banka.KullancıAdı ?? "Giriş yapılmadı");
+            AnaEkran.Text = Kendi.Adı + " Kullanıcı : " + (Ortak.Banka.KullancıAdı ?? "Giriş yapılmadı") + " " + SürümKontrolMesajı;
         }
         public static void Dürt()
         {

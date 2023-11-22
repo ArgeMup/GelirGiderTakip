@@ -20,7 +20,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Açılış_Ekranı_Shown(object sender, System.EventArgs e)
         {
-            if (Ortak.Banka.Seçilenİşyeri != null) İşyeriSeçimi.Text = "İşyeri Seçimi : " + Ortak.Banka.Seçilenİşyeri.İşyeriAdı;
+            if (Ortak.Banka.Seçilenİşyeri != null) Seçim_GeriBildirimİşlemi(Ortak.Banka.Seçilenİşyeri.İşyeriAdı, null);
             else
             {
                 if (Ortak.Banka.İşyerleri.Count > 0) Seçim_GeriBildirimİşlemi(Ortak.Banka.İşyerleri.First().Key, null);
