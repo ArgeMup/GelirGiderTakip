@@ -43,6 +43,18 @@
             Düzenle_Durum = new System.Windows.Forms.ComboBox();
             KontrolNoktası_Notları = new System.Windows.Forms.TextBox();
             Tablo = new System.Windows.Forms.DataGridView();
+            Tablo_MuhatapGrubu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Muhatap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_ÖdemeTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Tip = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Durum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Miktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Notlar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Taksit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_Üyelik = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            Tablo_SonİşlemTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_KayıtTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_KullanıcıAdı = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TabloİçeriğiArama = new System.Windows.Forms.TextBox();
             Öde = new System.Windows.Forms.Button();
             SürümleriListele = new System.Windows.Forms.Button();
@@ -117,18 +129,6 @@
             Öde_KısmiÖdeme = new System.Windows.Forms.RadioButton();
             Öde_TamÖdeme = new System.Windows.Forms.RadioButton();
             Öde_MuhatapVeGrupAdı = new System.Windows.Forms.Label();
-            Tablo_MuhatapGrubu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Muhatap = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_ÖdemeTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Tip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Durum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Miktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Notlar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Taksit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_Üyelik = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            Tablo_SonİşlemTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_KayıtTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_KullanıcıAdı = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)Tablo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ayraç_Filtre_TabloSonuç).BeginInit();
             Ayraç_Filtre_TabloSonuç.Panel1.SuspendLayout();
@@ -302,6 +302,111 @@
             Tablo.Size = new System.Drawing.Size(859, 80);
             Tablo.TabIndex = 28;
             Tablo.CellMouseClick += Tablo_CellMouseClick;
+            // 
+            // Tablo_MuhatapGrubu
+            // 
+            Tablo_MuhatapGrubu.HeaderText = "Grup";
+            Tablo_MuhatapGrubu.MinimumWidth = 6;
+            Tablo_MuhatapGrubu.Name = "Tablo_MuhatapGrubu";
+            Tablo_MuhatapGrubu.ReadOnly = true;
+            Tablo_MuhatapGrubu.Width = 70;
+            // 
+            // Tablo_Muhatap
+            // 
+            Tablo_Muhatap.HeaderText = "Muhatap";
+            Tablo_Muhatap.MinimumWidth = 6;
+            Tablo_Muhatap.Name = "Tablo_Muhatap";
+            Tablo_Muhatap.ReadOnly = true;
+            Tablo_Muhatap.Width = 97;
+            // 
+            // Tablo_ÖdemeTarihi
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Tablo_ÖdemeTarihi.DefaultCellStyle = dataGridViewCellStyle2;
+            Tablo_ÖdemeTarihi.HeaderText = "Ödeme Günü";
+            Tablo_ÖdemeTarihi.MinimumWidth = 6;
+            Tablo_ÖdemeTarihi.Name = "Tablo_ÖdemeTarihi";
+            Tablo_ÖdemeTarihi.ReadOnly = true;
+            Tablo_ÖdemeTarihi.Width = 125;
+            // 
+            // Tablo_Tip
+            // 
+            Tablo_Tip.HeaderText = "Tip";
+            Tablo_Tip.MinimumWidth = 6;
+            Tablo_Tip.Name = "Tablo_Tip";
+            Tablo_Tip.ReadOnly = true;
+            Tablo_Tip.Width = 59;
+            // 
+            // Tablo_Durum
+            // 
+            Tablo_Durum.HeaderText = "Durum";
+            Tablo_Durum.MinimumWidth = 6;
+            Tablo_Durum.Name = "Tablo_Durum";
+            Tablo_Durum.ReadOnly = true;
+            Tablo_Durum.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Durum.Width = 83;
+            // 
+            // Tablo_Miktar
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Tablo_Miktar.DefaultCellStyle = dataGridViewCellStyle3;
+            Tablo_Miktar.HeaderText = "Miktar";
+            Tablo_Miktar.MinimumWidth = 6;
+            Tablo_Miktar.Name = "Tablo_Miktar";
+            Tablo_Miktar.ReadOnly = true;
+            Tablo_Miktar.Width = 80;
+            // 
+            // Tablo_Notlar
+            // 
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Notlar.DefaultCellStyle = dataGridViewCellStyle4;
+            Tablo_Notlar.HeaderText = "Notlar";
+            Tablo_Notlar.MinimumWidth = 6;
+            Tablo_Notlar.Name = "Tablo_Notlar";
+            Tablo_Notlar.ReadOnly = true;
+            Tablo_Notlar.Width = 80;
+            // 
+            // Tablo_Taksit
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Tablo_Taksit.DefaultCellStyle = dataGridViewCellStyle5;
+            Tablo_Taksit.HeaderText = "Taksit";
+            Tablo_Taksit.MinimumWidth = 6;
+            Tablo_Taksit.Name = "Tablo_Taksit";
+            Tablo_Taksit.ReadOnly = true;
+            Tablo_Taksit.Width = 74;
+            // 
+            // Tablo_Üyelik
+            // 
+            Tablo_Üyelik.HeaderText = "Üyelik";
+            Tablo_Üyelik.MinimumWidth = 6;
+            Tablo_Üyelik.Name = "Tablo_Üyelik";
+            Tablo_Üyelik.ReadOnly = true;
+            Tablo_Üyelik.Width = 55;
+            // 
+            // Tablo_SonİşlemTarihi
+            // 
+            Tablo_SonİşlemTarihi.HeaderText = "Son İşlem Tarihi";
+            Tablo_SonİşlemTarihi.MinimumWidth = 6;
+            Tablo_SonİşlemTarihi.Name = "Tablo_SonİşlemTarihi";
+            Tablo_SonİşlemTarihi.ReadOnly = true;
+            Tablo_SonİşlemTarihi.Width = 141;
+            // 
+            // Tablo_KayıtTarihi
+            // 
+            Tablo_KayıtTarihi.HeaderText = "Kayıt Tarihi";
+            Tablo_KayıtTarihi.MinimumWidth = 6;
+            Tablo_KayıtTarihi.Name = "Tablo_KayıtTarihi";
+            Tablo_KayıtTarihi.ReadOnly = true;
+            Tablo_KayıtTarihi.Width = 110;
+            // 
+            // Tablo_KullanıcıAdı
+            // 
+            Tablo_KullanıcıAdı.HeaderText = "Kullanıcı";
+            Tablo_KullanıcıAdı.MinimumWidth = 6;
+            Tablo_KullanıcıAdı.Name = "Tablo_KullanıcıAdı";
+            Tablo_KullanıcıAdı.ReadOnly = true;
+            Tablo_KullanıcıAdı.Width = 94;
             // 
             // TabloİçeriğiArama
             // 
@@ -493,7 +598,7 @@
             Sorgula_TarihAralığı.Dock = System.Windows.Forms.DockStyle.Top;
             Sorgula_TarihAralığı.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             Sorgula_TarihAralığı.FormattingEnabled = true;
-            Sorgula_TarihAralığı.Items.AddRange(new object[] { "Bu ay", "Bu hafta", "Bugün" });
+            Sorgula_TarihAralığı.Items.AddRange(new object[] { "Bu ay", "Bu hafta", "Bugün", "Son 1 gün" });
             Sorgula_TarihAralığı.Location = new System.Drawing.Point(0, 72);
             Sorgula_TarihAralığı.Name = "Sorgula_TarihAralığı";
             Sorgula_TarihAralığı.Size = new System.Drawing.Size(155, 28);
@@ -1240,111 +1345,6 @@
             Öde_MuhatapVeGrupAdı.TabIndex = 25;
             Öde_MuhatapVeGrupAdı.Text = "Grup ve muhatap adı";
             // 
-            // Tablo_MuhatapGrubu
-            // 
-            Tablo_MuhatapGrubu.HeaderText = "Grup";
-            Tablo_MuhatapGrubu.MinimumWidth = 6;
-            Tablo_MuhatapGrubu.Name = "Tablo_MuhatapGrubu";
-            Tablo_MuhatapGrubu.ReadOnly = true;
-            Tablo_MuhatapGrubu.Width = 70;
-            // 
-            // Tablo_Muhatap
-            // 
-            Tablo_Muhatap.HeaderText = "Muhatap";
-            Tablo_Muhatap.MinimumWidth = 6;
-            Tablo_Muhatap.Name = "Tablo_Muhatap";
-            Tablo_Muhatap.ReadOnly = true;
-            Tablo_Muhatap.Width = 97;
-            // 
-            // Tablo_ÖdemeTarihi
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            Tablo_ÖdemeTarihi.DefaultCellStyle = dataGridViewCellStyle2;
-            Tablo_ÖdemeTarihi.HeaderText = "Ödeme Günü";
-            Tablo_ÖdemeTarihi.MinimumWidth = 6;
-            Tablo_ÖdemeTarihi.Name = "Tablo_ÖdemeTarihi";
-            Tablo_ÖdemeTarihi.ReadOnly = true;
-            Tablo_ÖdemeTarihi.Width = 125;
-            // 
-            // Tablo_Tip
-            // 
-            Tablo_Tip.HeaderText = "Tip";
-            Tablo_Tip.MinimumWidth = 6;
-            Tablo_Tip.Name = "Tablo_Tip";
-            Tablo_Tip.ReadOnly = true;
-            Tablo_Tip.Width = 59;
-            // 
-            // Tablo_Durum
-            // 
-            Tablo_Durum.HeaderText = "Durum";
-            Tablo_Durum.MinimumWidth = 6;
-            Tablo_Durum.Name = "Tablo_Durum";
-            Tablo_Durum.ReadOnly = true;
-            Tablo_Durum.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Durum.Width = 83;
-            // 
-            // Tablo_Miktar
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            Tablo_Miktar.DefaultCellStyle = dataGridViewCellStyle3;
-            Tablo_Miktar.HeaderText = "Miktar";
-            Tablo_Miktar.MinimumWidth = 6;
-            Tablo_Miktar.Name = "Tablo_Miktar";
-            Tablo_Miktar.ReadOnly = true;
-            Tablo_Miktar.Width = 80;
-            // 
-            // Tablo_Notlar
-            // 
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Notlar.DefaultCellStyle = dataGridViewCellStyle4;
-            Tablo_Notlar.HeaderText = "Notlar";
-            Tablo_Notlar.MinimumWidth = 6;
-            Tablo_Notlar.Name = "Tablo_Notlar";
-            Tablo_Notlar.ReadOnly = true;
-            Tablo_Notlar.Width = 80;
-            // 
-            // Tablo_Taksit
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            Tablo_Taksit.DefaultCellStyle = dataGridViewCellStyle5;
-            Tablo_Taksit.HeaderText = "Taksit";
-            Tablo_Taksit.MinimumWidth = 6;
-            Tablo_Taksit.Name = "Tablo_Taksit";
-            Tablo_Taksit.ReadOnly = true;
-            Tablo_Taksit.Width = 74;
-            // 
-            // Tablo_Üyelik
-            // 
-            Tablo_Üyelik.HeaderText = "Üyelik";
-            Tablo_Üyelik.MinimumWidth = 6;
-            Tablo_Üyelik.Name = "Tablo_Üyelik";
-            Tablo_Üyelik.ReadOnly = true;
-            Tablo_Üyelik.Width = 55;
-            // 
-            // Tablo_SonİşlemTarihi
-            // 
-            Tablo_SonİşlemTarihi.HeaderText = "Son İşlem Tarihi";
-            Tablo_SonİşlemTarihi.MinimumWidth = 6;
-            Tablo_SonİşlemTarihi.Name = "Tablo_SonİşlemTarihi";
-            Tablo_SonİşlemTarihi.ReadOnly = true;
-            Tablo_SonİşlemTarihi.Width = 141;
-            // 
-            // Tablo_KayıtTarihi
-            // 
-            Tablo_KayıtTarihi.HeaderText = "Kayıt Tarihi";
-            Tablo_KayıtTarihi.MinimumWidth = 6;
-            Tablo_KayıtTarihi.Name = "Tablo_KayıtTarihi";
-            Tablo_KayıtTarihi.ReadOnly = true;
-            Tablo_KayıtTarihi.Width = 110;
-            // 
-            // Tablo_KullanıcıAdı
-            // 
-            Tablo_KullanıcıAdı.HeaderText = "Kullanıcı";
-            Tablo_KullanıcıAdı.MinimumWidth = 6;
-            Tablo_KullanıcıAdı.Name = "Tablo_KullanıcıAdı";
-            Tablo_KullanıcıAdı.ReadOnly = true;
-            Tablo_KullanıcıAdı.Width = 94;
-            // 
             // Cari_Döküm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -1355,7 +1355,6 @@
             KeyPreview = true;
             Name = "Cari_Döküm";
             Padding = new System.Windows.Forms.Padding(3);
-            Load += Cari_Döküm_Load;
             Shown += Cari_Döküm_Shown;
             KeyPress += GelirGider_Ekle_KeyPress;
             ((System.ComponentModel.ISupportInitialize)Tablo).EndInit();

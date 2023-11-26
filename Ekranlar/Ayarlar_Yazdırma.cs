@@ -295,6 +295,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             PrintDocument pd = new PrintDocument();
             pd.PrintController = new StandardPrintController(); //Yazdırılıyor yazısının gizlenmesi
             pd.OriginAtMargins = true;
+            pd.DefaultPageSettings.Landscape = YatayGörünüm.Checked;
 
             if (DosyaAdı != null)
             {
@@ -303,7 +304,6 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
             else
             {
-                pd.DefaultPageSettings.Landscape = YatayGörünüm.Checked;
                 pd.EndPrint += Pd_EndPrint;
                 Önizleme.Document = pd;
             }

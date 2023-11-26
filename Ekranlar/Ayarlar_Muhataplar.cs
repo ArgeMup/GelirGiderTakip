@@ -103,7 +103,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         void Seçim_GeriBildirimİşlemi(string GrupAdı, string MuhatapAdı)
         {
-            Muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(GrupAdı, MuhatapAdı);
+            Muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(GrupAdı, MuhatapAdı, true);
             if (Muhatap == null && !ÖnYüzler_Kaydet.Enabled)
             {
                 Close();

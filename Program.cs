@@ -59,7 +59,7 @@ namespace Gelir_Gider_Takip
                         {
                             foreach (var Talep in Önyüz.İlkAçılışAyarları.Ekle_GelirGider_Talepler)
                             {
-                                var muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı);
+                                var muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, true);
                                 if (muhatap == null) throw new Exception("Muhatap bulunamadı " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı);
 
                                 var gelir_gider = muhatap.GelirGider_Oluştur(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_ParaBirimi,
@@ -76,13 +76,13 @@ namespace Gelir_Gider_Takip
 
                     case Banka1.İlkAçılışAyarları_Komut_.Yazdır:
                         var cd = new Cari_Döküm(Cari_Döküm.AçılışTürü_.Gizli);
-                        cd.Cari_Döküm_Load(null, null);
 
                         if (Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım == null || Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length < 1) throw new Exception("if (AçılışDetayları == null || AçılışDetayları.Length < 1)");
                         string şablon = Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length >= 2 ? Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[1] : null;
-                        cd.Şablon_Seç_TabloyuOluştur(şablon);
+                        string sonuç = cd.Şablon_Seç_TabloyuOluştur(şablon);
 
-                        if (cd.Tablo.RowCount == 0) Açıkla("Hiç kayıt bulunamadı");
+                        if (sonuç.DoluMu()) Açıkla(sonuç);
+                        else if (cd.Tablo.RowCount == 0) Açıkla("Hiç kayıt bulunamadı");
                         else
                         {
                             Ayarlar_Yazdırma yzdrm = new Ayarlar_Yazdırma();

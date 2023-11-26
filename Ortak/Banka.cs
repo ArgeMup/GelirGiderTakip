@@ -255,7 +255,7 @@ namespace Gelir_Gider_Takip
 
                 if(GrupAdı == Çalışan_Yazısı)
                 {
-                    Muhatap_ Muhatap = Muhatap_Aç(GrupAdı, MuhatapAdı);
+                    Muhatap_ Muhatap = Muhatap_Aç(GrupAdı, MuhatapAdı, true);
                     Muhatap.Çalışan = new Muhatap_Çalışan_();
 
                     Muhatap_Çalışan_ÖzlükHakkı_ öh = new Muhatap_Çalışan_ÖzlükHakkı_();
@@ -301,14 +301,15 @@ namespace Gelir_Gider_Takip
                 {
                     string kls = İşyeri_Klasörü + "Mu\\" + muhatap.GöbekAdı;
                     if (!Klasör.Sil(kls)) throw new System.Exception("Klasör silinemedi " + kls);
+
+                    MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı].Remove(MuhatapAdı);
                 }
 
-                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı].Remove(MuhatapAdı);
                 Muhataplar.Clear();
 
                 DeğişiklikYapıldı = true;
             }
-            public Muhatap_? Muhatap_Aç(string GrupAdı, string MuhatapAdı)
+            public Muhatap_? Muhatap_Aç(string GrupAdı, string MuhatapAdı, bool YoksaOluştur = false)
             {
                 if (GrupAdı.BoşMu(true) || MuhatapAdı.BoşMu(true)) return null;
 
@@ -316,7 +317,8 @@ namespace Gelir_Gider_Takip
                    !_GrupİçindekiMuhatapAdları_.TryGetValue(MuhatapAdı, out string _GrupİçindekiMuhatabınGöbekAdı_))
                 {
                     if (!MuhatapGrubuVeMuhatapİsimleri_Sabit.TryGetValue(GrupAdı, out List<string> _GrupİçindekiMuhatapAdları_2_) ||
-                        !_GrupİçindekiMuhatapAdları_2_.Contains(MuhatapAdı)) return null;
+                        !_GrupİçindekiMuhatapAdları_2_.Contains(MuhatapAdı) ||
+                        !YoksaOluştur) return null;
 
                     if (_GrupİçindekiMuhatapAdları_ == null) MuhatapGrubu_Ekle(GrupAdı);
                     _GrupİçindekiMuhatabınGöbekAdı_ = Muhatap_Ekle(GrupAdı, MuhatapAdı);
@@ -325,7 +327,8 @@ namespace Gelir_Gider_Takip
                 if (Muhataplar.TryGetValue(_GrupİçindekiMuhatabınGöbekAdı_, out Muhatap_ muhatap)) return muhatap;
                 else
                 {
-                    if (!Banka_Ortak.Sınıf_DosyaVarMı(GöbekAdı + "\\Mu\\" + _GrupİçindekiMuhatabınGöbekAdı_ + "\\Ay"))
+                    string dsy_muhatap_ay = GöbekAdı + "\\Mu\\" + _GrupİçindekiMuhatabınGöbekAdı_ + "\\Ay";
+                    if (!Banka_Ortak.Sınıf_DosyaVarMı(dsy_muhatap_ay))
                     {
                         muhatap = (Muhatap_)Banka_Ortak.Sınıf_Oluştur(typeof(Muhatap_), null);
                         muhatap.DeğişiklikYapıldı = true;
@@ -335,7 +338,7 @@ namespace Gelir_Gider_Takip
                     }
                     else
                     {
-                        muhatap = Banka_Ortak.Sınıf_Aç(typeof(Muhatap_), GöbekAdı + "\\Mu\\" + _GrupİçindekiMuhatabınGöbekAdı_ + "\\Ay") as Muhatap_;
+                        muhatap = Banka_Ortak.Sınıf_Aç(typeof(Muhatap_), dsy_muhatap_ay) as Muhatap_;
                         if (muhatap == null ||
                             muhatap.GöbekAdı != _GrupİçindekiMuhatabınGöbekAdı_ ||
                             muhatap.GrupAdı != GrupAdı ||
@@ -1062,7 +1065,7 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("Y", 4)] public float KarakterBüyüklüğü = 8;
             [Değişken_.Niteliği.Adını_Değiştir("Y", 5)] public float FirmaLogo_Genişlik = 30;
             [Değişken_.Niteliği.Adını_Değiştir("Y", 6)] public float FirmaLogo_Yükseklik = 15;
-            [Değişken_.Niteliği.Adını_Değiştir("Y", 7)] public bool RenkliHücreler = true;
+            [Değişken_.Niteliği.Adını_Değiştir("Y", 7)] public bool RenkliHücreler;
             [Değişken_.Niteliği.Adını_Değiştir("Y", 8)] public bool YatayGörünüm;
         }
 
@@ -1503,7 +1506,7 @@ namespace Gelir_Gider_Takip
                     goto Devam;
 
                 case DoğrulamaKodu.KontrolEt.Durum_.DoğrulamaDosyasıYok:
-#if !DEBUG
+#if !DEBUG && !RELEASE
                 Klasör_ kls = new Klasör_(Ortak.Klasör_Banka, DoğrulamaKodunuÜret:false);
                 if (kls.Dosyalar.Count > 0) throw new Exception("Büyük Hata A");
 #endif
@@ -1598,10 +1601,14 @@ namespace Gelir_Gider_Takip
             string İşyeri_Adı = Ortak.Banka.Seçilenİşyeri.İşyeriAdı;
             Dictionary<string, List<string>> MuhatapGrubuAdı_MuhatapAdı_GöbekAdı = Ortak.Banka.Seçilenİşyeri.MuhatapGrubuVeMuhatapİsimleri_Sabit;
 
+            string GeçerliKullanıcıAdı = Ortak.Banka.KullancıAdı;
+
             Ortak.Banka = new Banka1();
             Ortak.Banka.Başlat();
             Ortak.Banka.Seçilenİşyeri = Ortak.Banka.İşyeri_Aç(İşyeri_Adı);
             Ortak.Banka.Seçilenİşyeri.MuhatapGrubuVeMuhatapİsimleri_Sabit = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı;
+
+            if (GeçerliKullanıcıAdı.DoluMu()) Ortak.Banka.Ayarlar.Kullanıcılar.GeçerliKullanıcı = Ortak.Banka.Ayarlar.Kullanıcılar.Kişiler.FirstOrDefault(x => x.Adı == GeçerliKullanıcıAdı);
         }
 
         public static bool Yedekleme_Tümü_Çalışıyor = false;

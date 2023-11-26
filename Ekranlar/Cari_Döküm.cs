@@ -59,9 +59,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Sorgula_KıstasSeçimi.SelectedIndex = 0;
             Sorgula_TarihAralığı.SelectedIndex = 0;
-        }
-        public void Cari_Döküm_Load(object sender, EventArgs e)
-        {
+
             Ayraç_Seçenekler_Muhataplar.SplitterDistance = Ayraç_Seçenekler_Muhataplar.Width * 25 / 100;
             Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.SplitterDistance = Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Width * 50 / 100;
             Ayraç_Filtre_TabloSonuç.SplitterDistance = Height / 5;
@@ -154,12 +152,14 @@ namespace Gelir_Gider_Takip.Ekranlar
                 default: throw new Exception("Durum(" + Durum + ") uygun değil");
             }
         }
-        public void Şablon_Seç_TabloyuOluştur(string Adı)
+        public string Şablon_Seç_TabloyuOluştur(string Adı)
         {
-            if (Adı.DoluMu() && !Sorgula_Şablonlar.Tüm_Elemanlar.Contains(Adı)) throw new Exception("Yazdırma şablonu (" + Adı + ") bulunamadı");
+            if (Adı.DoluMu() && !Sorgula_Şablonlar.Tüm_Elemanlar.Contains(Adı)) return "Yazdırma şablonu (" + Adı + ") bulunamadı";
 
             if (Sorgula_Şablonlar.SeçilenEleman_Adı == Adı) Sorgula_Click(null, null);
             else Sorgula_Şablonlar.SeçilenEleman_Adı = Adı;
+
+            return null;
         }
 
         private bool Sorgula_MuhatapGrubu_GeriBildirim_İşlemi(string Adı, ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü Türü, string YeniAdı)
@@ -310,6 +310,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             switch (Sorgula_TarihAralığı.SelectedIndex)
             {
+                default:
                 case 0: //bu ay
                     Sorgula_Başlangıç.Value = new DateTime(tt.Year, tt.Month, 1);
                     Sorgula_Bitiş.Value = new DateTime(tt.Year, tt.Month, DateTime.DaysInMonth(tt.Year, tt.Month), 23, 59, 59);
@@ -322,10 +323,14 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Sorgula_Bitiş.Value = new DateTime(tt.Year, tt.Month, tt.Day, 23, 59, 59);
                     break;
 
-                default:
                 case 2://bugün
                     Sorgula_Başlangıç.Value = tt;
                     Sorgula_Bitiş.Value = new DateTime(tt.Year, tt.Month, tt.Day, 23, 59, 59);
+                    break;
+
+                case 3://son 1 gün
+                    Sorgula_Bitiş.Value = DateTime.Now;
+                    Sorgula_Başlangıç.Value = Sorgula_Bitiş.Value.AddDays(-1);
                     break;
             }
         }
@@ -394,6 +399,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             Tablo_Üyelik.Visible = Sorgula_Üyelik.Checked;
             Tablo_SonİşlemTarihi.Visible = Sorgula_Tarih_Sonİşlem.Checked;
             Tablo_KayıtTarihi.Visible = Sorgula_Tarih_Kayıt.Checked;
+            bool EnAz1KullanıcıAdıMevcut = false;
 
             foreach (string yıl in Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_Yıllar())
             {
@@ -452,6 +458,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 }
             }
 
+            Tablo_KullanıcıAdı.Visible = EnAz1KullanıcıAdıMevcut;
             Tablo.Rows.AddRange(dizi.ToArray());
             Tablo.Sort(Sorgula_Maaşlar.Checked || Sorgula_AltToplam.Checked ? Tablo_Muhatap :
                         Sorgula_Tarih_Ödeme.Checked ? Tablo_ÖdemeTarihi :
@@ -487,6 +494,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 KeyValuePair<DateTime, Banka1.İşyeri_Ödeme_İşlem_> son_işlem = _ödeme_.İşlemler.Last();
 
                 Banka1.İşyeri_Ödeme_İşlem_.Tipi_ tipi = son_işlem.Value.Tipi;
+                DataGridViewRow _1_satır_dizisi_;
                 if (tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.KontrolNoktası)
                 {
                     if (!Sorgula_KontrolNoktası.Checked) return;
@@ -502,7 +510,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     dizin[Tablo_KayıtTarihi.Index] = ilk_işlem.Key;
                     dizin[Tablo_KullanıcıAdı.Index] = son_işlem.Value.GerçekleştirenKullanıcıAdı;
 
-                    DataGridViewRow _1_satır_dizisi_ = new DataGridViewRow();
+                    _1_satır_dizisi_ = new DataGridViewRow();
                     dizi.Add(_1_satır_dizisi_);
                     _1_satır_dizisi_.CreateCells(Tablo, dizin);
 
@@ -634,7 +642,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     dizin[Tablo_KayıtTarihi.Index] = _ödeme_.İşlemler.First().Key;
                     dizin[Tablo_KullanıcıAdı.Index] = son_işlem.Value.GerçekleştirenKullanıcıAdı;
 
-                    DataGridViewRow _1_satır_dizisi_ = new DataGridViewRow();
+                    _1_satır_dizisi_ = new DataGridViewRow();
                     dizi.Add(_1_satır_dizisi_);
                     _1_satır_dizisi_.CreateCells(Tablo, dizin);
 
@@ -664,6 +672,9 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = _ödeme_.ÜyelikKayıtTarihi.Value.Yazıya();
                     _1_satır_dizisi_.Cells[Tablo_Durum.Index].Style.BackColor = DurumRengi(_ödeme_.Durumu);
                 }
+
+                object Kul_adı = _1_satır_dizisi_.Cells[Tablo_KullanıcıAdı.Index].Value;
+                if (Kul_adı != null && ((string)Kul_adı).DoluMu()) EnAz1KullanıcıAdıMevcut = true;
             }
         }
 
@@ -956,7 +967,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 string açıklama = ödeme.ParaBirimi != İstenenParBirimi ? "(" + Banka_Ortak.Yazdır_Ücret((double)Öde_KısmiÖdeme_Miktar.Value, İstenenParBirimi) + ")" : null;
                 açıklama += (açıklama.DoluMu() ? Environment.NewLine : null) + Öde_Notlar.Text;
 
-                Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı);
+                Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı, true);
                 muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(ödeme.Tipi, ödeme.İlkKayıtTarihi, YapılanÖdeme_ÖdemeParaBiriminde, ödeme.ParaBirimi, Öde_KalanÖdemeTarihi.Value, açıklama, ödeme.Taksit, ödeme.ÜyelikKayıtTarihi));
             }
 
