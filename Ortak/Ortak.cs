@@ -23,9 +23,10 @@ namespace Gelir_Gider_Takip
         public static Color Renk_Sarı = Color.FromArgb(int.Parse("FFEBEF95", System.Globalization.NumberStyles.HexNumber));
         public static Color Renk_Yeşil = Color.FromArgb(int.Parse("FFD0F0C0", System.Globalization.NumberStyles.HexNumber));
         public static Color Renk_Gri = Color.FromArgb(int.Parse("FFD9D9D9", System.Globalization.NumberStyles.HexNumber));
+        public static Color Renk_Mavi = Color.FromArgb(int.Parse("FFE0FFFF", System.Globalization.NumberStyles.HexNumber));
         public static Color Renk_Gelir = Renk_Yeşil;
         public static Color Renk_Gider = Renk_Kırmızı;
-        public static Color Renk_Mavi = Color.FromArgb(int.Parse("FFE0FFFF", System.Globalization.NumberStyles.HexNumber));
+        public static Color Renk_KontrolNoktası = Renk_Mavi;
 
         public static void Başlat()
         {

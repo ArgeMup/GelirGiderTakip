@@ -516,7 +516,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                     for (int i = 0; i < sutun_sayısı; i++)
                     {
-                        _1_satır_dizisi_.Cells[i].Style.BackColor = Ortak.Renk_Mavi;
+                        _1_satır_dizisi_.Cells[i].Style.BackColor = Ortak.Renk_KontrolNoktası;
                     }
                 }
                 else
@@ -656,7 +656,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     }
                     else
                     {
-                        _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Mavi;
+                        _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Mavi; //Gelecek Döneem ait
                         _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = "Sadece bilgi amaçlıdır" + Environment.NewLine +
                             Banka_Ortak.Yazdır_Tarih_Gün(son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()) - şimdi.ToDateTime(new TimeOnly())) + " daha var";
                     }
@@ -664,7 +664,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (_ödeme_.İşlemler.Count > 1)
                     {
                         _1_satır_dizisi_.Cells[Tablo_SonİşlemTarihi.Index].ToolTipText = "Sürüm : " + _ödeme_.İşlemler.Count;
-                        _1_satır_dizisi_.Cells[Tablo_SonİşlemTarihi.Index].Style.BackColor = Ortak.Renk_Mavi;
+                        _1_satır_dizisi_.Cells[Tablo_SonİşlemTarihi.Index].Style.BackColor = Ortak.Renk_Mavi; //çok sürümlü
                     }
                     _1_satır_dizisi_.Cells[Tablo_Miktar.Index].Style.BackColor = gelir_olarak_göster ? Ortak.Renk_Gelir : Ortak.Renk_Gider;
                     _1_satır_dizisi_.Cells[Tablo_Miktar.Index].ToolTipText = gelir_olarak_göster ? "Gelir" : "Gider";
