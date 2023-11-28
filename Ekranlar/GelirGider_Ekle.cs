@@ -18,6 +18,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                 return Avans_peşinat_taksit_ve_üyelik_ekleyebilir && Üyelik.Enabled && Üyelik.Checked;
             }
         }
+        bool AvansMı
+        {
+            get
+            {
+                return Avans_peşinat_taksit_ve_üyelik_ekleyebilir && Avans.Enabled && Avans.Checked;
+            }
+        }
         bool Avans_peşinat_taksit_ve_üyelik_ekleyebilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir);
 
         public GelirGider_Ekle(Banka1.Muhatap_ Muhatap = null, DateTime? ÜyelikKayıtTarihi = null)
@@ -34,6 +41,8 @@ namespace Gelir_Gider_Takip.Ekranlar
             Gelir.FlatAppearance.CheckedBackColor = Ortak.Renk_Gelir;
             Avans.FlatAppearance.CheckedBackColor = Ortak.Renk_Sarı;
             Gider.FlatAppearance.CheckedBackColor = Ortak.Renk_Gider;
+            Durum_Ödendi.FlatAppearance.CheckedBackColor = Ortak.Renk_Gelir;
+            Durum_Ödenmedi.FlatAppearance.CheckedBackColor = Ortak.Renk_Gider;
 
             ÖdemeTarihi_Değeri.Visible = Avans_peşinat_taksit_ve_üyelik_ekleyebilir;
             ÖdemeTarihi_Yazısı.Visible = Avans_peşinat_taksit_ve_üyelik_ekleyebilir;
@@ -51,13 +60,10 @@ namespace Gelir_Gider_Takip.Ekranlar
             {
                 İşyeri_Grup_Muhatap_Click(null, null);
 
-                Durum.SelectedIndex = (int)Banka1.İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi - 1;
+                Durum_Ödendi.Checked = true;
             }
             else
             {
-                Durum.SelectedIndex = (int)Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi - 1;
-                Durum.Enabled = false;
-
                 İşyeri_Grup_Muhatap.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + "          " + Muhatap.GrupAdı + "          " + Muhatap.MuhatapAdı;
                 İşyeri_Grup_Muhatap.Enabled = false;
 
@@ -69,6 +75,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Gelir.Checked = ÜyelikDetayları.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Gelir;
                 Notlar.Text = ÜyelikDetayları.Notlar;
 
+                Durum.Visible = false;
+                Peşinat.Visible = false;
                 Üyelik.Enabled = false;
                 Üyelik.Checked = true;
                 Üyelik_Dönem.SelectedIndex = (int)ÜyelikDetayları.Dönemi - 1;
@@ -111,17 +119,19 @@ namespace Gelir_Gider_Takip.Ekranlar
             DateTime tt;
             if (GrupAdı == Banka1.Çalışan_Yazısı)
             {
-                Avans.Visible = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir);
-                if (Avans.Visible) Avans.Checked = true;
+                Avans.Visible = Avans_peşinat_taksit_ve_üyelik_ekleyebilir;
 
                 tt = Ortak.Banka.Seçilenİşyeri.EnYakınMaaşGünü().ToDateTime(new TimeOnly());
             }
             else
             {
+                Avans.Visible = false;
+
                 tt = DateTime.Now;
                 tt = new DateTime(tt.Year, tt.Month, tt.Day);
             }
             ÖdemeTarihi_Değeri.Value = tt;
+            Avans.Checked = Avans.Visible;
 
             İşyeri_Grup_Muhatap.Enabled = true;
             ÖnYüzler_Kaydet.Enabled = false;
@@ -131,15 +141,17 @@ namespace Gelir_Gider_Takip.Ekranlar
         {
             if (İlkAçılış) return;
 
-            Üyelik.Enabled = !Avans.Checked;
+            Üyelik.Enabled = ÜyelikKayıtTarihi == null && !AvansMı;
 
             ÖdemeTarihi_Değeri.Value = new DateTime(ÖdemeTarihi_Değeri.Value.Year, ÖdemeTarihi_Değeri.Value.Month, ÖdemeTarihi_Değeri.Value.Day);
             İşyeri_Grup_Muhatap.Enabled = false;
             ÖnYüzler_Kaydet.Enabled = true;
 
-            Peşinat.Enabled = Avans_peşinat_taksit_ve_üyelik_ekleyebilir && !ÜyelikMi && !Avans.Checked && Taksit_Adet.Value > 1;
-            Durum.Enabled = !ÜyelikMi;
-            if (ÜyelikMi || (!Avans.Checked && (int)Taksit_Adet.Value > 1)) Durum.SelectedIndex = (int)Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi - 1;
+            bool ÜyelikVeAvansDeğil = !ÜyelikMi && !AvansMı;
+            Peşinat.Enabled = ÜyelikVeAvansDeğil;
+            bool TaksitliVePeşinatDadeDeğil = ÜyelikVeAvansDeğil && Taksit_Adet.Value < 2 && (double)PeşinatMiktarı.Value == 0;
+            Durum.Enabled = TaksitliVePeşinatDadeDeğil;
+            if (!TaksitliVePeşinatDadeDeğil) Durum_Ödenmedi.Checked = true;
 
             Banka1.İşyeri_Ödeme_.ParaBirimi_ parabirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(ParaBirimi.SelectedIndex + 1);
             Banka1.Muhatap_Üyelik_.Dönem_ dönem_taksit = (Banka1.Muhatap_Üyelik_.Dönem_)(Taksit_Dönem.SelectedIndex + 1);
@@ -147,10 +159,9 @@ namespace Gelir_Gider_Takip.Ekranlar
             Tablo.Rows.Clear();
             Miktar.BackColor = Color.White;
 
-            if (ÜyelikMi)
+            if (ÜyelikMi || ÜyelikKayıtTarihi != null)
             {
                 Üyelik_Grubu.Enabled = true;
-                //Tablo.ReadOnly = true;
 
                 int dönem_no = 1;
                 DateTime ödeme_zamanı = ÖdemeTarihi_Değeri.Value;
@@ -166,66 +177,29 @@ namespace Gelir_Gider_Takip.Ekranlar
             else
             {
                 Üyelik_Grubu.Enabled = false;
-                //Tablo.ReadOnly = false;
 
                 _Yazdır_(ÖdemeTarihi_Değeri.Value);
             }
 
             void _Yazdır_(DateTime _başlangıç_, string Açıklama = null)
             {
-                if (Taksit_Adet.Value == 1)
+                double Miktarı = (double)Miktar.Value;
+                DateTime tt = _başlangıç_;
+
+                if (Peşinat.Enabled && PeşinatMiktarı.Value > 0)
                 {
-                    Tablo.Rows.Add(new object[] { Açıklama + "1", Banka_Ortak.Yazdır_Tarih(_başlangıç_.Yazıya()), Banka_Ortak.Yazdır_Ücret((double)Miktar.Value, parabirimi) });
+                    Tablo.Rows.Add(new object[] { "Peşinat", Banka_Ortak.Yazdır_Tarih(tt.Yazıya()), Banka_Ortak.Yazdır_Ücret((double)PeşinatMiktarı.Value, parabirimi) });
+                    tt = Banka_Ortak.SonrakiTarihiHesapla(tt, dönem_taksit, (int)Taksit_Dönem_Adet.Value);
+
+                    Miktarı -= (double)PeşinatMiktarı.Value;
                 }
-                else
+
+                Miktarı = Miktarı / (double)Taksit_Adet.Value;
+                for (int i = 0; i < Taksit_Adet.Value; i++)
                 {
-                    double taksit_1_dönem_için = (double)Miktar.Value;
-                    if (Peşinat.Enabled) taksit_1_dönem_için -= (double)PeşinatMiktarı.Value;
-
-                    taksit_1_dönem_için = taksit_1_dönem_için / (double)Taksit_Adet.Value;
-                    DateTime tt = _başlangıç_;
-                    for (int i = 0; i < Taksit_Adet.Value; i++)
-                    {
-                        Tablo.Rows.Add(new object[] { Açıklama + (i + 1), Banka_Ortak.Yazdır_Tarih(tt.Yazıya()), Banka_Ortak.Yazdır_Ücret(taksit_1_dönem_için, parabirimi) });
-                        tt = Banka_Ortak.SonrakiTarihiHesapla(tt, dönem_taksit, (int)Taksit_Dönem_Adet.Value);
-                    }
+                    Tablo.Rows.Add(new object[] { Açıklama + (i + 1), Banka_Ortak.Yazdır_Tarih(tt.Yazıya()), Banka_Ortak.Yazdır_Ücret(Miktarı, parabirimi) });
+                    tt = Banka_Ortak.SonrakiTarihiHesapla(tt, dönem_taksit, (int)Taksit_Dönem_Adet.Value);
                 }
-            }
-        }
-        private void Tablo_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (e.RowIndex < 0 || e.ColumnIndex <= Tablo_Taksit.Index) return;
-
-                double toplam = 0;
-                for (int i = 0; i < Tablo.Rows.Count; i++)
-                {
-                    Tablo[Tablo_ÖdemeTarihi.Index, i].Style.BackColor = Color.White;
-
-                    toplam += ((string)Tablo[Tablo_Miktarı.Index, i].Value).NoktalıSayıya();
-                }
-                Miktar.BackColor = toplam == (double)Miktar.Value ? Color.White : Color.Salmon;
-
-                for (int i = 1; i < Tablo.Rows.Count; i++)
-                {
-                    string a = (Tablo[Tablo_ÖdemeTarihi.Index, i].Value as string);
-                    string b = (Tablo[Tablo_ÖdemeTarihi.Index, i - 1].Value as string);
-
-                    bool hatalı = false;
-                    if (a.Length != 10 || b.Length != 10) hatalı = true;
-                    else hatalı = a.TarihSaate("dd.MM.yyyy") <= b.TarihSaate("dd.MM.yyyy");
-                    if (hatalı)
-                    {
-                        Tablo[Tablo_ÖdemeTarihi.Index, i].Style.BackColor = Color.Salmon;
-                        Tablo[Tablo_ÖdemeTarihi.Index, i - 1].Style.BackColor = Color.Salmon;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Girdiğiniz içerik uygun değil, kontrol ediniz.", Text);
-                return;
             }
         }
 
@@ -253,13 +227,17 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
             else PeşinatMiktarı.Value = 0;
 
+            Banka1.İşyeri_Ödeme_İşlem_.Tipi_ Tipi = Gelir.Checked ? Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Gelir : Gider.Checked ? Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Gider : AvansMı ? Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansVerilmesi : Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Boşta;
+            if (Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Boşta)
+            {
+                MessageBox.Show("Gelir veya Gider seçeneklerinden birisini seçiniz.", Text);
+                return;
+            }
+
             Banka1.İşyeri_Ödeme_.ParaBirimi_ parabirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(ParaBirimi.SelectedIndex + 1);
             Banka1.Muhatap_Üyelik_.Dönem_ dönem_taksit = (Banka1.Muhatap_Üyelik_.Dönem_)(Taksit_Dönem.SelectedIndex + 1);
             Banka1.Muhatap_Üyelik_.Dönem_ dönem_üyelik = (Banka1.Muhatap_Üyelik_.Dönem_)(Üyelik_Dönem.SelectedIndex + 1);
-            Banka1.İşyeri_Ödeme_İşlem_.Durum_ durum = Durum.Enabled ? (Banka1.İşyeri_Ödeme_İşlem_.Durum_)(Durum.SelectedIndex + 1) : Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi;
-
             double miktar = (double)Miktar.Value;
-            Banka1.İşyeri_Ödeme_İşlem_.Tipi_ Tipi = Gelir.Checked ? Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Gelir : Gider.Checked ? Banka1.İşyeri_Ödeme_İşlem_.Tipi_.Gider : Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansVerilmesi;
 
             if (ÜyelikKayıtTarihi == null)
             {
@@ -278,10 +256,10 @@ namespace Gelir_Gider_Takip.Ekranlar
                     List<Banka1.İşyeri_Ödeme_> ödemeler;
                     DateTime? KayıtTarihi = DateTime.Now;
 
-                    if (Avans.Checked)
+                    if (AvansMı)
                     {
                         //1 kerede çıkan paranın ödemesi
-                        ödemeler = Muhatap.GelirGider_Oluştur(Tipi, durum, miktar, parabirimi, KayıtTarihi.Value, Notlar.Text,
+                        ödemeler = Muhatap.GelirGider_Oluştur(Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi, miktar, parabirimi, KayıtTarihi.Value, Notlar.Text,
                             1, dönem_taksit, 0,
                             null, null, KayıtTarihi);
 
@@ -305,7 +283,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                         }
                         else ödemeler = new List<Banka1.İşyeri_Ödeme_>();
 
-                        ödemeler.AddRange(Muhatap.GelirGider_Oluştur(Tipi, durum, miktar, parabirimi, ÖdemeTarihi_Değeri.Value, Notlar.Text,
+                        ödemeler.AddRange(Muhatap.GelirGider_Oluştur(Tipi, Durum_Ödendi.Checked ? Banka1.İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi : Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, miktar, parabirimi, ÖdemeTarihi_Değeri.Value, Notlar.Text,
                             (int)Taksit_Adet.Value, dönem_taksit, (int)Taksit_Dönem_Adet.Value,
                             null, null, KayıtTarihi));
                     }

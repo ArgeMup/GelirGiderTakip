@@ -693,7 +693,7 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("T", 0)] public int Taksit_Sayısı;
             [Değişken_.Niteliği.Adını_Değiştir("T", 1)] public int Taksit_No;
             [Değişken_.Niteliği.Adını_Değiştir("T", 2)] public Muhatap_Üyelik_.Dönem_ Dönemi;
-            [Değişken_.Niteliği.Adını_Değiştir("T", 3)] public int Dönem_Adet; //Her <Adet> dönemde 1 sefer
+            [Değişken_.Niteliği.Adını_Değiştir("T", 3)] public int Dönem_Adet; //Her <Adet> dönemde 1 kez
         }
 
         public class Muhatap_ : Banka_Ortak.IBanka_Tanımlayıcı_
@@ -929,7 +929,7 @@ namespace Gelir_Gider_Takip
             public enum Dönem_ { Boşta, Günlük, Haftalık, Aylık, Yıllık };
             public string Yazdır_Dönem()
             {
-                string açıklama = "Her " + Dönem_Adet + " " + (Dönemi == Dönem_.Günlük ? "günde" : (Dönemi == Dönem_.Haftalık ? "haftada" : (Dönemi == Dönem_.Aylık ? "ayda" : Dönemi == Dönem_.Yıllık ? "yılda" : throw new Exception("Dönem(" + Dönemi + ") hatalı")))) + " 1 sefer";
+                string açıklama = "Her " + Dönem_Adet + " " + (Dönemi == Dönem_.Günlük ? "günde" : (Dönemi == Dönem_.Haftalık ? "haftada" : (Dönemi == Dönem_.Aylık ? "ayda" : Dönemi == Dönem_.Yıllık ? "yılda" : throw new Exception("Dönem(" + Dönemi + ") hatalı")))) + " 1 kez";
                 if (Taksit != null) açıklama += Environment.NewLine + "Her " + Taksit.Dönem_Adet + " " + (Taksit.Dönemi == Dönem_.Günlük ? "günde" : (Taksit.Dönemi == Dönem_.Haftalık ? "haftada" : (Taksit.Dönemi == Dönem_.Aylık ? "ayda" : Taksit.Dönemi == Dönem_.Yıllık ? "yılda" : throw new Exception("Taksit.Dönemi(" + Taksit.Dönemi + ") hatalı")))) + " " + Taksit.Taksit_Sayısı + " taksit";
 
                 return açıklama;
@@ -940,7 +940,7 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("Ü", 2)] public double Miktarı;
             [Değişken_.Niteliği.Adını_Değiştir("Ü", 3)] public İşyeri_Ödeme_.ParaBirimi_ ParaBirimi;
             [Değişken_.Niteliği.Adını_Değiştir("Ü", 4)] public Dönem_ Dönemi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ü", 5)] public int Dönem_Adet; //Her <Adet> dönemde 1 sefer
+            [Değişken_.Niteliği.Adını_Değiştir("Ü", 5)] public int Dönem_Adet; //Her <Adet> dönemde 1 kez
             [Değişken_.Niteliği.Adını_Değiştir("Ü", 6)] public string Notlar;
             [Değişken_.Niteliği.Adını_Değiştir("Ü", 7)] public string GerçekleştirenKullanıcıAdı;
             [Değişken_.Niteliği.Adını_Değiştir("Ü", 8)] public DateOnly? BitişTarihi;

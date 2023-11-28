@@ -8,7 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
     <PlatformTarget>x64</PlatformTarget>
-    <FileVersion>0.3</FileVersion>
+    <FileVersion>0.4</FileVersion>
     <Configurations>Debug;Release;Yayınla</Configurations>
     <ApplicationIcon>Resources\ico.ico</ApplicationIcon>
   </PropertyGroup>

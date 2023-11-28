@@ -33,6 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             Ayraç_Diğer_Çalışan = new System.Windows.Forms.SplitContainer();
             groupBox3 = new System.Windows.Forms.GroupBox();
             Tablo_Üyelik = new System.Windows.Forms.DataGridView();
@@ -178,6 +179,8 @@
             // 
             // Tablo_Üyelik_Dönem
             // 
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Üyelik_Dönem.DefaultCellStyle = dataGridViewCellStyle2;
             Tablo_Üyelik_Dönem.HeaderText = "Dönem";
             Tablo_Üyelik_Dönem.MinimumWidth = 6;
             Tablo_Üyelik_Dönem.Name = "Tablo_Üyelik_Dönem";
@@ -194,9 +197,9 @@
             // 
             // Tablo_Üyelik_Notlar
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Üyelik_Notlar.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Üyelik_Notlar.DefaultCellStyle = dataGridViewCellStyle3;
             Tablo_Üyelik_Notlar.HeaderText = "Notlar";
             Tablo_Üyelik_Notlar.MinimumWidth = 6;
             Tablo_Üyelik_Notlar.Name = "Tablo_Üyelik_Notlar";
@@ -452,13 +455,13 @@
             Tablo_ÖzlükHakkı.AllowUserToDeleteRows = false;
             Tablo_ÖzlükHakkı.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             Tablo_ÖzlükHakkı.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_ÖzlükHakkı.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_ÖzlükHakkı.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             Tablo_ÖzlükHakkı.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Tablo_ÖzlükHakkı.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Tablo_Çalışan_KayıtTarihi, Tablo_Çalışan_Açıklama, Tablo_Çalışan_Notlar, Tablo_Çalışan_KullanıcıAdı });
             Tablo_ÖzlükHakkı.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -497,8 +500,8 @@
             // 
             // Tablo_Çalışan_Notlar
             // 
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Çalışan_Notlar.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Çalışan_Notlar.DefaultCellStyle = dataGridViewCellStyle5;
             Tablo_Çalışan_Notlar.HeaderText = "Notlar";
             Tablo_Çalışan_Notlar.MinimumWidth = 6;
             Tablo_Çalışan_Notlar.Name = "Tablo_Çalışan_Notlar";
@@ -536,7 +539,7 @@
             İşyeri_Grup_Muhatap.UseVisualStyleBackColor = true;
             İşyeri_Grup_Muhatap.Click += İşyeri_Grup_Muhatap_Click;
             // 
-            // Muhatap_Detayları
+            // Ayarlar_Muhataplar
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -544,7 +547,7 @@
             Controls.Add(Ayraç_Diğer_Çalışan);
             Controls.Add(İşyeri_Grup_Muhatap);
             KeyPreview = true;
-            Name = "Muhatap_Detayları";
+            Name = "Ayarlar_Muhataplar";
             Text = "Çalışan_Detayları";
             Shown += Muhatap_Detayları_Shown;
             KeyPress += Muhatap_Detayları_KeyPress;
@@ -604,15 +607,15 @@
         private System.Windows.Forms.ToolStripMenuItem SağTuşMenü_Üyelik_Düzenle;
         private System.Windows.Forms.ToolStripMenuItem SağTuşMenü_Üyelik_Sil;
         private System.Windows.Forms.Button İşyeri_Grup_Muhatap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KayıtTarihi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Açıklama;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Notlar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KullanıcıAdı;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_İlkÖdemeninYapılacağıTarih;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Miktar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Dönem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_BitişTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Notlar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_KullanıcıAdı;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KayıtTarihi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Açıklama;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Notlar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KullanıcıAdı;
     }
 }

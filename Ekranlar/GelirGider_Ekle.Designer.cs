@@ -34,7 +34,6 @@
             İpucu = new System.Windows.Forms.ToolTip(components);
             ParaBirimi = new System.Windows.Forms.ComboBox();
             Notlar = new System.Windows.Forms.TextBox();
-            Durum = new System.Windows.Forms.ComboBox();
             ÖdemeTarihi_Değeri = new System.Windows.Forms.DateTimePicker();
             ÖdemeTarihi_Yazısı = new System.Windows.Forms.Label();
             Miktar = new System.Windows.Forms.NumericUpDown();
@@ -59,6 +58,9 @@
             label2 = new System.Windows.Forms.Label();
             İşyeri_Grup_Muhatap = new System.Windows.Forms.Button();
             Ayraç_Detaylar_Taksit = new System.Windows.Forms.SplitContainer();
+            Durum = new System.Windows.Forms.Panel();
+            Durum_Ödenmedi = new System.Windows.Forms.RadioButton();
+            Durum_Ödendi = new System.Windows.Forms.RadioButton();
             Üyelik = new System.Windows.Forms.CheckBox();
             Üyelik_Grubu = new System.Windows.Forms.GroupBox();
             panel6 = new System.Windows.Forms.Panel();
@@ -81,6 +83,7 @@
             Ayraç_Detaylar_Taksit.Panel1.SuspendLayout();
             Ayraç_Detaylar_Taksit.Panel2.SuspendLayout();
             Ayraç_Detaylar_Taksit.SuspendLayout();
+            Durum.SuspendLayout();
             Üyelik_Grubu.SuspendLayout();
             panel6.SuspendLayout();
             panel5.SuspendLayout();
@@ -97,7 +100,6 @@
             İpucu.InitialDelay = 100;
             İpucu.IsBalloon = true;
             İpucu.ReshowDelay = 20;
-            İpucu.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             İpucu.UseAnimation = false;
             İpucu.UseFading = false;
             // 
@@ -122,24 +124,11 @@
             Notlar.Multiline = true;
             Notlar.Name = "Notlar";
             Notlar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            Notlar.Size = new System.Drawing.Size(391, 70);
+            Notlar.Size = new System.Drawing.Size(391, 68);
             Notlar.TabIndex = 19;
             İpucu.SetToolTip(Notlar, "Notlar");
             Notlar.WordWrap = false;
             Notlar.TextChanged += AyarDeğişti;
-            // 
-            // Durum
-            // 
-            Durum.Dock = System.Windows.Forms.DockStyle.Bottom;
-            Durum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Durum.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            Durum.FormattingEnabled = true;
-            Durum.Items.AddRange(new object[] { "Ödenmedi", "Kısmen ödendi", "Ödendi", "İptal edildi" });
-            Durum.Location = new System.Drawing.Point(0, 214);
-            Durum.Name = "Durum";
-            Durum.Size = new System.Drawing.Size(391, 36);
-            Durum.TabIndex = 35;
-            İpucu.SetToolTip(Durum, "Para birimi");
             // 
             // ÖdemeTarihi_Değeri
             // 
@@ -257,7 +246,6 @@
             Tablo.ShowRowErrors = false;
             Tablo.Size = new System.Drawing.Size(353, 305);
             Tablo.TabIndex = 28;
-            Tablo.CellValueChanged += Tablo_CellValueChanged;
             // 
             // Tablo_Taksit
             // 
@@ -456,6 +444,45 @@
             Ayraç_Detaylar_Taksit.SplitterDistance = 395;
             Ayraç_Detaylar_Taksit.TabIndex = 18;
             // 
+            // Durum
+            // 
+            Durum.Controls.Add(Durum_Ödenmedi);
+            Durum.Controls.Add(Durum_Ödendi);
+            Durum.Dock = System.Windows.Forms.DockStyle.Bottom;
+            Durum.Location = new System.Drawing.Point(0, 212);
+            Durum.Name = "Durum";
+            Durum.Size = new System.Drawing.Size(391, 38);
+            Durum.TabIndex = 4;
+            // 
+            // Durum_Ödenmedi
+            // 
+            Durum_Ödenmedi.Appearance = System.Windows.Forms.Appearance.Button;
+            Durum_Ödenmedi.AutoSize = true;
+            Durum_Ödenmedi.Checked = true;
+            Durum_Ödenmedi.Dock = System.Windows.Forms.DockStyle.Fill;
+            Durum_Ödenmedi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Durum_Ödenmedi.Location = new System.Drawing.Point(116, 0);
+            Durum_Ödenmedi.Name = "Durum_Ödenmedi";
+            Durum_Ödenmedi.Size = new System.Drawing.Size(275, 38);
+            Durum_Ödenmedi.TabIndex = 12;
+            Durum_Ödenmedi.TabStop = true;
+            Durum_Ödenmedi.Text = "Ödenmedi";
+            Durum_Ödenmedi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            Durum_Ödenmedi.UseVisualStyleBackColor = true;
+            // 
+            // Durum_Ödendi
+            // 
+            Durum_Ödendi.Appearance = System.Windows.Forms.Appearance.Button;
+            Durum_Ödendi.Dock = System.Windows.Forms.DockStyle.Left;
+            Durum_Ödendi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Durum_Ödendi.Location = new System.Drawing.Point(0, 0);
+            Durum_Ödendi.Name = "Durum_Ödendi";
+            Durum_Ödendi.Size = new System.Drawing.Size(116, 38);
+            Durum_Ödendi.TabIndex = 11;
+            Durum_Ödendi.Text = "Ödendi";
+            Durum_Ödendi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            Durum_Ödendi.UseVisualStyleBackColor = true;
+            // 
             // Üyelik
             // 
             Üyelik.AutoSize = true;
@@ -608,6 +635,8 @@
             Ayraç_Detaylar_Taksit.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Ayraç_Detaylar_Taksit).EndInit();
             Ayraç_Detaylar_Taksit.ResumeLayout(false);
+            Durum.ResumeLayout(false);
+            Durum.PerformLayout();
             Üyelik_Grubu.ResumeLayout(false);
             panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
@@ -657,10 +686,12 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.RadioButton Avans;
-        private System.Windows.Forms.ComboBox Durum;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel Peşinat;
         private System.Windows.Forms.NumericUpDown PeşinatMiktarı;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel Durum;
+        private System.Windows.Forms.RadioButton Durum_Ödenmedi;
+        private System.Windows.Forms.RadioButton Durum_Ödendi;
     }
 }
