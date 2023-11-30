@@ -122,7 +122,7 @@ namespace Gelir_Gider_Takip
 
             if (işyeri.İşyeriAdı != Adı) throw new Exception("işyeri.İşyeriAdı(" + işyeri.İşyeriAdı + ") != Adı(" + Adı + ")");
 
-            if (işyeri.Üyelik_Kontrol()) Banka_Ortak.DeğişiklikleriKaydet();
+            if (işyeri.Üyelik_ZamanıGelenleriKaydet()) Banka_Ortak.DeğişiklikleriKaydet();
 
             return işyeri;
         }
@@ -393,7 +393,7 @@ namespace Gelir_Gider_Takip
 
                 return BirYıllıkDönem;
             }
-            public bool Üyelik_Kontrol()
+            public bool Üyelik_ZamanıGelenleriKaydet()
             {
                 bool EnAz1ÜyelikÖdemesioluşturuldu = false;
 
@@ -404,13 +404,13 @@ namespace Gelir_Gider_Takip
                         Muhatap_ muhatap = Muhatap_Aç(MuhatapGrupAdı, MuhatapAdı);
                         if (muhatap == null) continue;
 
-                        EnAz1ÜyelikÖdemesioluşturuldu |= muhatap.Üyelik_Kontrol();
+                        EnAz1ÜyelikÖdemesioluşturuldu |= muhatap.Üyelik_ZamanıGelenleriKaydet();
                     }
                 }
 
                 return EnAz1ÜyelikÖdemesioluşturuldu;
             }
-            public List<İşyeri_Ödeme_> Üyelik_OlacaklarıHesapla(DateOnly BitişTarihi, bool ÜyelikİçineKaydet = false)
+            public List<İşyeri_Ödeme_> Üyelik_OlacaklarıHesapla(DateOnly BitişTarihi, bool VeKaydet = false)
             {
                 List<İşyeri_Ödeme_> Ödemeler = new List<İşyeri_Ödeme_>();
 
@@ -421,7 +421,7 @@ namespace Gelir_Gider_Takip
                         Muhatap_ muhatap = Muhatap_Aç(MuhatapGrupAdı, MuhatapAdı);
                         if (muhatap == null) continue;
 
-                        Ödemeler.AddRange(muhatap.Üyelik_OlacaklarıHesapla(BitişTarihi, ÜyelikİçineKaydet));
+                        Ödemeler.AddRange(muhatap.Üyelik_OlacaklarıHesapla(BitişTarihi, VeKaydet));
                     }
                 }
 
@@ -592,7 +592,7 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("Ö", 0)] public string MuhatapGrubuAdı;
             [Değişken_.Niteliği.Adını_Değiştir("Ö", 1)] public string MuhatapAdı;
             [Değişken_.Niteliği.Adını_Değiştir("Ö", 2)] public ParaBirimi_ ParaBirimi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ö", 3)] public DateTime? ÜyelikKayıtTarihi;
+            [Değişken_.Niteliği.Adını_Değiştir("Ö", 3)] public DateTime? Üyelik_KayıtTarihi;
 
             [Değişken_.Niteliği.Adını_Değiştir("T")] public İşyeri_Ödeme_Taksit_ Taksit;
             [Değişken_.Niteliği.Adını_Değiştir("G")] public Dictionary<DateTime, İşyeri_Ödeme_İşlem_> İşlemler = new Dictionary<DateTime, İşyeri_Ödeme_İşlem_>();
@@ -704,26 +704,24 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("Ç")] public Muhatap_Çalışan_ Çalışan;
 
             #region İşlemler
-            public bool Üyelik_Kontrol()
+            public bool Üyelik_ZamanıGelenleriKaydet()
             {
                 List<İşyeri_Ödeme_> ödemeler = Üyelik_OlacaklarıHesapla(DateOnly.FromDateTime(DateTime.Now), true);
-
-                GelirGider_Ekle(ödemeler);
-
-                bool EnAz1ÜyelikÖdemesioluşturuldu = ödemeler.Count > 0;
+                if (ödemeler.Count <= 0) return false;
                 
-                DeğişiklikYapıldı |= EnAz1ÜyelikÖdemesioluşturuldu;
-
-                return EnAz1ÜyelikÖdemesioluşturuldu;
+                GelirGider_Ekle(ödemeler);
+                DeğişiklikYapıldı = true;
+                return true;
             }
-            public List<İşyeri_Ödeme_> Üyelik_OlacaklarıHesapla(DateOnly BitişTarihi, bool ÜyelikİçineKaydet)
+            public List<İşyeri_Ödeme_> Üyelik_OlacaklarıHesapla(DateOnly BitişTarihi, bool VeKaydet)
             {
-                List<İşyeri_Ödeme_> ödemeler = new List<İşyeri_Ödeme_>();
+                List<İşyeri_Ödeme_> ödemeler_tümü = new List<İşyeri_Ödeme_>();
 
                 if (Üyelikler != null)
                 {
                     foreach (KeyValuePair<DateTime, Muhatap_Üyelik_> üyelik in Üyelikler)
                     {
+                        List<İşyeri_Ödeme_> ödemeler_üyelik = new List<İşyeri_Ödeme_>();
                         DateOnly? ÜyelikBitişTarihi = üyelik.Value.BitişTarihi == null ? DateOnly.MaxValue : üyelik.Value.BitişTarihi;
                         DateOnly İlkÖdemeTarihi = üyelik.Value.İlkÖdemeninYapılacağıTarih;
 
@@ -732,12 +730,13 @@ namespace Gelir_Gider_Takip
 
                         while (ÜyelikBitişTarihi >= İlkÖdemeTarihi && İlkÖdemeTarihi <= BitişTarihi)
                         {
-                            ödemeler.AddRange(GelirGider_Oluştur(üyelik.Value.Tipi, İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, üyelik.Value.Miktarı, üyelik.Value.ParaBirimi, İlkÖdemeTarihi.ToDateTime(new TimeOnly()), üyelik.Value.Notlar, taksit.Taksit_Sayısı, taksit.Dönemi, taksit.Dönem_Adet, üyelik.Key, BitişTarihi));
+                            ödemeler_üyelik.AddRange(GelirGider_Oluştur(üyelik.Value.Tipi, İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, üyelik.Value.Miktarı, üyelik.Value.ParaBirimi, İlkÖdemeTarihi.ToDateTime(new TimeOnly()), üyelik.Value.Notlar, taksit.Taksit_Sayısı, taksit.Dönemi, taksit.Dönem_Adet, üyelik.Key, BitişTarihi));
 
                             İlkÖdemeTarihi = Banka_Ortak.SonrakiTarihiHesapla(İlkÖdemeTarihi, üyelik.Value.Dönemi, üyelik.Value.Dönem_Adet);
 
-                            if (ÜyelikİçineKaydet) üyelik.Value.İlkÖdemeninYapılacağıTarih = İlkÖdemeTarihi;
+                            if (VeKaydet) üyelik.Value.İlkÖdemeninYapılacağıTarih = İlkÖdemeTarihi;
                         }
+                        ödemeler_tümü.AddRange(ödemeler_üyelik);
                     }
                 }
                 
@@ -749,17 +748,17 @@ namespace Gelir_Gider_Takip
 
                     while (ilkÖdemeTarihi <= BitişTarihi)
                     {
-                        ödemeler.AddRange(GelirGider_Oluştur(İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi, İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, Çalışan.AylıkNetÜcreti, İşyeri_Ödeme_.ParaBirimi_.TürkLirası, ilkÖdemeTarihi.ToDateTime(new TimeOnly()), ilkÖdemeTarihi.Month + "/" + ilkÖdemeTarihi.Year,
+                        ödemeler_tümü.AddRange(GelirGider_Oluştur(İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi, İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, Çalışan.AylıkNetÜcreti, İşyeri_Ödeme_.ParaBirimi_.TürkLirası, ilkÖdemeTarihi.ToDateTime(new TimeOnly()), ilkÖdemeTarihi.Month + "/" + ilkÖdemeTarihi.Year,
                             0, Muhatap_Üyelik_.Dönem_.Boşta, 0,
                             null, BitişTarihi, KayıtTarihi));
 
                         ilkÖdemeTarihi = Banka_Ortak.SonrakiTarihiHesapla(ilkÖdemeTarihi, Muhatap_Üyelik_.Dönem_.Aylık, 1);
 
-                        if (ÜyelikİçineKaydet) Çalışan.İlkÜcretÖdemesininYapılacağıTarih = ilkÖdemeTarihi;
+                        if (VeKaydet) Çalışan.İlkÜcretÖdemesininYapılacağıTarih = ilkÖdemeTarihi;
                     }
                 }
 
-                return ödemeler;
+                return ödemeler_tümü;
             }
             public void Üyelik_Ekle(İşyeri_Ödeme_İşlem_.Tipi_ Tipi, double Miktar, İşyeri_Ödeme_.ParaBirimi_ ParaBirimi,
                     DateTime İlkÖdemeTarihi, string Notlar,
@@ -774,6 +773,7 @@ namespace Gelir_Gider_Takip
                 üyelik.Dönemi = Üyelik_Dönem;
                 üyelik.Dönem_Adet = Üyelik_Dönem_Adet;
                 üyelik.Notlar = Notlar;
+                üyelik.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
                 üyelik.BitişTarihi = ÜyelikBitişTarihi == null ? null : DateOnly.FromDateTime(ÜyelikBitişTarihi.Value);
 
                 if (Taksit_Sayısı > 1)
@@ -793,7 +793,7 @@ namespace Gelir_Gider_Takip
                 Üyelikler.Add(KayıtTarihi, üyelik);
                 DeğişiklikYapıldı = true;
 
-                Üyelik_Kontrol();
+                Üyelik_ZamanıGelenleriKaydet();
             }
             
             public List<İşyeri_Ödeme_> GelirGider_Oluştur(İşyeri_Ödeme_İşlem_.Tipi_ Tipi, İşyeri_Ödeme_İşlem_.Durum_ Durumu, double Miktar, İşyeri_Ödeme_.ParaBirimi_ ParaBirimi,
@@ -821,7 +821,7 @@ namespace Gelir_Gider_Takip
                         Ödeme.MuhatapGrubuAdı = GrupAdı;
                         Ödeme.MuhatapAdı = MuhatapAdı;
                         Ödeme.ParaBirimi = ParaBirimi;
-                        Ödeme.ÜyelikKayıtTarihi = ÜyelikKayıtTarihi;
+                        Ödeme.Üyelik_KayıtTarihi = ÜyelikKayıtTarihi;
                         Ödeme.İşlem_Ekle(işlem, KayıtTarihi.Value);
 
                         Liste.Add(Ödeme);
@@ -854,7 +854,7 @@ namespace Gelir_Gider_Takip
                         Ödeme.MuhatapGrubuAdı = GrupAdı;
                         Ödeme.MuhatapAdı = MuhatapAdı;
                         Ödeme.ParaBirimi = ParaBirimi;
-                        Ödeme.ÜyelikKayıtTarihi = ÜyelikKayıtTarihi;
+                        Ödeme.Üyelik_KayıtTarihi = ÜyelikKayıtTarihi;
                         Ödeme.İşlem_Ekle(işlem, KayıtTarihi.Value);
                         Ödeme.Taksit = taksit;
 
@@ -882,15 +882,14 @@ namespace Gelir_Gider_Takip
                 Ödeme.MuhatapAdı = MuhatapAdı;
                 Ödeme.ParaBirimi = ParaBirimi;
                 Ödeme.Taksit = Taksit;
-                Ödeme.ÜyelikKayıtTarihi = ÜyelikKayıtTarihi;
+                Ödeme.Üyelik_KayıtTarihi = ÜyelikKayıtTarihi;
                 Ödeme.İşlem_Ekle(işlem, KayıtTarihi);
 
                 return new List<İşyeri_Ödeme_>() { Ödeme };
             }
-            public void GelirGider_Ekle(List<İşyeri_Ödeme_> Ödemeler)
+            public void GelirGider_Ekle(List<İşyeri_Ödeme_> Ödemeler, İşyeri_BirYıllıkDönem_ BirYıllıkDönem = null)
             {
-                DateTime KayıtTarihi = DateTime.Now;
-                İşyeri_BirYıllıkDönem_ BirYıllıkDönem = İşyeri.Ödemeler_Listele_BirYıllıkDönem(KayıtTarihi.Year.Yazıya());
+                if (BirYıllıkDönem == null) BirYıllıkDönem = İşyeri.Ödemeler_Listele_BirYıllıkDönem(DateTime.Now.Year.Yazıya());
 
                 BirYıllıkDönem.Ödemeler.AddRange(Ödemeler);
                 BirYıllıkDönem.DeğişiklikYapıldı = true;
@@ -902,6 +901,7 @@ namespace Gelir_Gider_Takip
                         ödeme.Tipi, ödeme.Durumu, ödeme.Miktarı, 
                         ödeme.ParaBirimi);
                 }
+
                 İşyeri.DeğişiklikYapıldı |= Ödemeler.Count > 0;
             }
             #endregion

@@ -301,7 +301,7 @@
             Tablo.ShowRowErrors = false;
             Tablo.Size = new System.Drawing.Size(859, 80);
             Tablo.TabIndex = 28;
-            Tablo.CellMouseClick += Tablo_CellMouseClick;
+            Tablo.SelectionChanged += Tablo_SelectionChanged;
             // 
             // Tablo_MuhatapGrubu
             // 

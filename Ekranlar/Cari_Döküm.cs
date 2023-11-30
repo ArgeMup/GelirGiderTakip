@@ -102,7 +102,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     {
                         if (işlem.Value.Notlar.DoluMu()) Son_Not = işlem.Value.Notlar;
 
-                        bool üyelik_olarak_göster = Ödeme.ÜyelikKayıtTarihi != null;
+                        bool üyelik_olarak_göster = Ödeme.Üyelik_KayıtTarihi != null;
                         bool gelir_olarak_göster = Ödeme.Tipi.GelirMi();
 
                         object[] dizin = new object[sutun_sayısı];
@@ -124,7 +124,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                         _1_satır_dizisi_.Cells[Tablo_Miktar.Index].Style.BackColor = gelir_olarak_göster ? Ortak.Renk_Gelir : Ortak.Renk_Gider;
                         _1_satır_dizisi_.Cells[Tablo_Miktar.Index].ToolTipText = gelir_olarak_göster ? "Gelir" : "Gider";
-                        if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = Ödeme.ÜyelikKayıtTarihi.Value.Yazıya();
+                        if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = Ödeme.Üyelik_KayıtTarihi.Value.Yazıya();
                         _1_satır_dizisi_.Cells[Tablo_Durum.Index].Style.BackColor = DurumRengi(işlem.Value.Durumu);
                         if (Ödeme.GeciktiMi) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Kırmızı;
                     }
@@ -378,7 +378,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Açıklamalar.Text = null;
             Tablo.Rows.Clear();
-            Tablo_CellMouseClick(null, null);
+            Tablo_SelectionChanged(null, null);
             if (Tablo.SortedColumn != null)
             {
                 DataGridViewColumn col = Tablo.SortedColumn;
@@ -523,7 +523,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 {
                     Banka1.İşyeri_Ödeme_İşlem_.Durum_ durumu = son_işlem.Value.Durumu;
                     bool gelir_olarak_göster = son_işlem.Value.Tipi.GelirMi();
-                    bool üyelik_olarak_göster = _ödeme_.ÜyelikKayıtTarihi != null;
+                    bool üyelik_olarak_göster = _ödeme_.Üyelik_KayıtTarihi != null;
                     bool gecikti_olarak_göster = !durumu.ÖdendiMi() && son_işlem.Value.ÖdemeninYapılacağıTarih <= şimdi;
                     bool iptaledildi_olarak_göster = durumu == Banka1.İşyeri_Ödeme_İşlem_.Durum_.İptalEdildi;
 
@@ -557,8 +557,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (!listele) return;
 
                     if (Sorgula_AltToplam.Checked &&
-                            !iptaledildi_olarak_göster &&
-                            _ödeme_.MuhatapGrubuAdı != Banka1.Çalışan_Yazısı)
+                        !iptaledildi_olarak_göster &&
+                        _ödeme_.MuhatapGrubuAdı != Banka1.Çalışan_Yazısı)
                     {
                         string anahtar = ((int)_ödeme_.ParaBirimi).Yazıya() + AltToplamlar_Ayraç + _ödeme_.MuhatapGrubuAdı;
                         double miktar = 0;
@@ -669,7 +669,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     _1_satır_dizisi_.Cells[Tablo_Miktar.Index].Style.BackColor = gelir_olarak_göster ? Ortak.Renk_Gelir : Ortak.Renk_Gider;
                     _1_satır_dizisi_.Cells[Tablo_Miktar.Index].ToolTipText = gelir_olarak_göster ? "Gelir" : "Gider";
                     if (gecikti_olarak_göster) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Kırmızı;
-                    if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = _ödeme_.ÜyelikKayıtTarihi.Value.Yazıya();
+                    if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = _ödeme_.Üyelik_KayıtTarihi.Value.Yazıya();
                     _1_satır_dizisi_.Cells[Tablo_Durum.Index].Style.BackColor = DurumRengi(_ödeme_.Durumu);
                 }
 
@@ -760,7 +760,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (TabloİçeriğiArama_KapatmaTalebi) TabloİçeriğiArama_TextChanged(null, null);
             TabloİçeriğiArama_KapatmaTalebi = false;
         }
-        private void Tablo_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void Tablo_SelectionChanged(object sender, EventArgs e)
         {
             if (e != null && e.RowIndex >= 0 && Tablo.Rows[e.RowIndex].Tag != null && Tablo.Rows[e.RowIndex].Tag is Banka1.İşyeri_Ödeme_)
             {
@@ -968,7 +968,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 açıklama += (açıklama.DoluMu() ? Environment.NewLine : null) + Öde_Notlar.Text;
 
                 Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı, true);
-                muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(ödeme.Tipi, ödeme.İlkKayıtTarihi, YapılanÖdeme_ÖdemeParaBiriminde, ödeme.ParaBirimi, Öde_KalanÖdemeTarihi.Value, açıklama, ödeme.Taksit, ödeme.ÜyelikKayıtTarihi));
+                muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(ödeme.Tipi, ödeme.İlkKayıtTarihi, YapılanÖdeme_ÖdemeParaBiriminde, ödeme.ParaBirimi, Öde_KalanÖdemeTarihi.Value, açıklama, ödeme.Taksit, ödeme.Üyelik_KayıtTarihi));
             }
 
             Banka_Ortak.DeğişiklikleriKaydet();

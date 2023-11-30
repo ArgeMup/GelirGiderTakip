@@ -166,7 +166,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 int dönem_no = 1;
                 DateTime ödeme_zamanı = ÖdemeTarihi_Değeri.Value;
                 DateTime bitiş_tarihi = Üyelik_BitişTarihi.Checked ? Üyelik_BitişTarihi.Value : DateTime.MaxValue;
-                while (dönem_no < 6 && ödeme_zamanı < bitiş_tarihi)
+                while (dönem_no < 100 && ödeme_zamanı < bitiş_tarihi)
                 {
                     _Yazdır_(ödeme_zamanı, "Dönem " + dönem_no + " - ");
 
