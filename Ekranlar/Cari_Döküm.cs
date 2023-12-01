@@ -409,7 +409,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
                 foreach (Banka1.İşyeri_Ödeme_ ödeme in BirYıllıkDönem.Ödemeler)
                 {
-                    _TabloyaEkle_(ödeme, true);
+                    _TabloyaEkle_(ödeme);
                 }
             }
 
@@ -488,7 +488,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 }));
             }
 
-            void _TabloyaEkle_(Banka1.İşyeri_Ödeme_ _ödeme_, bool Eşle = false)
+            void _TabloyaEkle_(Banka1.İşyeri_Ödeme_ _ödeme_)
             {
                 KeyValuePair<DateTime, Banka1.İşyeri_Ödeme_İşlem_> ilk_işlem = _ödeme_.İşlemler.First();
                 KeyValuePair<DateTime, Banka1.İşyeri_Ödeme_İşlem_> son_işlem = _ödeme_.İşlemler.Last();
@@ -645,20 +645,21 @@ namespace Gelir_Gider_Takip.Ekranlar
                     _1_satır_dizisi_ = new DataGridViewRow();
                     dizi.Add(_1_satır_dizisi_);
                     _1_satır_dizisi_.CreateCells(Tablo, dizin);
+                    _1_satır_dizisi_.Tag = _ödeme_;
 
-                    if (Eşle)
+                    if (_ödeme_.Üyelik_HenüzKaydedilmemişBirÖdeme)
                     {
-                        _1_satır_dizisi_.Tag = _ödeme_;
-
-                        string açıklama = Banka_Ortak.Yazdır_Tarih_Gün(şimdi.ToDateTime(new TimeOnly()) - son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()));
-                        if (gecikti_olarak_göster) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = Banka_Ortak.Yazdır_Tarih_Gün(şimdi.ToDateTime(new TimeOnly()) - son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly())) + " GECİKTİ";
-                        else _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = durumu.ÖdendiMi() ? null : açıklama + " daha var";
+                        //Gelecek Döneem ait
+                        _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Mavi;
+                        _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = "Sadece bilgi amaçlıdır" + Environment.NewLine +
+                            Banka_Ortak.Yazdır_Tarih_Gün(son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()) - şimdi.ToDateTime(new TimeOnly())) + " daha var";
                     }
                     else
                     {
-                        _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Mavi; //Gelecek Döneem ait
-                        _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = "Sadece bilgi amaçlıdır" + Environment.NewLine +
-                            Banka_Ortak.Yazdır_Tarih_Gün(son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()) - şimdi.ToDateTime(new TimeOnly())) + " daha var";
+                        //Normal
+                        string açıklama = Banka_Ortak.Yazdır_Tarih_Gün(şimdi.ToDateTime(new TimeOnly()) - son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()));
+                        if (gecikti_olarak_göster) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = Banka_Ortak.Yazdır_Tarih_Gün(şimdi.ToDateTime(new TimeOnly()) - son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly())) + " GECİKTİ";
+                        else _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].ToolTipText = durumu.ÖdendiMi() ? null : açıklama + " daha var";
                     }
 
                     if (_ödeme_.İşlemler.Count > 1)
@@ -762,25 +763,29 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Tablo_SelectionChanged(object sender, EventArgs e)
         {
-            if (e != null && e.RowIndex >= 0 && Tablo.Rows[e.RowIndex].Tag != null && Tablo.Rows[e.RowIndex].Tag is Banka1.İşyeri_Ödeme_)
-            {
-                Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[e.RowIndex].Tag as Banka1.İşyeri_Ödeme_;
-
-                if (Öde.Visible)
-                {
-                    Öde.Enabled = !ödeme.Durumu.ÖdendiMi();
-                    Düzenle.Enabled = true;
-                }
-
-                İlişkiliÖdemeleriListele.Enabled = true;
-                SürümleriListele.Enabled = ödeme.İşlemler.Count > 1;
-            }
-            else
+            if (Tablo.SelectedRows.Count != 1)
             {
                 Öde.Enabled = false;
                 Düzenle.Enabled = false;
                 İlişkiliÖdemeleriListele.Enabled = false;
                 SürümleriListele.Enabled = false;
+                return;
+            }
+
+            int SatırNo = Tablo.SelectedRows[0].Index;
+            if (SatırNo >= 0 && Tablo.Rows[SatırNo].Tag != null)
+            {
+                Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
+                bool Üyelik_HenüzKaydedilmemişBirÖdeme_Değil = !ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme;
+
+                if (Öde.Visible)
+                {
+                    Öde.Enabled = !ödeme.Durumu.ÖdendiMi();
+                    Düzenle.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                }
+
+                İlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                SürümleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && ödeme.İşlemler.Count > 1;
             }
         }
 
@@ -950,6 +955,15 @@ namespace Gelir_Gider_Takip.Ekranlar
             Banka1.İşyeri_Ödeme_ ödeme = Öde_TamÖdeme.Tag as Banka1.İşyeri_Ödeme_;
             string yıl = ödeme.İlkKayıtTarihi.Year.Yazıya(); //ilk kayıt tarihi
             Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
+
+            if (ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme)
+            {
+                ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme = false;
+
+                Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı);
+                muhatap.Üyelik_SisteminTetiklemesiniEngelle(ödeme.Üyelik_KayıtTarihi.Value, ödeme.ÖdemeninYapılacağıTarih);
+                muhatap.GelirGider_Ekle(new List<Banka1.İşyeri_Ödeme_>() { ödeme }, BirYıllıkDönem);
+            }
 
             if (Öde_TamÖdeme.Checked)
             {
