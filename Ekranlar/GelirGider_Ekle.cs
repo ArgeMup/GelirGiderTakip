@@ -249,7 +249,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 {
                     Muhatap.Üyelik_Ekle(Tipi, miktar, parabirimi, ÖdemeTarihi_Değeri.Value, Notlar.Text,
                         (int)Taksit_Adet.Value, dönem_taksit, (int)Taksit_Dönem_Adet.Value,
-                        dönem_üyelik, (int)Üyelik_Dönem_Adet.Value, Üyelik_BitişTarihi.Checked ? Üyelik_BitişTarihi.Value : null);
+                        dönem_üyelik, (int)Üyelik_Dönem_Adet.Value, Üyelik_BitişTarihi.Checked ? Üyelik_BitişTarihi.Value : null, true);
                 }
                 else
                 {
@@ -297,10 +297,10 @@ namespace Gelir_Gider_Takip.Ekranlar
                 DialogResult Dr = MessageBox.Show("Mevcut üyelik değiştirilecek. İşleme devam etmek istiyor musunuz?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                 if (Dr == DialogResult.No) return;
 
-                Muhatap.Üyelik_Ekle(Tipi, miktar, parabirimi, ÖdemeTarihi_Değeri.Value, Notlar.Text,
-                       (int)Taksit_Adet.Value, dönem_taksit, (int)Taksit_Dönem_Adet.Value,
-                       dönem_üyelik, (int)Üyelik_Dönem_Adet.Value, Üyelik_BitişTarihi.Checked ? Üyelik_BitişTarihi.Value : null);
-                Muhatap.Üyelikler.Remove(ÜyelikKayıtTarihi.Value);
+                Muhatap.Üyelik_Düzenle(ÜyelikKayıtTarihi.Value,
+                    Tipi, miktar, parabirimi, ÖdemeTarihi_Değeri.Value, Notlar.Text,
+                    (int)Taksit_Adet.Value, dönem_taksit, (int)Taksit_Dönem_Adet.Value,
+                    dönem_üyelik, (int)Üyelik_Dönem_Adet.Value, Üyelik_BitişTarihi.Checked ? Üyelik_BitişTarihi.Value : null);
 
                 Önyüz.Dürt();
             }

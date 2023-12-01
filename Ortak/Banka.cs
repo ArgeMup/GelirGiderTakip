@@ -711,13 +711,12 @@ namespace Gelir_Gider_Takip
                 bool Kaydetsin = false;
                 if (Çalışan != null && Çalışan.AylıkNetÜcreti > 0)
                 {
-                    var dty = Maaş_Üyelik_Detaylar();
+                    var dty = Maaş_Üyelik_Detaylar(out DateTime ÜyelikKayıtTarihi);
                     dty.Miktarı = Çalışan.AylıkNetÜcreti;
                     if (Çalışan.İlkÜcretÖdemesininYapılacağıTarih != default) dty.İlkÖdemeninYapılacağıTarih = Çalışan.İlkÜcretÖdemesininYapılacağıTarih;
 
                     Çalışan.AylıkNetÜcreti = 0;
-                    Maaş_Üyelik_Değiştir(dty);
-                    dty.GerçekleştirenKullanıcıAdı = "Sistem";
+                    Maaş_Üyelik_Değiştir(ÜyelikKayıtTarihi, dty);
                     Kaydetsin = true;
                 }
                 //
@@ -794,10 +793,10 @@ namespace Gelir_Gider_Takip
 
                 DeğişiklikYapıldı = true;
             }
-            public void Üyelik_Ekle(İşyeri_Ödeme_İşlem_.Tipi_ Tipi, double Miktar, İşyeri_Ödeme_.ParaBirimi_ ParaBirimi,
+            public DateTime Üyelik_Ekle(İşyeri_Ödeme_İşlem_.Tipi_ Tipi, double Miktar, İşyeri_Ödeme_.ParaBirimi_ ParaBirimi,
                     DateTime İlkÖdemeTarihi, string Notlar,
                     int Taksit_Sayısı, Muhatap_Üyelik_.Dönem_ Taksit_Dönem, int Taksit_Dönem_Adet,
-                    Muhatap_Üyelik_.Dönem_ Üyelik_Dönem, int Üyelik_Dönem_Adet, DateTime? ÜyelikBitişTarihi)
+                    Muhatap_Üyelik_.Dönem_ Üyelik_Dönem, int Üyelik_Dönem_Adet, DateTime? ÜyelikBitişTarihi, bool ZamanıGelenleriKaydet)
             {
                 Muhatap_Üyelik_ üyelik = new Muhatap_Üyelik_();
                 üyelik.Tipi = Tipi;
@@ -827,9 +826,32 @@ namespace Gelir_Gider_Takip
                 Üyelikler.Add(KayıtTarihi, üyelik);
                 DeğişiklikYapıldı = true;
 
+                if (ZamanıGelenleriKaydet) Üyelik_ZamanıGelenleriKaydet();
+
+                return KayıtTarihi;
+            }
+            public void Üyelik_Düzenle(DateTime ÜyelikKayıtTarihi, 
+                    İşyeri_Ödeme_İşlem_.Tipi_ Tipi, double Miktar, İşyeri_Ödeme_.ParaBirimi_ ParaBirimi,
+                    DateTime İlkÖdemeTarihi, string Notlar,
+                    int Taksit_Sayısı, Muhatap_Üyelik_.Dönem_ Taksit_Dönem, int Taksit_Dönem_Adet,
+                    Muhatap_Üyelik_.Dönem_ Üyelik_Dönem, int Üyelik_Dönem_Adet, DateTime? ÜyelikBitişTarihi)
+            {
+                DateTime ÜyelikKayıtTarihi_Üretilen = Üyelik_Ekle(Tipi, Miktar, ParaBirimi,
+                    İlkÖdemeTarihi, Notlar,
+                    Taksit_Sayısı, Taksit_Dönem, Taksit_Dönem_Adet,
+                    Üyelik_Dönem, Üyelik_Dönem_Adet, ÜyelikBitişTarihi, false);
+
+                Muhatap_Üyelik_ yeni = Üyelikler[ÜyelikKayıtTarihi_Üretilen];
+                Muhatap_Üyelik_ eski = Üyelikler[ÜyelikKayıtTarihi];
+
+                yeni.ZamanıGelmedenİşlemYapılan_İlkÖdemeTarihleri = eski.ZamanıGelmedenİşlemYapılan_İlkÖdemeTarihleri;
+
+                Üyelikler.Remove(ÜyelikKayıtTarihi_Üretilen);
+                Üyelikler[ÜyelikKayıtTarihi] = yeni;
+
                 Üyelik_ZamanıGelenleriKaydet();
             }
-            
+
             public List<İşyeri_Ödeme_> GelirGider_Oluştur(İşyeri_Ödeme_İşlem_.Tipi_ Tipi, İşyeri_Ödeme_İşlem_.Durum_ Durumu, double Miktar, İşyeri_Ödeme_.ParaBirimi_ ParaBirimi,
                     DateTime İlkÖdemeTarihi, string Notlar,
                     int Taksit_Sayısı, Muhatap_Üyelik_.Dönem_ Taksit_Dönem, int Taksit_Dönem_Adet,
@@ -939,46 +961,32 @@ namespace Gelir_Gider_Takip
                 İşyeri.DeğişiklikYapıldı |= Ödemeler.Count > 0;
             }
             
-            public Muhatap_Üyelik_ Maaş_Üyelik_Detaylar()
+            public Muhatap_Üyelik_ Maaş_Üyelik_Detaylar(out DateTime ÜyelikKayıtTarihi)
             {
-                Muhatap_Üyelik_ detaylar = null;
-                if (Üyelikler != null) detaylar = Üyelikler.FirstOrDefault(x => x.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi).Value;
-                if (detaylar == null) detaylar = new Muhatap_Üyelik_()
-                                                {
-                                                    İlkÖdemeninYapılacağıTarih = İşyeri.EnYakınMaaşGünü(),
-                                                    Tipi = İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi,
-                                                    ParaBirimi = İşyeri_Ödeme_.ParaBirimi_.TürkLirası,
-                                                    Dönemi = Muhatap_Üyelik_.Dönem_.Aylık,
-                                                    Dönem_Adet = 1,
-                                                    GerçekleştirenKullanıcıAdı = "Sistem"
-                                                };
-
-                return detaylar;
-            }
-            public void Maaş_Üyelik_Değiştir(Muhatap_Üyelik_ Üyelik)
-            {
-                Üyelik.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
-
                 if (Üyelikler == null) Üyelikler = new Dictionary<DateTime, Muhatap_Üyelik_>();
-                else
+                
+                KeyValuePair<DateTime, Muhatap_Üyelik_> detaylar = Üyelikler.FirstOrDefault(x => x.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi);
+                if (detaylar.Value == null)
                 {
-                    List<DateTime> silinecekler = new List<DateTime>();
-                    foreach (var üylk in Üyelikler)
-                    {
-                        if (üylk.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi) silinecekler.Add(üylk.Key);
-                    }
-                    foreach (var üylk in silinecekler)
-                    {
-                        Üyelikler.Remove(üylk);
-                    }
+                    DateTime kayıt_tarihi = Üyelik_Ekle(İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi, 0, İşyeri_Ödeme_.ParaBirimi_.TürkLirası, İşyeri.EnYakınMaaşGünü().ToDateTime(new TimeOnly()), null,
+                        0, Muhatap_Üyelik_.Dönem_.Boşta, 0,
+                        Muhatap_Üyelik_.Dönem_.Aylık, 1, null, false);
+
+                    detaylar = Üyelikler.FirstOrDefault(x => x.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi);
+                    detaylar.Value.GerçekleştirenKullanıcıAdı = "Sistem";
                 }
 
-                DateTime KayıtTarihi = DateTime.Now;
-                while (Üyelikler.ContainsKey(KayıtTarihi)) KayıtTarihi = KayıtTarihi.AddMilliseconds(1);
-                Üyelikler.Add(KayıtTarihi, Üyelik);
-                DeğişiklikYapıldı = true;
+                ÜyelikKayıtTarihi = detaylar.Key;
+                return detaylar.Value;
+            }
+            public void Maaş_Üyelik_Değiştir(DateTime ÜyelikKayıtTarihi, Muhatap_Üyelik_ Üyelik)
+            {
+                if (Üyelik.Taksit == null) Üyelik.Taksit = new İşyeri_Ödeme_Taksit_() { Taksit_Sayısı = 0 };
 
-                Üyelik_ZamanıGelenleriKaydet();
+                Üyelik_Düzenle(ÜyelikKayıtTarihi,
+                    Üyelik.Tipi, Üyelik.Miktarı, Üyelik.ParaBirimi, Üyelik.İlkÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()), Üyelik.Notlar,
+                    Üyelik.Taksit.Taksit_Sayısı, Üyelik.Taksit.Dönemi, Üyelik.Taksit.Dönem_Adet,
+                    Üyelik.Dönemi, Üyelik.Dönem_Adet, Üyelik.BitişTarihi == null ? null : Üyelik.BitişTarihi.Value.ToDateTime(new TimeOnly()));
             }
             #endregion
 

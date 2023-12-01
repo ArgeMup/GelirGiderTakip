@@ -45,7 +45,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     İştenAyrılışTarihi.Checked = Muhatap.Çalışan.İştenAyrılışTarihi != null;
                     if (İştenAyrılışTarihi.Checked) İştenAyrılışTarihi.Value = Muhatap.Çalışan.İştenAyrılışTarihi.Value.ToDateTime(new TimeOnly()); ;
 
-                    Ücret.Value = (decimal)Muhatap.Maaş_Üyelik_Detaylar().Miktarı;
+                    Ücret.Value = (decimal)Muhatap.Maaş_Üyelik_Detaylar(out _).Miktarı;
                     İzin.Value = (decimal)Muhatap.Çalışan.MevcutİzinGünü;
 
                     foreach (var işl in Muhatap.Çalışan.Geçmişİşlemler)
@@ -183,7 +183,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             if (Muhatap.Çalışan == null) Muhatap.Çalışan = new Banka1.Muhatap_Çalışan_();
 
-            Banka1.Muhatap_Üyelik_ MaaşDetayları = Muhatap.Maaş_Üyelik_Detaylar();
+            Banka1.Muhatap_Üyelik_ MaaşDetayları = Muhatap.Maaş_Üyelik_Detaylar(out DateTime ÜyelikKayıtTarihi);
             Banka1.Muhatap_Çalışan_ÖzlükHakkı_ öh = new Banka1.Muhatap_Çalışan_ÖzlükHakkı_();
             öh.Türü = Banka1.Muhatap_Çalışan_ÖzlükHakkı_.Türü_.MaaşGüncelleme;
             öh.Mevcut = MaaşDetayları.Miktarı;
@@ -194,7 +194,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             Muhatap.Çalışan.ÖzlükHakkı_Ekle(öh, dt);
 
             MaaşDetayları.Miktarı = öh.GüncelVeyaKullanım;
-            Muhatap.Maaş_Üyelik_Değiştir(MaaşDetayları);
+            Muhatap.Maaş_Üyelik_Değiştir(ÜyelikKayıtTarihi, MaaşDetayları);
 
             Muhatap.DeğişiklikYapıldı = true;
             Banka_Ortak.DeğişiklikleriKaydet();
