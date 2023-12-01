@@ -17,9 +17,10 @@ namespace Gelir_Gider_Takip.Ekranlar
                 foreach (var üüü in Muhatap.Üyelikler)
                 {
                     Banka1.Muhatap_Üyelik_ üyelik = üüü.Value;
+                    if (üyelik.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi) continue;
 
                     int satır_no = Tablo_Üyelik.Rows.Add(new object[] {
-                                üyelik.İlkÖdemeninYapılacağıTarih,
+                                üyelik.İlkÖdemeninYapılacağıTarih.Yazıya(),
                                 üyelik.Tipi.Yazdır() + " " + Banka_Ortak.Yazdır_Ücret(üyelik.Miktarı, üyelik.ParaBirimi),
                                 üyelik.Yazdır_Dönem(),
                                 üyelik.BitişTarihi,
@@ -44,7 +45,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     İştenAyrılışTarihi.Checked = Muhatap.Çalışan.İştenAyrılışTarihi != null;
                     if (İştenAyrılışTarihi.Checked) İştenAyrılışTarihi.Value = Muhatap.Çalışan.İştenAyrılışTarihi.Value.ToDateTime(new TimeOnly()); ;
 
-                    Ücret.Value = (decimal)Muhatap.Çalışan.AylıkNetÜcreti;
+                    Ücret.Value = (decimal)Muhatap.Maaş_Üyelik_Detaylar().Miktarı;
                     İzin.Value = (decimal)Muhatap.Çalışan.MevcutİzinGünü;
 
                     foreach (var işl in Muhatap.Çalışan.Geçmişİşlemler)
@@ -118,7 +119,8 @@ namespace Gelir_Gider_Takip.Ekranlar
         private void SağTuşMenü_Üyelik_Düzenle_Click(object sender, EventArgs e)
         {
             if (Tablo_Üyelik.SelectedRows.Count != 1) return;
-            DateTime KayıtTarihi = (DateTime)Tablo_Üyelik.Rows[Tablo_Üyelik.SelectedRows[0].Index].Tag;
+            int SatırNo = Tablo_Üyelik.SelectedRows[0].Index;
+            DateTime KayıtTarihi = (DateTime)Tablo_Üyelik.Rows[SatırNo].Tag;
 
             GelirGider_Ekle gge = new GelirGider_Ekle(Muhatap, KayıtTarihi);
             Önyüz.Aç(gge);
@@ -181,16 +183,19 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             if (Muhatap.Çalışan == null) Muhatap.Çalışan = new Banka1.Muhatap_Çalışan_();
 
+            Banka1.Muhatap_Üyelik_ MaaşDetayları = Muhatap.Maaş_Üyelik_Detaylar();
             Banka1.Muhatap_Çalışan_ÖzlükHakkı_ öh = new Banka1.Muhatap_Çalışan_ÖzlükHakkı_();
             öh.Türü = Banka1.Muhatap_Çalışan_ÖzlükHakkı_.Türü_.MaaşGüncelleme;
-            öh.Mevcut = Muhatap.Çalışan.AylıkNetÜcreti;
+            öh.Mevcut = MaaşDetayları.Miktarı;
             öh.GüncelVeyaKullanım = (double)Ücret.Value;
             öh.Notlar = Ücret_Notlar.Text;
             öh.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
             DateTime dt = DateTime.Now;
             Muhatap.Çalışan.ÖzlükHakkı_Ekle(öh, dt);
 
-            Muhatap.Çalışan.AylıkNetÜcreti = öh.GüncelVeyaKullanım;
+            MaaşDetayları.Miktarı = öh.GüncelVeyaKullanım;
+            Muhatap.Maaş_Üyelik_Değiştir(MaaşDetayları);
+
             Muhatap.DeğişiklikYapıldı = true;
             Banka_Ortak.DeğişiklikleriKaydet();
 

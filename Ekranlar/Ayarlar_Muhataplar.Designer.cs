@@ -34,6 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             Ayraç_Diğer_Çalışan = new System.Windows.Forms.SplitContainer();
             groupBox3 = new System.Windows.Forms.GroupBox();
             Tablo_Üyelik = new System.Windows.Forms.DataGridView();
@@ -491,6 +492,8 @@
             // 
             // Tablo_Çalışan_Açıklama
             // 
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Çalışan_Açıklama.DefaultCellStyle = dataGridViewCellStyle5;
             Tablo_Çalışan_Açıklama.HeaderText = "Açıklama";
             Tablo_Çalışan_Açıklama.MinimumWidth = 6;
             Tablo_Çalışan_Açıklama.Name = "Tablo_Çalışan_Açıklama";
@@ -500,8 +503,8 @@
             // 
             // Tablo_Çalışan_Notlar
             // 
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Çalışan_Notlar.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Çalışan_Notlar.DefaultCellStyle = dataGridViewCellStyle6;
             Tablo_Çalışan_Notlar.HeaderText = "Notlar";
             Tablo_Çalışan_Notlar.MinimumWidth = 6;
             Tablo_Çalışan_Notlar.Name = "Tablo_Çalışan_Notlar";
@@ -607,15 +610,15 @@
         private System.Windows.Forms.ToolStripMenuItem SağTuşMenü_Üyelik_Düzenle;
         private System.Windows.Forms.ToolStripMenuItem SağTuşMenü_Üyelik_Sil;
         private System.Windows.Forms.Button İşyeri_Grup_Muhatap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KayıtTarihi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Açıklama;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Notlar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KullanıcıAdı;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_İlkÖdemeninYapılacağıTarih;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Miktar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Dönem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_BitişTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Notlar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_KullanıcıAdı;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KayıtTarihi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Açıklama;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Notlar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KullanıcıAdı;
     }
 }
