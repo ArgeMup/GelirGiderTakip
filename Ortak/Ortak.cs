@@ -95,22 +95,74 @@ namespace Gelir_Gider_Takip
 
             return false;
         }
+
+        public static double ParaBirimi_Dönüştür(double Miktar, Banka1.İşyeri_Ödeme_.ParaBirimi_ Girdi, Banka1.İşyeri_Ödeme_.ParaBirimi_ Çıktı)
+        {
+            if (Girdi == Çıktı) return Miktar;
+
+            double Avro, Dolar;
+            if (!Döviz.Oku(out Avro, out Dolar))
+            {
+                int za = Environment.TickCount + 15000;
+                bool Bitti = false;
+
+                Döviz.KurlarıAl(_GeriBildirimİşlemi_DövizKurları_);
+                void _GeriBildirimİşlemi_DövizKurları_(double _Avro_, double _Dolar_)
+                {
+                    Avro = _Avro_;
+                    Dolar = _Dolar_;
+                    Bitti = true;
+                }
+
+                while (ArgeMup.HazirKod.ArkaPlan.Ortak.Çalışsın && !Bitti && za > Environment.TickCount)
+                {
+                    System.Threading.Thread.Sleep(35);
+                    System.Windows.Forms.Application.DoEvents();
+                }
+
+                if (!Bitti) return -1;
+            }
+
+            //önce TL yap
+            switch (Girdi)
+            {
+                case Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası:                       break;
+                case Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro:         Miktar *= Avro;     break;
+                case Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar:        Miktar *= Dolar;    break;
+
+                default: throw new Exception("Girdi para birimi (" + Girdi + ") uygun değil");
+            }
+
+            //dönüştür
+            switch (Çıktı)
+            {
+                case Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası:                       break;
+                case Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro:         Miktar /= Avro;     break;
+                case Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar:        Miktar /= Dolar;    break;
+
+                default: throw new Exception("Çıktı para birimi (" + Çıktı + ") uygun değil");
+            }
+
+            return Miktar;
+        }
     }
 
     public static class Döviz
     {
         static DateTime EnSonGüncelleme = DateTime.MinValue;
         static string Çıktı_yazı = null;
-        static string[] Çıktı_dizi = null; //tcmb dolar avro, diğer dolar avro
+        static double[] Çıktı_dizi = null; //tcmb dolar avro, diğer dolar avro
+        static double _Avro, _Dolar;
 
-        public static void KurlarıAl(Action<string, string[]> İşlem)
+        /// <param name="İşlem">Action<Avro, Dolar> </param>
+        public static void KurlarıAl(Action<double, double> İşlem)
         {
             System.Threading.Tasks.Task.Run(() =>
             {
                 if ((DateTime.Now - EnSonGüncelleme).TotalMinutes > 5 || Çıktı_yazı.BoşMu() || Çıktı_yazı.Split(new string[] { "Okunamadı" }, StringSplitOptions.None).Length > 2)
                 {
                     Çıktı_yazı = null;
-                    Çıktı_dizi = new string[] { "-1", "-1", "-1", "-1" };
+                    Çıktı_dizi = new double[] { -1, -1, -1, -1 };
 
                     string Dosya_TCMB = Ortak.Klasör_Gecici + "TCMB_Kurlar.xml";
                     Dosya.Sil(Dosya_TCMB);
@@ -141,8 +193,8 @@ namespace Gelir_Gider_Takip
                             "Dolar = " + dolar + " ₺" + Environment.NewLine +
                             "Avro = " + avro + " ₺" + Environment.NewLine;
 
-                            Çıktı_dizi[0] = dolar;
-                            Çıktı_dizi[1] = avro;
+                            Çıktı_dizi[0] = dolar.NoktalıSayıya();
+                            Çıktı_dizi[1] = avro.NoktalıSayıya();
                         }
                         catch (Exception) { }
                     }
@@ -161,8 +213,8 @@ namespace Gelir_Gider_Takip
                             "Dolar = " + dolar + " ₺" + Environment.NewLine +
                             "Avro = " + avro + " ₺";
 
-                            Çıktı_dizi[2] = dolar;
-                            Çıktı_dizi[3] = avro;
+                            Çıktı_dizi[2] = dolar.NoktalıSayıya();
+                            Çıktı_dizi[3] = avro.NoktalıSayıya();
 
                             string _Al_(string Girdi, string Başlangıç, string Bitiş)
                             {
@@ -183,26 +235,23 @@ namespace Gelir_Gider_Takip
                     EnSonGüncelleme = DateTime.Now;
                     Kaynak_TCMB.Dispose();
                     Kaynak_GenelPara.Dispose();
+
+                    //[0] TCMB Dolar, Avro
+                    //[2] Diğer Dolar, Avro
+                    _Dolar = Çıktı_dizi[0] > Çıktı_dizi[2] ? Çıktı_dizi[0] : Çıktı_dizi[2];
+                    _Avro = Çıktı_dizi[1] > Çıktı_dizi[3] ? Çıktı_dizi[1] : Çıktı_dizi[3];
                 }
 
-                İşlem?.Invoke(Çıktı_yazı, Çıktı_dizi);
+                İşlem?.Invoke(_Avro, _Dolar);
             });
         }
-        /// <param name="İşlem">Action<Dolar, Avro> </param>
-        public static void KurlarıAl(Action<double, double> İşlem)
+
+        public static bool Oku(out double Avro, out double Dolar)
         {
-            KurlarıAl(_GeriBildirimİşlemi_DövizKuru_);
+            Avro = _Avro;
+            Dolar = _Dolar;
 
-            void _GeriBildirimİşlemi_DövizKuru_(string Yazı, string[] Dizi)
-            {
-                double[] sayı_olarak = new double[Dizi.Length];
-                for (int i = 0; i < Dizi.Length; i++) { sayı_olarak[i] = Dizi[i].NoktalıSayıya(); }
-
-                //[0] TCMB Dolar, Avro
-                //[2] Diğer Dolar, Avro
-
-                İşlem(sayı_olarak[0] > sayı_olarak[2] ? sayı_olarak[0] : sayı_olarak[2], sayı_olarak[1] > sayı_olarak[3] ? sayı_olarak[1] : sayı_olarak[3]);
-            }
+            return (DateTime.Now - EnSonGüncelleme).TotalMinutes <= 5;
         }
     }
 }

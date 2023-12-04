@@ -30,11 +30,13 @@
         {
             components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             İpucu = new System.Windows.Forms.ToolTip(components);
             Öde_KısmiÖdeme_ParaBirimi = new System.Windows.Forms.ComboBox();
             Öde_Notlar = new System.Windows.Forms.TextBox();
@@ -58,40 +60,13 @@
             TabloİçeriğiArama = new System.Windows.Forms.TextBox();
             Öde = new System.Windows.Forms.Button();
             SürümleriListele = new System.Windows.Forms.Button();
-            Sorgula_Gelir = new System.Windows.Forms.CheckBox();
-            Sorgula_Gider = new System.Windows.Forms.CheckBox();
-            Sorgula_TamÖdendi = new System.Windows.Forms.CheckBox();
-            Sorgula_Taksitli = new System.Windows.Forms.CheckBox();
-            Sorgula_Üyelik = new System.Windows.Forms.CheckBox();
             Ayraç_Filtre_TabloSonuç = new System.Windows.Forms.SplitContainer();
-            Ayraç_Seçenekler_Muhataplar = new System.Windows.Forms.SplitContainer();
-            panel3 = new System.Windows.Forms.Panel();
-            Sorgula = new System.Windows.Forms.Button();
-            Sorgula_Bitiş = new System.Windows.Forms.DateTimePicker();
-            Sorgula_Başlangıç = new System.Windows.Forms.DateTimePicker();
-            Sorgula_TarihAralığı = new System.Windows.Forms.ComboBox();
-            Sorgula_Tarih_Kayıt = new System.Windows.Forms.RadioButton();
-            Sorgula_Tarih_Sonİşlem = new System.Windows.Forms.RadioButton();
-            Sorgula_Tarih_Ödeme = new System.Windows.Forms.RadioButton();
-            panel4 = new System.Windows.Forms.Panel();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler = new System.Windows.Forms.SplitContainer();
-            Sorgula_Seçenekleri = new System.Windows.Forms.FlowLayoutPanel();
-            Sorgula_Gecikti = new System.Windows.Forms.CheckBox();
-            Sorgula_Ödenmedi = new System.Windows.Forms.CheckBox();
-            Sorgula_KısmenÖdendi = new System.Windows.Forms.CheckBox();
-            Sorgula_MaaşÖdemesi = new System.Windows.Forms.CheckBox();
-            Sorgula_AvansVerilmesi = new System.Windows.Forms.CheckBox();
-            Sorgula_AvansÖdemesi = new System.Windows.Forms.CheckBox();
-            Sorgula_PeşinatÖdendi = new System.Windows.Forms.CheckBox();
-            Sorgula_KısmiÖdemeYapıldı = new System.Windows.Forms.CheckBox();
-            Sorgula_İptalEdildi = new System.Windows.Forms.CheckBox();
-            Sorgula_KontrolNoktası = new System.Windows.Forms.CheckBox();
-            Sorgula_Maaşlar = new System.Windows.Forms.CheckBox();
-            Sorgula_AltToplam = new System.Windows.Forms.CheckBox();
-            Sorgula_TümünüSeç = new System.Windows.Forms.Button();
-            Sorgula_KıstasSeçimi = new System.Windows.Forms.ComboBox();
+            Ayraç_MuhatapGrubu_Muhatap = new System.Windows.Forms.SplitContainer();
+            Sorgula = new System.Windows.Forms.Button();
             splitContainer2 = new System.Windows.Forms.SplitContainer();
+            Ayraç_Şablonlar_SorgulamaSeçenekleri = new System.Windows.Forms.SplitContainer();
+            SorgulamaDetayları = new System.Windows.Forms.PropertyGrid();
             Açıklamalar = new System.Windows.Forms.TextBox();
             KontrolNoktası_Ekranı = new System.Windows.Forms.Panel();
             KontrolNoktası_Ekranı_2 = new System.Windows.Forms.Panel();
@@ -134,22 +109,19 @@
             Ayraç_Filtre_TabloSonuç.Panel1.SuspendLayout();
             Ayraç_Filtre_TabloSonuç.Panel2.SuspendLayout();
             Ayraç_Filtre_TabloSonuç.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Ayraç_Seçenekler_Muhataplar).BeginInit();
-            Ayraç_Seçenekler_Muhataplar.Panel1.SuspendLayout();
-            Ayraç_Seçenekler_Muhataplar.Panel2.SuspendLayout();
-            Ayraç_Seçenekler_Muhataplar.SuspendLayout();
-            panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler).BeginInit();
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel1.SuspendLayout();
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel2.SuspendLayout();
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.SuspendLayout();
-            Sorgula_Seçenekleri.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Ayraç_MuhatapGrubu_Muhatap).BeginInit();
+            Ayraç_MuhatapGrubu_Muhatap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
             splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Ayraç_Şablonlar_SorgulamaSeçenekleri).BeginInit();
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.SuspendLayout();
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.SuspendLayout();
             KontrolNoktası_Ekranı.SuspendLayout();
             KontrolNoktası_Ekranı_2.SuspendLayout();
             panel8.SuspendLayout();
@@ -279,14 +251,14 @@
             Tablo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Tablo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Tablo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Tablo_MuhatapGrubu, Tablo_Muhatap, Tablo_ÖdemeTarihi, Tablo_Tip, Tablo_Durum, Tablo_Miktar, Tablo_Notlar, Tablo_Taksit, Tablo_Üyelik, Tablo_SonİşlemTarihi, Tablo_KayıtTarihi, Tablo_KullanıcıAdı });
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            Tablo.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            Tablo.DefaultCellStyle = dataGridViewCellStyle8;
             Tablo.Dock = System.Windows.Forms.DockStyle.Fill;
             Tablo.Location = new System.Drawing.Point(0, 34);
             Tablo.MultiSelect = false;
@@ -322,6 +294,8 @@
             // Tablo_ÖdemeTarihi
             // 
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "D";
+            dataGridViewCellStyle2.NullValue = null;
             Tablo_ÖdemeTarihi.DefaultCellStyle = dataGridViewCellStyle2;
             Tablo_ÖdemeTarihi.HeaderText = "Ödeme Günü";
             Tablo_ÖdemeTarihi.MinimumWidth = 6;
@@ -386,6 +360,10 @@
             // 
             // Tablo_SonİşlemTarihi
             // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Format = "F";
+            dataGridViewCellStyle6.NullValue = null;
+            Tablo_SonİşlemTarihi.DefaultCellStyle = dataGridViewCellStyle6;
             Tablo_SonİşlemTarihi.HeaderText = "Son İşlem Tarihi";
             Tablo_SonİşlemTarihi.MinimumWidth = 6;
             Tablo_SonİşlemTarihi.Name = "Tablo_SonİşlemTarihi";
@@ -394,6 +372,9 @@
             // 
             // Tablo_KayıtTarihi
             // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "F";
+            Tablo_KayıtTarihi.DefaultCellStyle = dataGridViewCellStyle7;
             Tablo_KayıtTarihi.HeaderText = "Kayıt Tarihi";
             Tablo_KayıtTarihi.MinimumWidth = 6;
             Tablo_KayıtTarihi.Name = "Tablo_KayıtTarihi";
@@ -447,63 +428,6 @@
             SürümleriListele.UseVisualStyleBackColor = true;
             SürümleriListele.Click += SürümleriListele_Click;
             // 
-            // Sorgula_Gelir
-            // 
-            Sorgula_Gelir.AutoSize = true;
-            Sorgula_Gelir.Location = new System.Drawing.Point(479, 3);
-            Sorgula_Gelir.Name = "Sorgula_Gelir";
-            Sorgula_Gelir.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Gelir.Size = new System.Drawing.Size(72, 24);
-            Sorgula_Gelir.TabIndex = 3;
-            Sorgula_Gelir.Text = "Gelir";
-            Sorgula_Gelir.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Gider
-            // 
-            Sorgula_Gider.AutoSize = true;
-            Sorgula_Gider.Location = new System.Drawing.Point(479, 33);
-            Sorgula_Gider.Name = "Sorgula_Gider";
-            Sorgula_Gider.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Gider.Size = new System.Drawing.Size(77, 24);
-            Sorgula_Gider.TabIndex = 4;
-            Sorgula_Gider.Text = "Gider";
-            Sorgula_Gider.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_TamÖdendi
-            // 
-            Sorgula_TamÖdendi.AutoSize = true;
-            Sorgula_TamÖdendi.Checked = true;
-            Sorgula_TamÖdendi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_TamÖdendi.Location = new System.Drawing.Point(3, 93);
-            Sorgula_TamÖdendi.Name = "Sorgula_TamÖdendi";
-            Sorgula_TamÖdendi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_TamÖdendi.Size = new System.Drawing.Size(119, 24);
-            Sorgula_TamÖdendi.TabIndex = 0;
-            Sorgula_TamÖdendi.Text = "Tam ödendi";
-            Sorgula_TamÖdendi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Taksitli
-            // 
-            Sorgula_Taksitli.AutoSize = true;
-            Sorgula_Taksitli.Location = new System.Drawing.Point(332, 33);
-            Sorgula_Taksitli.Name = "Sorgula_Taksitli";
-            Sorgula_Taksitli.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Taksitli.Size = new System.Drawing.Size(85, 24);
-            Sorgula_Taksitli.TabIndex = 1;
-            Sorgula_Taksitli.Text = "Taksitli";
-            Sorgula_Taksitli.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Üyelik
-            // 
-            Sorgula_Üyelik.AutoSize = true;
-            Sorgula_Üyelik.Location = new System.Drawing.Point(332, 63);
-            Sorgula_Üyelik.Name = "Sorgula_Üyelik";
-            Sorgula_Üyelik.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Üyelik.Size = new System.Drawing.Size(81, 24);
-            Sorgula_Üyelik.TabIndex = 2;
-            Sorgula_Üyelik.Text = "Üyelik";
-            Sorgula_Üyelik.UseVisualStyleBackColor = true;
-            // 
             // Ayraç_Filtre_TabloSonuç
             // 
             Ayraç_Filtre_TabloSonuç.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -515,7 +439,7 @@
             // Ayraç_Filtre_TabloSonuç.Panel1
             // 
             Ayraç_Filtre_TabloSonuç.Panel1.AutoScroll = true;
-            Ayraç_Filtre_TabloSonuç.Panel1.Controls.Add(Ayraç_Seçenekler_Muhataplar);
+            Ayraç_Filtre_TabloSonuç.Panel1.Controls.Add(splitContainer1);
             // 
             // Ayraç_Filtre_TabloSonuç.Panel2
             // 
@@ -528,130 +452,6 @@
             Ayraç_Filtre_TabloSonuç.SplitterDistance = 160;
             Ayraç_Filtre_TabloSonuç.TabIndex = 30;
             // 
-            // Ayraç_Seçenekler_Muhataplar
-            // 
-            Ayraç_Seçenekler_Muhataplar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            Ayraç_Seçenekler_Muhataplar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Ayraç_Seçenekler_Muhataplar.Location = new System.Drawing.Point(0, 0);
-            Ayraç_Seçenekler_Muhataplar.Name = "Ayraç_Seçenekler_Muhataplar";
-            // 
-            // Ayraç_Seçenekler_Muhataplar.Panel1
-            // 
-            Ayraç_Seçenekler_Muhataplar.Panel1.Controls.Add(panel3);
-            Ayraç_Seçenekler_Muhataplar.Panel1.Controls.Add(panel4);
-            // 
-            // Ayraç_Seçenekler_Muhataplar.Panel2
-            // 
-            Ayraç_Seçenekler_Muhataplar.Panel2.Controls.Add(splitContainer1);
-            Ayraç_Seçenekler_Muhataplar.Size = new System.Drawing.Size(965, 160);
-            Ayraç_Seçenekler_Muhataplar.SplitterDistance = 345;
-            Ayraç_Seçenekler_Muhataplar.TabIndex = 1;
-            // 
-            // panel3
-            // 
-            panel3.AutoScroll = true;
-            panel3.Controls.Add(Sorgula);
-            panel3.Controls.Add(Sorgula_Bitiş);
-            panel3.Controls.Add(Sorgula_Başlangıç);
-            panel3.Controls.Add(Sorgula_TarihAralığı);
-            panel3.Controls.Add(Sorgula_Tarih_Kayıt);
-            panel3.Controls.Add(Sorgula_Tarih_Sonİşlem);
-            panel3.Controls.Add(Sorgula_Tarih_Ödeme);
-            panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel3.Location = new System.Drawing.Point(0, 0);
-            panel3.Name = "panel3";
-            panel3.Size = new System.Drawing.Size(176, 156);
-            panel3.TabIndex = 0;
-            // 
-            // Sorgula
-            // 
-            Sorgula.AutoSize = true;
-            Sorgula.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            Sorgula.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            Sorgula.Location = new System.Drawing.Point(0, 154);
-            Sorgula.Name = "Sorgula";
-            Sorgula.Size = new System.Drawing.Size(155, 30);
-            Sorgula.TabIndex = 9;
-            Sorgula.Text = "Sorgula";
-            Sorgula.UseVisualStyleBackColor = true;
-            Sorgula.Click += Sorgula_Click;
-            // 
-            // Sorgula_Bitiş
-            // 
-            Sorgula_Bitiş.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula_Bitiş.Location = new System.Drawing.Point(0, 127);
-            Sorgula_Bitiş.Name = "Sorgula_Bitiş";
-            Sorgula_Bitiş.Size = new System.Drawing.Size(155, 27);
-            Sorgula_Bitiş.TabIndex = 6;
-            // 
-            // Sorgula_Başlangıç
-            // 
-            Sorgula_Başlangıç.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula_Başlangıç.Location = new System.Drawing.Point(0, 100);
-            Sorgula_Başlangıç.Name = "Sorgula_Başlangıç";
-            Sorgula_Başlangıç.Size = new System.Drawing.Size(155, 27);
-            Sorgula_Başlangıç.TabIndex = 5;
-            // 
-            // Sorgula_TarihAralığı
-            // 
-            Sorgula_TarihAralığı.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula_TarihAralığı.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Sorgula_TarihAralığı.FormattingEnabled = true;
-            Sorgula_TarihAralığı.Items.AddRange(new object[] { "Bu ay", "Bu hafta", "Bugün", "Son 1 gün" });
-            Sorgula_TarihAralığı.Location = new System.Drawing.Point(0, 72);
-            Sorgula_TarihAralığı.Name = "Sorgula_TarihAralığı";
-            Sorgula_TarihAralığı.Size = new System.Drawing.Size(155, 28);
-            Sorgula_TarihAralığı.TabIndex = 0;
-            Sorgula_TarihAralığı.SelectedIndexChanged += Sorgula_TarihAralığı_SelectedIndexChanged;
-            // 
-            // Sorgula_Tarih_Kayıt
-            // 
-            Sorgula_Tarih_Kayıt.AutoSize = true;
-            Sorgula_Tarih_Kayıt.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula_Tarih_Kayıt.Location = new System.Drawing.Point(0, 48);
-            Sorgula_Tarih_Kayıt.Name = "Sorgula_Tarih_Kayıt";
-            Sorgula_Tarih_Kayıt.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Tarih_Kayıt.Size = new System.Drawing.Size(155, 24);
-            Sorgula_Tarih_Kayıt.TabIndex = 4;
-            Sorgula_Tarih_Kayıt.Text = "Kayıt tarihi";
-            Sorgula_Tarih_Kayıt.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Tarih_Sonİşlem
-            // 
-            Sorgula_Tarih_Sonİşlem.AutoSize = true;
-            Sorgula_Tarih_Sonİşlem.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula_Tarih_Sonİşlem.Location = new System.Drawing.Point(0, 24);
-            Sorgula_Tarih_Sonİşlem.Name = "Sorgula_Tarih_Sonİşlem";
-            Sorgula_Tarih_Sonİşlem.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Tarih_Sonİşlem.Size = new System.Drawing.Size(155, 24);
-            Sorgula_Tarih_Sonİşlem.TabIndex = 2;
-            Sorgula_Tarih_Sonİşlem.Text = "Son işlem tarihi";
-            Sorgula_Tarih_Sonİşlem.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Tarih_Ödeme
-            // 
-            Sorgula_Tarih_Ödeme.AutoSize = true;
-            Sorgula_Tarih_Ödeme.Checked = true;
-            Sorgula_Tarih_Ödeme.Dock = System.Windows.Forms.DockStyle.Top;
-            Sorgula_Tarih_Ödeme.Location = new System.Drawing.Point(0, 0);
-            Sorgula_Tarih_Ödeme.Name = "Sorgula_Tarih_Ödeme";
-            Sorgula_Tarih_Ödeme.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Tarih_Ödeme.Size = new System.Drawing.Size(155, 24);
-            Sorgula_Tarih_Ödeme.TabIndex = 3;
-            Sorgula_Tarih_Ödeme.TabStop = true;
-            Sorgula_Tarih_Ödeme.Text = "Ödeme tarihi";
-            Sorgula_Tarih_Ödeme.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            panel4.Location = new System.Drawing.Point(176, 0);
-            panel4.Name = "panel4";
-            panel4.Padding = new System.Windows.Forms.Padding(3);
-            panel4.Size = new System.Drawing.Size(165, 156);
-            panel4.TabIndex = 0;
-            // 
             // splitContainer1
             // 
             splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -661,237 +461,39 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler);
+            splitContainer1.Panel1.Controls.Add(Ayraç_MuhatapGrubu_Muhatap);
+            splitContainer1.Panel1.Controls.Add(Sorgula);
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(Açıklamalar);
-            splitContainer1.Size = new System.Drawing.Size(616, 160);
-            splitContainer1.SplitterDistance = 476;
-            splitContainer1.TabIndex = 3;
+            splitContainer1.Panel2.Controls.Add(splitContainer2);
+            splitContainer1.Size = new System.Drawing.Size(965, 160);
+            splitContainer1.SplitterDistance = 304;
+            splitContainer1.TabIndex = 0;
             // 
-            // Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler
+            // Ayraç_MuhatapGrubu_Muhatap
             // 
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Dock = System.Windows.Forms.DockStyle.Fill;
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Location = new System.Drawing.Point(0, 0);
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Name = "Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler";
+            Ayraç_MuhatapGrubu_Muhatap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            Ayraç_MuhatapGrubu_Muhatap.Dock = System.Windows.Forms.DockStyle.Fill;
+            Ayraç_MuhatapGrubu_Muhatap.Location = new System.Drawing.Point(0, 0);
+            Ayraç_MuhatapGrubu_Muhatap.Name = "Ayraç_MuhatapGrubu_Muhatap";
+            Ayraç_MuhatapGrubu_Muhatap.Size = new System.Drawing.Size(304, 130);
+            Ayraç_MuhatapGrubu_Muhatap.SplitterDistance = 151;
+            Ayraç_MuhatapGrubu_Muhatap.TabIndex = 2;
             // 
-            // Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel1
+            // Sorgula
             // 
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel1.Controls.Add(Sorgula_Seçenekleri);
-            // 
-            // Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel2
-            // 
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel2.Controls.Add(splitContainer2);
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Size = new System.Drawing.Size(476, 160);
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.SplitterDistance = 183;
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.TabIndex = 3;
-            // 
-            // Sorgula_Seçenekleri
-            // 
-            Sorgula_Seçenekleri.AutoScroll = true;
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Gecikti);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Ödenmedi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_KısmenÖdendi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_TamÖdendi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_MaaşÖdemesi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_AvansVerilmesi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_AvansÖdemesi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_PeşinatÖdendi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_KısmiÖdemeYapıldı);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_İptalEdildi);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_KontrolNoktası);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Taksitli);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Üyelik);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Maaşlar);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_AltToplam);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Gelir);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_Gider);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_TümünüSeç);
-            Sorgula_Seçenekleri.Controls.Add(Sorgula_KıstasSeçimi);
-            Sorgula_Seçenekleri.Dock = System.Windows.Forms.DockStyle.Fill;
-            Sorgula_Seçenekleri.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            Sorgula_Seçenekleri.Location = new System.Drawing.Point(0, 0);
-            Sorgula_Seçenekleri.Name = "Sorgula_Seçenekleri";
-            Sorgula_Seçenekleri.Size = new System.Drawing.Size(179, 156);
-            Sorgula_Seçenekleri.TabIndex = 0;
-            // 
-            // Sorgula_Gecikti
-            // 
-            Sorgula_Gecikti.AutoSize = true;
-            Sorgula_Gecikti.Checked = true;
-            Sorgula_Gecikti.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_Gecikti.Location = new System.Drawing.Point(3, 3);
-            Sorgula_Gecikti.Name = "Sorgula_Gecikti";
-            Sorgula_Gecikti.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Gecikti.Size = new System.Drawing.Size(86, 24);
-            Sorgula_Gecikti.TabIndex = 5;
-            Sorgula_Gecikti.Text = "Gecikti";
-            Sorgula_Gecikti.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Ödenmedi
-            // 
-            Sorgula_Ödenmedi.AutoSize = true;
-            Sorgula_Ödenmedi.Checked = true;
-            Sorgula_Ödenmedi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_Ödenmedi.Location = new System.Drawing.Point(3, 33);
-            Sorgula_Ödenmedi.Name = "Sorgula_Ödenmedi";
-            Sorgula_Ödenmedi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Ödenmedi.Size = new System.Drawing.Size(111, 24);
-            Sorgula_Ödenmedi.TabIndex = 6;
-            Sorgula_Ödenmedi.Text = "Ödenmedi";
-            Sorgula_Ödenmedi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_KısmenÖdendi
-            // 
-            Sorgula_KısmenÖdendi.AutoSize = true;
-            Sorgula_KısmenÖdendi.Checked = true;
-            Sorgula_KısmenÖdendi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_KısmenÖdendi.Location = new System.Drawing.Point(3, 63);
-            Sorgula_KısmenÖdendi.Name = "Sorgula_KısmenÖdendi";
-            Sorgula_KısmenÖdendi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_KısmenÖdendi.Size = new System.Drawing.Size(140, 24);
-            Sorgula_KısmenÖdendi.TabIndex = 12;
-            Sorgula_KısmenÖdendi.Text = "Kısmen ödendi";
-            Sorgula_KısmenÖdendi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_MaaşÖdemesi
-            // 
-            Sorgula_MaaşÖdemesi.AutoSize = true;
-            Sorgula_MaaşÖdemesi.Checked = true;
-            Sorgula_MaaşÖdemesi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_MaaşÖdemesi.Location = new System.Drawing.Point(3, 123);
-            Sorgula_MaaşÖdemesi.Name = "Sorgula_MaaşÖdemesi";
-            Sorgula_MaaşÖdemesi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_MaaşÖdemesi.Size = new System.Drawing.Size(137, 24);
-            Sorgula_MaaşÖdemesi.TabIndex = 9;
-            Sorgula_MaaşÖdemesi.Text = "Maaş ödemesi";
-            Sorgula_MaaşÖdemesi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_AvansVerilmesi
-            // 
-            Sorgula_AvansVerilmesi.AutoSize = true;
-            Sorgula_AvansVerilmesi.Checked = true;
-            Sorgula_AvansVerilmesi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_AvansVerilmesi.Location = new System.Drawing.Point(149, 3);
-            Sorgula_AvansVerilmesi.Name = "Sorgula_AvansVerilmesi";
-            Sorgula_AvansVerilmesi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_AvansVerilmesi.Size = new System.Drawing.Size(143, 24);
-            Sorgula_AvansVerilmesi.TabIndex = 10;
-            Sorgula_AvansVerilmesi.Text = "Avans verilmesi";
-            Sorgula_AvansVerilmesi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_AvansÖdemesi
-            // 
-            Sorgula_AvansÖdemesi.AutoSize = true;
-            Sorgula_AvansÖdemesi.Checked = true;
-            Sorgula_AvansÖdemesi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_AvansÖdemesi.Location = new System.Drawing.Point(149, 33);
-            Sorgula_AvansÖdemesi.Name = "Sorgula_AvansÖdemesi";
-            Sorgula_AvansÖdemesi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_AvansÖdemesi.Size = new System.Drawing.Size(141, 24);
-            Sorgula_AvansÖdemesi.TabIndex = 11;
-            Sorgula_AvansÖdemesi.Text = "Avans ödemesi";
-            Sorgula_AvansÖdemesi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_PeşinatÖdendi
-            // 
-            Sorgula_PeşinatÖdendi.AutoSize = true;
-            Sorgula_PeşinatÖdendi.Checked = true;
-            Sorgula_PeşinatÖdendi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_PeşinatÖdendi.Location = new System.Drawing.Point(149, 63);
-            Sorgula_PeşinatÖdendi.Name = "Sorgula_PeşinatÖdendi";
-            Sorgula_PeşinatÖdendi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_PeşinatÖdendi.Size = new System.Drawing.Size(138, 24);
-            Sorgula_PeşinatÖdendi.TabIndex = 16;
-            Sorgula_PeşinatÖdendi.Text = "Peşinat ödendi";
-            Sorgula_PeşinatÖdendi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_KısmiÖdemeYapıldı
-            // 
-            Sorgula_KısmiÖdemeYapıldı.AutoSize = true;
-            Sorgula_KısmiÖdemeYapıldı.Checked = true;
-            Sorgula_KısmiÖdemeYapıldı.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_KısmiÖdemeYapıldı.Location = new System.Drawing.Point(149, 93);
-            Sorgula_KısmiÖdemeYapıldı.Name = "Sorgula_KısmiÖdemeYapıldı";
-            Sorgula_KısmiÖdemeYapıldı.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_KısmiÖdemeYapıldı.Size = new System.Drawing.Size(177, 24);
-            Sorgula_KısmiÖdemeYapıldı.TabIndex = 8;
-            Sorgula_KısmiÖdemeYapıldı.Text = "Kısmi ödeme yapıldı";
-            Sorgula_KısmiÖdemeYapıldı.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_İptalEdildi
-            // 
-            Sorgula_İptalEdildi.AutoSize = true;
-            Sorgula_İptalEdildi.Checked = true;
-            Sorgula_İptalEdildi.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_İptalEdildi.Location = new System.Drawing.Point(149, 123);
-            Sorgula_İptalEdildi.Name = "Sorgula_İptalEdildi";
-            Sorgula_İptalEdildi.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_İptalEdildi.Size = new System.Drawing.Size(113, 24);
-            Sorgula_İptalEdildi.TabIndex = 7;
-            Sorgula_İptalEdildi.Text = "İptal Edildi";
-            Sorgula_İptalEdildi.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_KontrolNoktası
-            // 
-            Sorgula_KontrolNoktası.AutoSize = true;
-            Sorgula_KontrolNoktası.Checked = true;
-            Sorgula_KontrolNoktası.CheckState = System.Windows.Forms.CheckState.Checked;
-            Sorgula_KontrolNoktası.Location = new System.Drawing.Point(332, 3);
-            Sorgula_KontrolNoktası.Name = "Sorgula_KontrolNoktası";
-            Sorgula_KontrolNoktası.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_KontrolNoktası.Size = new System.Drawing.Size(141, 24);
-            Sorgula_KontrolNoktası.TabIndex = 15;
-            Sorgula_KontrolNoktası.Text = "Kontrol noktası";
-            Sorgula_KontrolNoktası.UseVisualStyleBackColor = true;
-            // 
-            // Sorgula_Maaşlar
-            // 
-            Sorgula_Maaşlar.AutoSize = true;
-            Sorgula_Maaşlar.Location = new System.Drawing.Point(332, 93);
-            Sorgula_Maaşlar.Name = "Sorgula_Maaşlar";
-            Sorgula_Maaşlar.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_Maaşlar.Size = new System.Drawing.Size(93, 24);
-            Sorgula_Maaşlar.TabIndex = 13;
-            Sorgula_Maaşlar.Text = "Maaşlar";
-            Sorgula_Maaşlar.UseVisualStyleBackColor = true;
-            Sorgula_Maaşlar.CheckedChanged += Sorgula_Maaşlar_CheckedChanged;
-            // 
-            // Sorgula_AltToplam
-            // 
-            Sorgula_AltToplam.AutoSize = true;
-            Sorgula_AltToplam.Location = new System.Drawing.Point(332, 123);
-            Sorgula_AltToplam.Name = "Sorgula_AltToplam";
-            Sorgula_AltToplam.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            Sorgula_AltToplam.Size = new System.Drawing.Size(112, 24);
-            Sorgula_AltToplam.TabIndex = 17;
-            Sorgula_AltToplam.Text = "Alt toplam";
-            Sorgula_AltToplam.UseVisualStyleBackColor = true;
-            Sorgula_AltToplam.CheckedChanged += Sorgula_AltToplam_CheckedChanged;
-            // 
-            // Sorgula_TümünüSeç
-            // 
-            Sorgula_TümünüSeç.AutoSize = true;
-            Sorgula_TümünüSeç.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            Sorgula_TümünüSeç.Location = new System.Drawing.Point(479, 63);
-            Sorgula_TümünüSeç.Name = "Sorgula_TümünüSeç";
-            Sorgula_TümünüSeç.Size = new System.Drawing.Size(99, 30);
-            Sorgula_TümünüSeç.TabIndex = 14;
-            Sorgula_TümünüSeç.Text = "Tümünü Seç";
-            Sorgula_TümünüSeç.UseVisualStyleBackColor = true;
-            Sorgula_TümünüSeç.Click += Sorgula_TümünüSeç_Click;
-            // 
-            // Sorgula_KıstasSeçimi
-            // 
-            Sorgula_KıstasSeçimi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Sorgula_KıstasSeçimi.FormattingEnabled = true;
-            Sorgula_KıstasSeçimi.Items.AddRange(new object[] { "En az 1 kıstasa uyan işlemler", "Tüm kıstaslara uyan işlemler" });
-            Sorgula_KıstasSeçimi.Location = new System.Drawing.Point(479, 99);
-            Sorgula_KıstasSeçimi.Name = "Sorgula_KıstasSeçimi";
-            Sorgula_KıstasSeçimi.Size = new System.Drawing.Size(250, 28);
-            Sorgula_KıstasSeçimi.TabIndex = 0;
+            Sorgula.AutoSize = true;
+            Sorgula.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            Sorgula.Dock = System.Windows.Forms.DockStyle.Bottom;
+            Sorgula.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            Sorgula.Location = new System.Drawing.Point(0, 130);
+            Sorgula.Name = "Sorgula";
+            Sorgula.Size = new System.Drawing.Size(304, 30);
+            Sorgula.TabIndex = 9;
+            Sorgula.Text = "Sorgula";
+            Sorgula.UseVisualStyleBackColor = true;
+            Sorgula.Click += Sorgula_Click;
             // 
             // splitContainer2
             // 
@@ -899,9 +501,42 @@
             splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainer2.Location = new System.Drawing.Point(0, 0);
             splitContainer2.Name = "splitContainer2";
-            splitContainer2.Size = new System.Drawing.Size(289, 160);
-            splitContainer2.SplitterDistance = 144;
-            splitContainer2.TabIndex = 2;
+            // 
+            // splitContainer2.Panel1
+            // 
+            splitContainer2.Panel1.Controls.Add(Ayraç_Şablonlar_SorgulamaSeçenekleri);
+            // 
+            // splitContainer2.Panel2
+            // 
+            splitContainer2.Panel2.Controls.Add(Açıklamalar);
+            splitContainer2.Size = new System.Drawing.Size(657, 160);
+            splitContainer2.SplitterDistance = 464;
+            splitContainer2.TabIndex = 0;
+            // 
+            // Ayraç_Şablonlar_SorgulamaSeçenekleri
+            // 
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Dock = System.Windows.Forms.DockStyle.Fill;
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Location = new System.Drawing.Point(0, 0);
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Name = "Ayraç_Şablonlar_SorgulamaSeçenekleri";
+            // 
+            // Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2
+            // 
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.Controls.Add(SorgulamaDetayları);
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Size = new System.Drawing.Size(464, 160);
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.SplitterDistance = 146;
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.TabIndex = 0;
+            // 
+            // SorgulamaDetayları
+            // 
+            SorgulamaDetayları.Dock = System.Windows.Forms.DockStyle.Fill;
+            SorgulamaDetayları.HelpVisible = false;
+            SorgulamaDetayları.Location = new System.Drawing.Point(0, 0);
+            SorgulamaDetayları.Name = "SorgulamaDetayları";
+            SorgulamaDetayları.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            SorgulamaDetayları.Size = new System.Drawing.Size(310, 156);
+            SorgulamaDetayları.TabIndex = 0;
+            SorgulamaDetayları.ToolbarVisible = false;
             // 
             // Açıklamalar
             // 
@@ -911,7 +546,7 @@
             Açıklamalar.Name = "Açıklamalar";
             Açıklamalar.ReadOnly = true;
             Açıklamalar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            Açıklamalar.Size = new System.Drawing.Size(132, 156);
+            Açıklamalar.Size = new System.Drawing.Size(185, 156);
             Açıklamalar.TabIndex = 0;
             // 
             // KontrolNoktası_Ekranı
@@ -1362,25 +997,21 @@
             Ayraç_Filtre_TabloSonuç.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Ayraç_Filtre_TabloSonuç).EndInit();
             Ayraç_Filtre_TabloSonuç.ResumeLayout(false);
-            Ayraç_Seçenekler_Muhataplar.Panel1.ResumeLayout(false);
-            Ayraç_Seçenekler_Muhataplar.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Ayraç_Seçenekler_Muhataplar).EndInit();
-            Ayraç_Seçenekler_Muhataplar.ResumeLayout(false);
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
-            splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel1.ResumeLayout(false);
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler).EndInit();
-            Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler.ResumeLayout(false);
-            Sorgula_Seçenekleri.ResumeLayout(false);
-            Sorgula_Seçenekleri.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Ayraç_MuhatapGrubu_Muhatap).EndInit();
+            Ayraç_MuhatapGrubu_Muhatap.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
             splitContainer2.ResumeLayout(false);
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Ayraç_Şablonlar_SorgulamaSeçenekleri).EndInit();
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.ResumeLayout(false);
             KontrolNoktası_Ekranı.ResumeLayout(false);
             KontrolNoktası_Ekranı_2.ResumeLayout(false);
             KontrolNoktası_Ekranı_2.PerformLayout();
@@ -1411,29 +1042,15 @@
 
         private System.Windows.Forms.ToolTip İpucu;
         private System.Windows.Forms.SplitContainer Ayraç_Filtre_TabloSonuç;
-        private System.Windows.Forms.RadioButton Sorgula_Tarih_Ödeme;
         private ArgeMup.HazirKod.Ekranlar.ListeKutusu Sorgula_MuhatapGrubu;
         private ArgeMup.HazirKod.Ekranlar.ListeKutusu Sorgula_Muhatap;
-        private System.Windows.Forms.RadioButton Sorgula_Tarih_Sonİşlem;
-        private System.Windows.Forms.DateTimePicker Sorgula_Bitiş;
-        private System.Windows.Forms.DateTimePicker Sorgula_Başlangıç;
-        private System.Windows.Forms.RadioButton Sorgula_Tarih_Kayıt;
-        private System.Windows.Forms.CheckBox Sorgula_TamÖdendi;
-        private System.Windows.Forms.CheckBox Sorgula_Taksitli;
-        private System.Windows.Forms.CheckBox Sorgula_Üyelik;
         private System.Windows.Forms.TextBox TabloİçeriğiArama;
         private System.Windows.Forms.Button SürümleriListele;
-        private System.Windows.Forms.CheckBox Sorgula_Gelir;
-        private System.Windows.Forms.CheckBox Sorgula_Gider;
-        private System.Windows.Forms.SplitContainer Ayraç_Seçenekler_Muhataplar;
-        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.SplitContainer Ayraç_MuhatapGrubu_Muhatap;
         private System.Windows.Forms.Button Öde;
         private System.Windows.Forms.Button Sorgula;
-        private System.Windows.Forms.CheckBox Sorgula_Gecikti;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox Açıklamalar;
-        private System.Windows.Forms.CheckBox Sorgula_Ödenmedi;
         private System.Windows.Forms.Panel Ödeme_Ekranı_2;
         private System.Windows.Forms.RadioButton Öde_TamÖdeme;
         private System.Windows.Forms.RadioButton Öde_KısmiÖdeme;
@@ -1450,8 +1067,6 @@
         private System.Windows.Forms.Panel Sonuçlar_Ekranı;
         private System.Windows.Forms.Button İlişkiliÖdemeleriListele;
         private System.Windows.Forms.Button Düzenle;
-        private System.Windows.Forms.CheckBox Sorgula_İptalEdildi;
-        private System.Windows.Forms.FlowLayoutPanel Sorgula_Seçenekleri;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel Düzenleme_Ekranı;
         private System.Windows.Forms.Panel Düzenleme_Ekranı_2;
@@ -1466,17 +1081,8 @@
         private System.Windows.Forms.ComboBox Düzenle_ParaBirimi;
         private System.Windows.Forms.Label Düzenle_MuhatapVeGrupAdı;
         private System.Windows.Forms.ComboBox Düzenle_Durum;
-        private System.Windows.Forms.CheckBox Sorgula_KısmiÖdemeYapıldı;
-        private System.Windows.Forms.SplitContainer Ayraç_FiltreSeçenekler_Kıstaslar_Seçenekler;
-        private System.Windows.Forms.CheckBox Sorgula_MaaşÖdemesi;
-        private System.Windows.Forms.CheckBox Sorgula_AvansVerilmesi;
-        private System.Windows.Forms.CheckBox Sorgula_AvansÖdemesi;
-        private System.Windows.Forms.CheckBox Sorgula_KısmenÖdendi;
         private System.Windows.Forms.ComboBox Düzenle_Tip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.CheckBox Sorgula_Maaşlar;
-        private System.Windows.Forms.Button Sorgula_TümünüSeç;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel KontrolNoktası_Ekranı;
         private System.Windows.Forms.Panel KontrolNoktası_Ekranı_2;
         private System.Windows.Forms.TextBox KontrolNoktası_Notları;
@@ -1485,14 +1091,12 @@
         private System.Windows.Forms.Button KontrolNoktası_Geri;
         private System.Windows.Forms.DateTimePicker KontrolNoktası_Tarihi;
         private System.Windows.Forms.Button KontrolNoktasıEkle;
-        private System.Windows.Forms.CheckBox Sorgula_KontrolNoktası;
-        private System.Windows.Forms.CheckBox Sorgula_PeşinatÖdendi;
-        private System.Windows.Forms.CheckBox Sorgula_AltToplam;
-        private System.Windows.Forms.ComboBox Sorgula_KıstasSeçimi;
-        private System.Windows.Forms.ComboBox Sorgula_TarihAralığı;
-        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button Yazdır;
         public System.Windows.Forms.DataGridView Tablo;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.SplitContainer Ayraç_Şablonlar_SorgulamaSeçenekleri;
+        private System.Windows.Forms.PropertyGrid SorgulamaDetayları;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_MuhatapGrubu;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Muhatap;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_ÖdemeTarihi;

@@ -107,6 +107,7 @@
             // 
             ParaBirimi.Dock = System.Windows.Forms.DockStyle.Right;
             ParaBirimi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            ParaBirimi.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             ParaBirimi.FormattingEnabled = true;
             ParaBirimi.Items.AddRange(new object[] { "₺", "Avro", "Dolar" });
@@ -115,7 +116,7 @@
             ParaBirimi.Size = new System.Drawing.Size(88, 36);
             ParaBirimi.TabIndex = 18;
             İpucu.SetToolTip(ParaBirimi, "Para birimi");
-            ParaBirimi.SelectedIndexChanged += AyarDeğişti;
+            ParaBirimi.SelectedIndexChanged += AyarDeğişti_ParaBirimi_Notlar;
             // 
             // Notlar
             // 
@@ -128,7 +129,7 @@
             Notlar.TabIndex = 19;
             İpucu.SetToolTip(Notlar, "Notlar");
             Notlar.WordWrap = false;
-            Notlar.TextChanged += AyarDeğişti;
+            Notlar.TextChanged += AyarDeğişti_ParaBirimi_Notlar;
             // 
             // ÖdemeTarihi_Değeri
             // 
@@ -412,7 +413,7 @@
             İşyeri_Grup_Muhatap.Name = "İşyeri_Grup_Muhatap";
             İşyeri_Grup_Muhatap.Size = new System.Drawing.Size(691, 46);
             İşyeri_Grup_Muhatap.TabIndex = 17;
-            İşyeri_Grup_Muhatap.Text = "İşyeri | çalışan | tahta kafa";
+            İşyeri_Grup_Muhatap.Text = "İşyeri | çalışan | biz";
             İşyeri_Grup_Muhatap.UseVisualStyleBackColor = true;
             İşyeri_Grup_Muhatap.Click += İşyeri_Grup_Muhatap_Click;
             // 

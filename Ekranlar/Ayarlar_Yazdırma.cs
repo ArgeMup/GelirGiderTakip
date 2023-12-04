@@ -125,15 +125,22 @@ namespace Gelir_Gider_Takip.Ekranlar
             DataGridViewTextBoxColumn Tablo_Taksit = new DataGridViewTextBoxColumn() { HeaderText = "Taksit", DefaultCellStyle = ortalanmış };
             DataGridViewCheckBoxColumn Tablo_Üyelik = new DataGridViewCheckBoxColumn() { HeaderText = "Üyelik", DefaultCellStyle = ortalanmış };
             DataGridViewTextBoxColumn Tablo_SonİşlemTarihi = new DataGridViewTextBoxColumn() { HeaderText = "Son İşlem Tarihi", DefaultCellStyle = ortalanmış };
+            DataGridViewTextBoxColumn Tablo_KayıtTarihi = new DataGridViewTextBoxColumn() { HeaderText = "Kayıt Tarihi", DefaultCellStyle = ortalanmış };
             DataGridViewTextBoxColumn Tablo_KullanıcıAdı = new DataGridViewTextBoxColumn() { HeaderText = "Kullanıcı" };
-            Tablo.Columns.AddRange(new DataGridViewColumn[] { Tablo_MuhatapGrubu, Tablo_Muhatap, Tablo_ÖdemeTarihi, Tablo_Tip, Tablo_Durum, Tablo_Miktar, Tablo_Notlar, Tablo_Taksit, Tablo_Üyelik, Tablo_SonİşlemTarihi, Tablo_KullanıcıAdı });
+            Tablo.Columns.AddRange(new DataGridViewColumn[] { Tablo_MuhatapGrubu, Tablo_Muhatap, Tablo_ÖdemeTarihi, Tablo_Tip, Tablo_Durum, Tablo_Miktar, Tablo_Notlar, Tablo_Taksit, Tablo_Üyelik, Tablo_SonİşlemTarihi, Tablo_KayıtTarihi, Tablo_KullanıcıAdı });
 
-            Ortak.Banka.Ayarlar.CariDökümŞablonlar.TryGetValue(TabloŞablonu.Text, out Banka1.Ayarlar_CariDöküm_Şablon_ şablon);
+            Ortak.Banka.Ayarlar.CariDökümŞablonlar.TryGetValue(TabloŞablonu.Text, out Ekranlar.Cari_Döküm_Şablon_ şablon);
             if (şablon != null)
             {
-                Tablo_Taksit.Visible = şablon.Taksitli;
-                Tablo_Üyelik.Visible = şablon.Üyelik;
-                Tablo_SonİşlemTarihi.Visible = şablon.TarihTürü >= Banka1.Ayarlar_CariDöküm_Şablon_.TarihTürü_.SonİşlemTarihi;
+                Tablo_Durum.Visible = şablon.Sütunlar_Durum == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_KayıtTarihi.Visible = şablon.Sütunlar_KayıtTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_KullanıcıAdı.Visible = şablon.Sütunlar_Kullanıcı == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_Notlar.Visible = şablon.Sütunlar_Notlar == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_SonİşlemTarihi.Visible = şablon.Sütunlar_SonİşlemTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_Taksit.Visible = şablon.Sütunlar_Taksit == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_Tip.Visible = şablon.Sütunlar_Tip == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_ÖdemeTarihi.Visible = şablon.Sütunlar_ÖdemeGünü == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_Üyelik.Visible = şablon.Sütunlar_Üyelik == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
             }
 
             int sutun_sayısı = Tablo.ColumnCount;
@@ -174,6 +181,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 dizin[Tablo_ÖdemeTarihi.Index] = DateOnly.FromDateTime(ÖdemeninYapılacağıTarih);
                 dizin[Tablo_Notlar.Index] = notlar;
                 dizin[Tablo_SonİşlemTarihi.Index] = ÖdemeninYapılacağıTarih;
+                dizin[Tablo_KayıtTarihi.Index] = ÖdemeninYapılacağıTarih.AddDays(-1);
                 dizin[Tablo_KullanıcıAdı.Index] = KullanıcıAdı;
 
                 if (tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.KontrolNoktası)
@@ -550,9 +558,10 @@ namespace Gelir_Gider_Takip.Ekranlar
         void İşler_Yazdır_Hesaplat(İşlemler_Bir_Sayfa_ Sayfa, DataGridView Tablo, Graphics Grafik)
         {
             Sayfa.Başlık_Yüksekliği = Grafik.MeasureString("ÖÇŞĞ", Sayfa.Kakü_Kalın).Height;
+            string KontrolNoktasıYazısı = Banka1.İşyeri_Ödeme_İşlem_.Tipi_.KontrolNoktası.Yazdır();
+            int SutunSayısı = Tablo.ColumnCount;
 
             //Sutunlarınn bölüştürülmesi
-            int SutunSayısı = Tablo.ColumnCount;
             int SutunNo_Notlar = -1, SutunNo_Tip = -1, SutunNo_ÖdemeGünü = -1;
             Sayfa.Sutunlar = new İşlemler_Bir_Sayfa_Sutun_[SutunSayısı];
             for (int x = 0; x < Tablo.Columns.Count; x++)
@@ -573,7 +582,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                 BirSutun.EnUzunYazı = BirSutun.Adı;
                 for (int y = 0; y < Tablo.RowCount; y++)
                 {
-                    if (Tablo[sutun.Index, y].Value == null) continue;
+                    if (Tablo[sutun.Index, y].Value == null ||
+                        (SutunNo_Tip >= 0 && (string)Tablo[SutunNo_Tip, y].Value == KontrolNoktasıYazısı)) continue;
 
                     string Yazı;
                     object içerik = Tablo[sutun.Index, y].Value;
@@ -633,7 +643,6 @@ namespace Gelir_Gider_Takip.Ekranlar
             //işlemlerin eklenmesi
             Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık = Sayfa.Sutunlar[SutunNo_Tip].Sol + Sayfa.Sutunlar[SutunNo_Tip].Genişlik - Sayfa.Sol;
             s = new SizeF(1000, 1000);//a4 ten büyük
-            string KontrolNoktasıYazısı = Banka1.İşyeri_Ödeme_İşlem_.Tipi_.KontrolNoktası.Yazdır();
             for (int y = 0; y < Tablo.RowCount; y++)
             {
                 İşlemler_Bir_Satır_Bilgi_ İşlemler_Bir_Satır_Bilgi = new İşlemler_Bir_Satır_Bilgi_();

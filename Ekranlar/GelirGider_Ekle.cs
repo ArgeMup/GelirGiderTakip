@@ -61,6 +61,9 @@ namespace Gelir_Gider_Takip.Ekranlar
                 İşyeri_Grup_Muhatap_Click(null, null);
 
                 Durum_Ödendi.Checked = true;
+
+                ParaBirimi.BackColor = Ortak.Renk_Kırmızı;
+                Notlar.BackColor = Ortak.Renk_Kırmızı;
             }
             else
             {
@@ -102,6 +105,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         private void İşyeri_Grup_Muhatap_Click(object sender, EventArgs e)
         {
             Muhatap = null;
+            Ayraç_Detaylar_Taksit.Enabled = false;
 
             Ortak.Seçtirt(SeçimVeDüzenleme_Ekranı.Türü_.MuhatapGrubu, Seçim_GeriBildirimİşlemi);
         }
@@ -115,6 +119,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
 
             İşyeri_Grup_Muhatap.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + "          " + GrupAdı + "          " + MuhatapAdı;
+            Ayraç_Detaylar_Taksit.Enabled = true;
 
             DateTime tt;
             if (GrupAdı == Banka1.Çalışan_Yazısı)
@@ -137,6 +142,12 @@ namespace Gelir_Gider_Takip.Ekranlar
             ÖnYüzler_Kaydet.Enabled = false;
         }
 
+        private void AyarDeğişti_ParaBirimi_Notlar(object sender, EventArgs e)
+        {
+            (sender as Control).BackColor = SystemColors.Window;
+
+            AyarDeğişti(sender, e);
+        }
         private void AyarDeğişti(object sender, EventArgs e)
         {
             if (İlkAçılış) return;
@@ -145,7 +156,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             ÖdemeTarihi_Değeri.Value = new DateTime(ÖdemeTarihi_Değeri.Value.Year, ÖdemeTarihi_Değeri.Value.Month, ÖdemeTarihi_Değeri.Value.Day);
             İşyeri_Grup_Muhatap.Enabled = false;
-            ÖnYüzler_Kaydet.Enabled = true;
+            ÖnYüzler_Kaydet.Enabled = Muhatap != null;
 
             bool ÜyelikVeAvansDeğil = !ÜyelikMi && !AvansMı;
             Peşinat.Enabled = ÜyelikVeAvansDeğil;

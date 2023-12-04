@@ -745,17 +745,23 @@ namespace Gelir_Gider_Takip
 
                         while (ÜyelikBitişTarihi >= İlkÖdemeTarihi && İlkÖdemeTarihi <= BitişTarihi)
                         {
+                            bool Üret = false;
                             string notlar = null;
                             if (üyelik.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi)
                             {
                                 if (Çalışan != null && Çalışan.İştenAyrılışTarihi == null && üyelik.Value.Miktarı > 0)
                                 {
+                                    Üret = true;
                                     notlar = İlkÖdemeTarihi.Yazıya("MMM yyyy", System.Threading.Thread.CurrentThread.CurrentCulture);
                                 }
                             }
-                            else notlar = üyelik.Value.Notlar;
+                            else
+                            {
+                                Üret = true;
+                                notlar = üyelik.Value.Notlar;
+                            }
 
-                            if (notlar.DoluMu()) ödemeler_üyelik.AddRange(GelirGider_Oluştur(üyelik.Value.Tipi, İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, üyelik.Value.Miktarı, üyelik.Value.ParaBirimi, İlkÖdemeTarihi.ToDateTime(new TimeOnly()), notlar, taksit.Taksit_Sayısı, taksit.Dönemi, taksit.Dönem_Adet, üyelik.Key, BitişTarihi));
+                            if (Üret) ödemeler_üyelik.AddRange(GelirGider_Oluştur(üyelik.Value.Tipi, İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, üyelik.Value.Miktarı, üyelik.Value.ParaBirimi, İlkÖdemeTarihi.ToDateTime(new TimeOnly()), notlar, taksit.Taksit_Sayısı, taksit.Dönemi, taksit.Dönem_Adet, üyelik.Key, BitişTarihi));
                             
                             İlkÖdemeTarihi = Banka_Ortak.SonrakiTarihiHesapla(İlkÖdemeTarihi, üyelik.Value.Dönemi, üyelik.Value.Dönem_Adet);
 
@@ -1086,7 +1092,7 @@ namespace Gelir_Gider_Takip
         {
             [Değişken_.Niteliği.Adını_Değiştir("S")] public DateTime SonBankaKayıt;
             [Değişken_.Niteliği.Adını_Değiştir("K")] public Kullanıcılar_Ayarlar_ Kullanıcılar = new Kullanıcılar_Ayarlar_();
-            [Değişken_.Niteliği.Adını_Değiştir("Ş")] public Dictionary<string, Ayarlar_CariDöküm_Şablon_> CariDökümŞablonlar = new Dictionary<string, Ayarlar_CariDöküm_Şablon_>();
+            [Değişken_.Niteliği.Adını_Değiştir("Ş")] public Dictionary<string, Ekranlar.Cari_Döküm_Şablon_> CariDökümŞablonlar = new Dictionary<string, Ekranlar.Cari_Döküm_Şablon_>();
             [Değişken_.Niteliği.Adını_Değiştir("Y")] public Ayarlar_Yazdırma_ Yazdırma = new Ayarlar_Yazdırma_();
 
             #region Kayıt
@@ -1114,34 +1120,6 @@ namespace Gelir_Gider_Takip
             SonEleman_,
             DiziElemanSayısı_ = SonEleman_
         };
-        public class Ayarlar_CariDöküm_Şablon_
-        {
-            public enum TarihTürü_ { ÖdemeTarihi, SonİşlemTarihi, KayıtTarihi };
-
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 0)] public TarihTürü_ TarihTürü;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 1)] public int TarihAralığı;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 2)] public bool Gecikti;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 3)] public bool Ödenmedi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 4)] public bool KısmenÖdendi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 5)] public bool TamÖdendi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 6)] public bool MaaşÖdemesi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 7)] public bool AvansVerilmesi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 8)] public bool AvansÖdemesi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 9)] public bool PeşinatÖdendi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 10)] public bool KısmiÖdemeYapıldı;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 11)] public bool KontrolNoktası;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 12)] public bool Taksitli;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 13)] public bool Üyelik;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 14)] public bool İptalEdildi;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 15)] public bool Maaşlar;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 16)] public bool AltToplam;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 17)] public bool Gelir;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 18)] public bool Gider;
-            [Değişken_.Niteliği.Adını_Değiştir("Ş", 19)] public int Kıstas_Seçim;
-
-            [Değişken_.Niteliği.Adını_Değiştir("G")] public List<string> Kapsam_Grup;
-            [Değişken_.Niteliği.Adını_Değiştir("M")] public List<string> Kapsam_Muhatap;
-        }
         public class Ayarlar_Yazdırma_
         {
             [Değişken_.Niteliği.Adını_Değiştir("Y", 0)] public string YazıcıAdı;
@@ -1412,6 +1390,12 @@ namespace Gelir_Gider_Takip
             {
                 throw new Exception(ex.Message + " " + DosyaYolu);
             }
+        }
+        public static object Sınıf_Kopyala(object Girdi)
+        {
+            IDepo_Eleman Depo = new Depo_()["ArGeMuP"];
+            De.Depola(Girdi, Depo);
+            return De.Üret(Girdi.GetType(), Depo);
         }
         public static void Sınıf_Kaydet(object Sınıf, string DosyaYolu)
         {
