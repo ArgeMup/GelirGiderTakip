@@ -63,6 +63,7 @@ namespace Gelir_Gider_Takip
                     void _YeniYazılımKontrolü_GeriBildirim_(bool Sonuç, string Açıklama)
                     {
                         if (Açıklama.Contains("github")) Önyüz.SürümKontrolMesajı = "Bağlantı kurulamadı";
+                        else if (Açıklama == "Durduruldu") return;
                         else Önyüz.SürümKontrolMesajı = Açıklama;
 
                         Invoke(new Action(() =>

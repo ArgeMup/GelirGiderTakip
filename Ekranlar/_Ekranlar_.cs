@@ -50,7 +50,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Önyüzler.Add(Önyüz);
 
-            AnaEkran.Text = Kendi.Adı + " Kullanıcı : " + (Ortak.Banka.KullancıAdı ?? "Giriş yapılmadı") + " " + SürümKontrolMesajı;
+            AnaEkran.Text = "ArGeMuP " + Kendi.Adı + " Kullanıcı : " + (Ortak.Banka.KullancıAdı ?? "Giriş yapılmadı") + " " + SürümKontrolMesajı;
         }
         public static void Dürt()
         {
@@ -75,17 +75,11 @@ namespace Gelir_Gider_Takip.Ekranlar
 
         private static void Önyüz_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            if (sender is Açılış_Ekranı)
+            if (Öndeki_ParolaGirişEkranıMı) Application.Exit();
+            else if (Önyüzler.Count > 1 && e.CloseReason == CloseReason.MdiFormClosing)
             {
-                if (Önyüzler.Count > 1 && e.CloseReason == CloseReason.MdiFormClosing)
-                {
-                    Önyüzler.Last().Close();
-                    e.Cancel = true;
-                }
-            }
-            else if (Öndeki_ParolaGirişEkranıMı)
-            {
-                Application.Exit();
+                Önyüzler.Last().Close();
+                e.Cancel = true;
             }
             else
             {

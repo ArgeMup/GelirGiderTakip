@@ -83,14 +83,20 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                 case AçılışTürü_.İlişkiliOlanlarıListele:
                     Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi;
+                    Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit;
                     Şablon.Zamanlama_Başlangıç = Ödeme.İlkKayıtTarihi;
                     Şablon.Zamanlama_Bitiş = Ödeme.İlkKayıtTarihi;
+                    Şablon.Zamanlama_GecikenleriKesinlikleGöster = Cari_Döküm_Şablon_.Zamanlama_GecikenleriKesinlikleGöster_.Hayır;
+
                     Sorgula_MuhatapGrubu.SeçilenEleman_Adı = Ödeme.MuhatapGrubuAdı;
                     Sorgula_Muhatap.SeçilenEleman_Adı = Ödeme.MuhatapAdı;
                     Sorgula_Click(null, null);
                     break;
 
                 case AçılışTürü_.SürümleriListele:
+                    Ayraç_Filtre_TabloSonuç.Panel1Collapsed = true;
+                    KontrolNoktasıEkle.Enabled = false;
+
                     int sutun_sayısı = Tablo.ColumnCount;
                     List<DataGridViewRow> dizi = new List<DataGridViewRow>();
                     Tablo_SonİşlemTarihi.Visible = false;
@@ -189,6 +195,8 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private bool Sorgula_Şablonlar_GeriBildirim_İşlemi(string Adı, ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü Türü, string YeniAdı)
         {
+            if (Adı.BoşMu()) return false;
+
             switch (Türü)
             {
                 case ListeKutusu.İşlemTürü.YeniEklendi:
@@ -239,6 +247,8 @@ namespace Gelir_Gider_Takip.Ekranlar
             Düzenle_Geri_Click(null, null);
             KontrolNoktası_Geri_Click(null, null);
 
+            Şablon.Yenile();
+            SorgulamaDetayları.Refresh();
             DateOnly başlangıç_d = DateOnly.FromDateTime(Şablon.Zamanlama_Başlangıç);
             DateOnly bitiş_d = DateOnly.FromDateTime(Şablon.Zamanlama_Bitiş);
 
@@ -820,7 +830,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 //ana ödemeden bağımsız tam ödeme oluşturulması
                 Banka1.İşyeri_Ödeme_.ParaBirimi_ İstenenParBirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(Öde_KısmiÖdeme_ParaBirimi.SelectedIndex + 1);
                 string açıklama = ödeme.ParaBirimi != İstenenParBirimi ? "(" + Banka_Ortak.Yazdır_Ücret((double)Öde_KısmiÖdeme_Miktar.Value, İstenenParBirimi) + ")" : null;
-                açıklama += (açıklama.DoluMu() ? Environment.NewLine : null) + Öde_Notlar.Text;
+                açıklama += (açıklama.DoluMu() ? " " : null) + Öde_Notlar.Text;
 
                 Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı, true);
                 muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(ödeme.Tipi, ödeme.İlkKayıtTarihi, YapılanÖdeme_ÖdemeParaBiriminde, ödeme.ParaBirimi, Öde_KalanÖdemeTarihi.Value, açıklama, ödeme.Taksit, ödeme.Üyelik_KayıtTarihi));

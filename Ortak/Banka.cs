@@ -1576,7 +1576,7 @@ namespace Gelir_Gider_Takip
                     goto Devam;
 
                 case DoğrulamaKodu.KontrolEt.Durum_.DoğrulamaDosyasıYok:
-#if !DEBUG && !RELEASE
+#if !DEBUG
                 Klasör_ kls = new Klasör_(Ortak.Klasör_Banka, DoğrulamaKodunuÜret:false);
                 if (kls.Dosyalar.Count > 0) throw new Exception("Büyük Hata A");
 #endif

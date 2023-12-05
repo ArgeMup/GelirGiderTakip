@@ -20,7 +20,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (üyelik.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi) continue;
 
                     int satır_no = Tablo_Üyelik.Rows.Add(new object[] {
-                                üyelik.İlkÖdemeninYapılacağıTarih.Yazıya(),
+                                üyelik.İlkÖdemeninYapılacağıTarih,
                                 üyelik.Tipi.Yazdır() + " " + Banka_Ortak.Yazdır_Ücret(üyelik.Miktarı, üyelik.ParaBirimi),
                                 üyelik.Yazdır_Dönem(),
                                 üyelik.BitişTarihi,
@@ -29,6 +29,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Tablo_Üyelik[Tablo_Üyelik_İlkÖdemeninYapılacağıTarih.Index, satır_no].ToolTipText = "Kayıt:" + üüü.Key.Yazıya();
                     Tablo_Üyelik.Rows[satır_no].Tag = üüü.Key;
                 }
+
+                Tablo_Üyelik.ClearSelection();
             }
 
             if (Muhatap.GrupAdı == Banka1.Çalışan_Yazısı)
@@ -51,11 +53,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                     foreach (var işl in Muhatap.Çalışan.Geçmişİşlemler)
                     {
                         Tablo_ÖzlükHakkı.Rows.Add(new object[] {
-                                işl.Key.Yazıya(),
+                                işl.Key,
                                 işl.Value.Yazdır_Açıklama(),
                                 işl.Value.Notlar,
                                 işl.Value.GerçekleştirenKullanıcıAdı});
                     }
+
+                    Tablo_ÖzlükHakkı.ClearSelection();
                 }
                 else
                 {
@@ -201,10 +205,11 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Ücret_Notlar.Text = null;
             Tablo_ÖzlükHakkı.Rows.Add(new object[] {
-                                    dt.Yazıya(),
+                                    dt,
                                     öh.Yazdır_Açıklama(),
                                     öh.Notlar,
                                     öh.GerçekleştirenKullanıcıAdı});
+            Tablo_ÖzlükHakkı.ClearSelection();
         }
 
         private void İzin_Güncelle_Click(object sender, EventArgs e)
@@ -237,10 +242,11 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             İzin_Notlar.Text = null;
             Tablo_ÖzlükHakkı.Rows.Add(new object[] {
-                                    dt.Yazıya(),
+                                    dt,
                                     öh.Yazdır_Açıklama(),
                                     öh.Notlar,
                                     öh.GerçekleştirenKullanıcıAdı});
+            Tablo_ÖzlükHakkı.ClearSelection();
         }
     }
 }

@@ -35,6 +35,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             Ayraç_Diğer_Çalışan = new System.Windows.Forms.SplitContainer();
             groupBox3 = new System.Windows.Forms.GroupBox();
             Tablo_Üyelik = new System.Windows.Forms.DataGridView();
@@ -164,6 +167,10 @@
             // 
             // Tablo_Üyelik_İlkÖdemeninYapılacağıTarih
             // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "D";
+            dataGridViewCellStyle2.NullValue = null;
+            Tablo_Üyelik_İlkÖdemeninYapılacağıTarih.DefaultCellStyle = dataGridViewCellStyle2;
             Tablo_Üyelik_İlkÖdemeninYapılacağıTarih.HeaderText = "İlk Ödeme";
             Tablo_Üyelik_İlkÖdemeninYapılacağıTarih.MinimumWidth = 6;
             Tablo_Üyelik_İlkÖdemeninYapılacağıTarih.Name = "Tablo_Üyelik_İlkÖdemeninYapılacağıTarih";
@@ -180,8 +187,8 @@
             // 
             // Tablo_Üyelik_Dönem
             // 
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Üyelik_Dönem.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Üyelik_Dönem.DefaultCellStyle = dataGridViewCellStyle3;
             Tablo_Üyelik_Dönem.HeaderText = "Dönem";
             Tablo_Üyelik_Dönem.MinimumWidth = 6;
             Tablo_Üyelik_Dönem.Name = "Tablo_Üyelik_Dönem";
@@ -190,6 +197,10 @@
             // 
             // Tablo_Üyelik_BitişTarihi
             // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Format = "D";
+            dataGridViewCellStyle4.NullValue = null;
+            Tablo_Üyelik_BitişTarihi.DefaultCellStyle = dataGridViewCellStyle4;
             Tablo_Üyelik_BitişTarihi.HeaderText = "Bitiş Tarihi";
             Tablo_Üyelik_BitişTarihi.MinimumWidth = 6;
             Tablo_Üyelik_BitişTarihi.Name = "Tablo_Üyelik_BitişTarihi";
@@ -198,9 +209,9 @@
             // 
             // Tablo_Üyelik_Notlar
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Üyelik_Notlar.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Üyelik_Notlar.DefaultCellStyle = dataGridViewCellStyle5;
             Tablo_Üyelik_Notlar.HeaderText = "Notlar";
             Tablo_Üyelik_Notlar.MinimumWidth = 6;
             Tablo_Üyelik_Notlar.Name = "Tablo_Üyelik_Notlar";
@@ -456,13 +467,13 @@
             Tablo_ÖzlükHakkı.AllowUserToDeleteRows = false;
             Tablo_ÖzlükHakkı.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             Tablo_ÖzlükHakkı.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_ÖzlükHakkı.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_ÖzlükHakkı.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             Tablo_ÖzlükHakkı.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Tablo_ÖzlükHakkı.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Tablo_Çalışan_KayıtTarihi, Tablo_Çalışan_Açıklama, Tablo_Çalışan_Notlar, Tablo_Çalışan_KullanıcıAdı });
             Tablo_ÖzlükHakkı.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -483,6 +494,10 @@
             // 
             // Tablo_Çalışan_KayıtTarihi
             // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "F";
+            dataGridViewCellStyle7.NullValue = null;
+            Tablo_Çalışan_KayıtTarihi.DefaultCellStyle = dataGridViewCellStyle7;
             Tablo_Çalışan_KayıtTarihi.HeaderText = "Kayıt";
             Tablo_Çalışan_KayıtTarihi.MinimumWidth = 6;
             Tablo_Çalışan_KayıtTarihi.Name = "Tablo_Çalışan_KayıtTarihi";
@@ -492,8 +507,8 @@
             // 
             // Tablo_Çalışan_Açıklama
             // 
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Çalışan_Açıklama.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Çalışan_Açıklama.DefaultCellStyle = dataGridViewCellStyle8;
             Tablo_Çalışan_Açıklama.HeaderText = "Açıklama";
             Tablo_Çalışan_Açıklama.MinimumWidth = 6;
             Tablo_Çalışan_Açıklama.Name = "Tablo_Çalışan_Açıklama";
@@ -503,8 +518,8 @@
             // 
             // Tablo_Çalışan_Notlar
             // 
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Çalışan_Notlar.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Çalışan_Notlar.DefaultCellStyle = dataGridViewCellStyle9;
             Tablo_Çalışan_Notlar.HeaderText = "Notlar";
             Tablo_Çalışan_Notlar.MinimumWidth = 6;
             Tablo_Çalışan_Notlar.Name = "Tablo_Çalışan_Notlar";
@@ -518,7 +533,8 @@
             Tablo_Çalışan_KullanıcıAdı.MinimumWidth = 6;
             Tablo_Çalışan_KullanıcıAdı.Name = "Tablo_Çalışan_KullanıcıAdı";
             Tablo_Çalışan_KullanıcıAdı.ReadOnly = true;
-            Tablo_Çalışan_KullanıcıAdı.Width = 121;
+            Tablo_Çalışan_KullanıcıAdı.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            Tablo_Çalışan_KullanıcıAdı.Width = 98;
             // 
             // İpucu
             // 
@@ -610,15 +626,15 @@
         private System.Windows.Forms.ToolStripMenuItem SağTuşMenü_Üyelik_Düzenle;
         private System.Windows.Forms.ToolStripMenuItem SağTuşMenü_Üyelik_Sil;
         private System.Windows.Forms.Button İşyeri_Grup_Muhatap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KayıtTarihi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Açıklama;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Notlar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KullanıcıAdı;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_İlkÖdemeninYapılacağıTarih;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Miktar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Dönem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_BitişTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_Notlar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Üyelik_KullanıcıAdı;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KayıtTarihi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Açıklama;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_Notlar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Çalışan_KullanıcıAdı;
     }
 }

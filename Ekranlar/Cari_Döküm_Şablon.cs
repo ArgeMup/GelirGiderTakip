@@ -30,7 +30,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         #endregion
 
         #region Zamanlama
-        public enum Zamanlama_Aralık_ { Bu_ay, Bu_hafta, Bugün, Son_1_gün, Tüm_ödemeler };
+        public enum Zamanlama_Aralık_ { Bu_ay, Bu_hafta, Bugün, Son_1_gün, Tüm_ödemeler, Sabit };
         [Değişken_.Niteliği.Adını_Değiştir("Ş", 0)]
         Zamanlama_Aralık_ _Zamanlama_Aralık_;
         [Category("1 Zamanlama"), DisplayName("Aralık"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
@@ -284,7 +284,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Muhatap;
 
                     Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
-                    
+                    Zamanlama_Türü = Zamanlama_Türü_.Ödeme_tarihi;
+
                     Tipi_KontrolNoktası = Sıralama_ÜçSeçenek_.Hariç_tut;
                    
                     Sütunlar_Grup = Sütunlar_Durum_.Gizle;
@@ -302,7 +303,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                         Sütunlar_Üyelik = Sütunlar_Durum_.Gizle;
                     }
                    
-                    MuhatapGrubu.SeçilenEleman_Adı = Banka1.Çalışan_Yazısı;
+                    if (MuhatapGrubu != null) MuhatapGrubu.SeçilenEleman_Adı = Banka1.Çalışan_Yazısı;
                 }
 
                 _Diğer_ÇalışanMaaşHesabı_ = value;
@@ -322,7 +323,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 {
                     Zamanlama_Aralık = Zamanlama_Aralık_.Tüm_ödemeler;
                     Zamanlama_GecikenleriKesinlikleGöster = Zamanlama_GecikenleriKesinlikleGöster_.Evet;
-                    Zamanlama_Türü = Zamanlama_Türü_.Ödeme_tarihi;
+                    Zamanlama_Türü = Zamanlama_Türü_.Son_işlem_tarihi;
 
                     Durumu_KısmenÖdendi = Sıralama_ÜçSeçenek_.Farketmez;
                     Durumu_KısmiÖdemeYapıldı = Sıralama_ÜçSeçenek_.Farketmez;
@@ -360,8 +361,11 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Sütunlar_ÖdemeGünü = Sütunlar_Durum_.Göster;
                     Sütunlar_Üyelik = Sütunlar_Durum_.Göster;
 
-                    MuhatapGrubu.SeçilenEleman_Adı = null;
-                    Muhatap.SeçilenEleman_Adı = null;
+                    if (MuhatapGrubu != null)
+                    {
+                        MuhatapGrubu.SeçilenEleman_Adı = null;
+                        Muhatap.SeçilenEleman_Adı = null;
+                    }
                 }
 
                 _Diğer_MevcutTümÖdemeleriListele_ = Diğer_MevcutTümÖdemeleriListele_.Hayır;
@@ -502,6 +506,21 @@ namespace Gelir_Gider_Takip.Ekranlar
         #endregion
 
         #region İşlemler
+        public void Yenile()
+        {
+            var gecici_aralık = _Zamanlama_Aralık_;
+            var gecici_başlangıç = _Zamanlama_Başlangıç_;
+            var gecici_bitiş = _Zamanlama_Bitiş_;
+
+            Diğer_ÇalışanMaaşHesabı = _Diğer_ÇalışanMaaşHesabı_;
+
+            Zamanlama_Aralık = gecici_aralık;
+            if (gecici_aralık == Zamanlama_Aralık_.Sabit)
+            {
+                Zamanlama_Başlangıç = gecici_başlangıç;
+                Zamanlama_Bitiş = gecici_bitiş;
+            }
+        }
         public Cari_Döküm_Şablon_ Kopyala(ListeKutusu MuhatapGrubu, ListeKutusu Muhatap)
         {
             Cari_Döküm_Şablon_ kopya = (Cari_Döküm_Şablon_)Banka_Ortak.Sınıf_Kopyala(this);
@@ -585,6 +604,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                             throw new Exception();
                         }
                     }
+                    else if (DateTime.TryParseExact(girdi, ArgeMup.HazirKod.Dönüştürme.D_TarihSaat.Şablon_Tarih_Saat_MiliSaniye, null, DateTimeStyles.None, out DateTime tt)) return tt;
                     else
                     {
                         //1 31 - 1 12 - 0 9999 - 0 23 - 0 59 - 0 - 59 - 0 999

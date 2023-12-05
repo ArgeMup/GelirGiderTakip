@@ -567,11 +567,10 @@ namespace Gelir_Gider_Takip.Ekranlar
             for (int x = 0; x < Tablo.Columns.Count; x++)
             {
                 DataGridViewColumn sutun = Tablo.Columns[x];
-                if (!sutun.Visible) continue;
-
                 if (sutun.HeaderText == "Notlar") SutunNo_Notlar = x;
                 if (sutun.HeaderText == "Tip") SutunNo_Tip = x;
                 if (sutun.HeaderText == "Ödeme Günü") SutunNo_ÖdemeGünü = x;
+                if (!sutun.Visible) continue;
 
                 İşlemler_Bir_Sayfa_Sutun_ BirSutun = new İşlemler_Bir_Sayfa_Sutun_();
                 Sayfa.Sutunlar[x] = BirSutun;
@@ -640,9 +639,27 @@ namespace Gelir_Gider_Takip.Ekranlar
                 sol_nokta += Sayfa.Sutunlar[x].Genişlik;
             }
 
-            //işlemlerin eklenmesi
-            Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık = Sayfa.Sutunlar[SutunNo_Tip].Sol + Sayfa.Sutunlar[SutunNo_Tip].Genişlik - Sayfa.Sol;
+            //Kontrol noktası başlık genişliği
             s = new SizeF(1000, 1000);//a4 ten büyük
+            int Geçerlisutunsayısı = Sayfa.Sutunlar.Count(x => x != null);
+            if (Geçerlisutunsayısı >= 2) 
+            {
+                string örnek_başlık = "   88 Ağustos 8888 Pazartesi   " + Environment.NewLine + DateOnly.MaxValue.Yazıya();
+                float genişlik_hesaplanan_kontrol_noktası_açıklama = Grafik.MeasureString(örnek_başlık, Sayfa.KaKü, s).Width;
+
+                foreach (var stn in Sayfa.Sutunlar)
+                {
+                    if (stn == null) continue;
+
+                    float gnşlk = stn.Sol - Sayfa.Sol;
+                    if (gnşlk > genişlik_hesaplanan_kontrol_noktası_açıklama) { Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık = gnşlk; break; }
+                    else if (gnşlk + stn.Genişlik > genişlik_hesaplanan_kontrol_noktası_açıklama) { Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık = gnşlk + stn.Genişlik; break; }
+                }
+            }
+            if (Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık == 0 ||
+                Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık > Sayfa.Genişlik / 2) Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık = Sayfa.Genişlik / 2;
+
+            //işlemlerin eklenmesi
             for (int y = 0; y < Tablo.RowCount; y++)
             {
                 İşlemler_Bir_Satır_Bilgi_ İşlemler_Bir_Satır_Bilgi = new İşlemler_Bir_Satır_Bilgi_();
