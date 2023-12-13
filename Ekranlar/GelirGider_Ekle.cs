@@ -64,6 +64,11 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                 ParaBirimi.BackColor = Ortak.Renk_Kırmızı;
                 Notlar.BackColor = Ortak.Renk_Kırmızı;
+
+                if (Önyüz.İlkAçılışAyarları != null && Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım != null && Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length == 1)
+                {
+                    if (Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[0] == "Gelir") Gelir.Checked = true;
+                }
             }
             else
             {

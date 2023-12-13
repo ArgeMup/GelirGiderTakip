@@ -1181,7 +1181,8 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("KuR")] public bool[] Kullanıcı_Rolİzinleri;
             [Değişken_.Niteliği.Adını_Değiştir("Ku", 0)] public string Kullanıcı_Adı;
             [Değişken_.Niteliği.Adını_Değiştir("Ku", 1)] public İlkAçılışAyarları_Komut_ Kullanıcı_Komut;
-            [Değişken_.Niteliği.Adını_Değiştir("KuEt")] public string[] Kullanıcı_Komut_EkTanım; //Yazdırma : pdf dosya yolu + Şablon Adı
+            [Değişken_.Niteliği.Adını_Değiştir("KuEt")] public string[] Kullanıcı_Komut_EkTanım;    //Yazdır                : pdf dosya yolu + Şablon Adı
+                                                                                                    //Sayfa_GelirGiderEkle  : Gelir veya Gider veya Boş
 
             [Değişken_.Niteliği.Adını_Değiştir("E GeGi")] public List<İlkAçılışAyarları_Ekle_GelirGider_Talep_> Ekle_GelirGider_Talepler;
         }
