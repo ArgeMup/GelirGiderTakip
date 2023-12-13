@@ -13,16 +13,21 @@ namespace Gelir_Gider_Takip.Ekranlar
         public enum AçılışTürü_ { Normal, İlişkiliOlanlarıListele, SürümleriListele, Gizli };
 
         List<string> Kapsam_Grup = null, Kapsam_Muhatap = null;
-        Banka1.İşyeri_Ödeme_ Ödeme = null;
+        Banka1.İşyeri_Ödeme_ Ortak_Kullanım_Ödeme = null;
         AçılışTürü_ AçılışTürü;
         ArgeMup.HazirKod.Ekranlar.ListeKutusu.Ayarlar_ ListeKutusu_Ayarlar;
         ListeKutusu Sorgula_Şablonlar;
+        const char Sorgula_AltToplamlar_Ayraç = 'é';
+        readonly Font Sorgula_Kakü_kontrolNoktası;
         Cari_Döküm_Şablon_ Şablon;
+        bool Cari_döküm_içinde_işlem_yapabilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Cari_döküm_içinde_işlem_yapabilir);
 
         public Cari_Döküm(AçılışTürü_ AçılışTürü = AçılışTürü_.Normal, Banka1.İşyeri_Ödeme_ Ödeme = null)
         {
             InitializeComponent();
             if (AçılışTürü == AçılışTürü_.Gizli) Opacity = 0;
+
+            Sorgula_Kakü_kontrolNoktası = new Font("Consolas", Tablo.DefaultCellStyle.Font.Size);
 
             Sorgula_MuhatapGrubu = new ArgeMup.HazirKod.Ekranlar.ListeKutusu();
             Ayraç_MuhatapGrubu_Muhatap.Panel1.Controls.Add(Sorgula_MuhatapGrubu);
@@ -44,13 +49,13 @@ namespace Gelir_Gider_Takip.Ekranlar
             Düzenleme_Ekranı.Dock = DockStyle.Fill;
             KontrolNoktası_Ekranı.Dock = DockStyle.Fill;
 
-            this.Ödeme = Ödeme;
+            this.Ortak_Kullanım_Ödeme = Ödeme;
             this.AçılışTürü = AçılışTürü;
 
             ListeKutusu_Ayarlar = new ArgeMup.HazirKod.Ekranlar.ListeKutusu.Ayarlar_() { ÇokluSeçim = ListeKutusu.Ayarlar_.ÇokluSeçim_.SolFareTuşuİle };
             ListeKutusu_Ayarlar.TümTuşlarıKapat();
 
-            if (!Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Cari_döküm_içinde_işlem_yapabilir))
+            if (!Cari_döküm_içinde_işlem_yapabilir)
             {
                 Öde.Visible = false;
                 Düzenle.Visible = false;
@@ -84,12 +89,12 @@ namespace Gelir_Gider_Takip.Ekranlar
                 case AçılışTürü_.İlişkiliOlanlarıListele:
                     Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi;
                     Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit;
-                    Şablon.Zamanlama_Başlangıç = Ödeme.İlkKayıtTarihi;
-                    Şablon.Zamanlama_Bitiş = Ödeme.İlkKayıtTarihi;
+                    Şablon.Zamanlama_Başlangıç = Ortak_Kullanım_Ödeme.İlkKayıtTarihi;
+                    Şablon.Zamanlama_Bitiş = Ortak_Kullanım_Ödeme.İlkKayıtTarihi;
                     Şablon.Zamanlama_GecikenleriKesinlikleGöster = Cari_Döküm_Şablon_.Zamanlama_GecikenleriKesinlikleGöster_.Hayır;
 
-                    Sorgula_MuhatapGrubu.SeçilenEleman_Adı = Ödeme.MuhatapGrubuAdı;
-                    Sorgula_Muhatap.SeçilenEleman_Adı = Ödeme.MuhatapAdı;
+                    Sorgula_MuhatapGrubu.SeçilenEleman_Adı = Ortak_Kullanım_Ödeme.MuhatapGrubuAdı;
+                    Sorgula_Muhatap.SeçilenEleman_Adı = Ortak_Kullanım_Ödeme.MuhatapAdı;
                     Sorgula_Click(null, null);
                     break;
 
@@ -102,22 +107,22 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Tablo_SonİşlemTarihi.Visible = false;
                     string Son_Not = null;
 
-                    foreach (KeyValuePair<DateTime, Banka1.İşyeri_Ödeme_İşlem_> işlem in Ödeme.İşlemler)
+                    foreach (KeyValuePair<DateTime, Banka1.İşyeri_Ödeme_İşlem_> işlem in Ortak_Kullanım_Ödeme.İşlemler)
                     {
                         if (işlem.Value.Notlar.DoluMu()) Son_Not = işlem.Value.Notlar;
 
-                        bool üyelik_olarak_göster = Ödeme.Üyelik_KayıtTarihi != null;
-                        bool gelir_olarak_göster = Ödeme.Tipi.GelirMi();
+                        bool üyelik_olarak_göster = Ortak_Kullanım_Ödeme.Üyelik_KayıtTarihi != null;
+                        bool gelir_olarak_göster = Ortak_Kullanım_Ödeme.Tipi.GelirMi();
 
                         object[] dizin = new object[sutun_sayısı];
-                        dizin[Tablo_MuhatapGrubu.Index] = Ödeme.MuhatapGrubuAdı;
-                        dizin[Tablo_Muhatap.Index] = Ödeme.MuhatapAdı;
+                        dizin[Tablo_MuhatapGrubu.Index] = Ortak_Kullanım_Ödeme.MuhatapGrubuAdı;
+                        dizin[Tablo_Muhatap.Index] = Ortak_Kullanım_Ödeme.MuhatapAdı;
                         dizin[Tablo_ÖdemeTarihi.Index] = işlem.Value.ÖdemeninYapılacağıTarih;
                         dizin[Tablo_Tip.Index] = işlem.Value.Tipi.Yazdır();
                         dizin[Tablo_Durum.Index] = işlem.Value.Durumu.Yazdır();
                         dizin[Tablo_Notlar.Index] = Son_Not;
-                        dizin[Tablo_Miktar.Index] = Banka_Ortak.Yazdır_Ücret(işlem.Value.Miktarı, Ödeme.ParaBirimi);
-                        dizin[Tablo_Taksit.Index] = Ödeme.Taksit.Yazdır();
+                        dizin[Tablo_Miktar.Index] = Banka_Ortak.Yazdır_Ücret(işlem.Value.Miktarı, Ortak_Kullanım_Ödeme.ParaBirimi);
+                        dizin[Tablo_Taksit.Index] = Ortak_Kullanım_Ödeme.Taksit.Yazdır();
                         dizin[Tablo_Üyelik.Index] = üyelik_olarak_göster;
                         dizin[Tablo_KayıtTarihi.Index] = işlem.Key;
                         dizin[Tablo_KullanıcıAdı.Index] = işlem.Value.GerçekleştirenKullanıcıAdı;
@@ -128,11 +133,12 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                         _1_satır_dizisi_.Cells[Tablo_Miktar.Index].Style.BackColor = gelir_olarak_göster ? Ortak.Renk_Gelir : Ortak.Renk_Gider;
                         _1_satır_dizisi_.Cells[Tablo_Miktar.Index].ToolTipText = gelir_olarak_göster ? "Gelir" : "Gider";
-                        if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = Ödeme.Üyelik_KayıtTarihi.Value.Yazıya();
+                        if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = Ortak_Kullanım_Ödeme.Üyelik_KayıtTarihi.Value.Yazıya();
                         _1_satır_dizisi_.Cells[Tablo_Durum.Index].Style.BackColor = DurumRengi(işlem.Value.Durumu);
-                        if (Ödeme.GeciktiMi) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Kırmızı;
+                        if (Ortak_Kullanım_Ödeme.GeciktiMi) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Kırmızı;
                     }
 
+                    dizi.Reverse();
                     Tablo.Rows.AddRange(dizi.ToArray());
                     Tablo.ClearSelection();
                     break;
@@ -268,7 +274,6 @@ namespace Gelir_Gider_Takip.Ekranlar
             int sutun_sayısı = Tablo.ColumnCount;
             List<DataGridViewRow> dizi = new List<DataGridViewRow>();
             Dictionary<string, double> AltToplamlar = new Dictionary<string, double>();
-            const char AltToplamlar_Ayraç = 'é';
 
             foreach (string yıl in Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_Yıllar())
             {
@@ -291,13 +296,13 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             if (Şablon.Diğer_AltToplam != Cari_Döküm_Şablon_.Diğer_AltToplam_.Gerekli_değil)
             {
-                if (AltToplamlar.Keys.Count == 0) AltToplamlar.Add("1" + AltToplamlar_Ayraç + "Geçerli kayıt bulunamadı" + AltToplamlar_Ayraç + "Geçerli kayıt bulunamadı", 0);
+                if (AltToplamlar.Keys.Count == 0) AltToplamlar.Add("1" + Sorgula_AltToplamlar_Ayraç + "Geçerli kayıt bulunamadı" + Sorgula_AltToplamlar_Ayraç + "Geçerli kayıt bulunamadı", 0);
                 bool MaaşÖdemeleriİçin = Şablon.Diğer_ÇalışanMaaşHesabı != Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Gerekli_değil;
 
                 foreach (KeyValuePair<string, double> AltToplam in AltToplamlar)
                 {
                     object[] dizin = new object[sutun_sayısı];
-                    string[] AltToplam_Ad_Dizisi = AltToplam.Key.Split(AltToplamlar_Ayraç);
+                    string[] AltToplam_Ad_Dizisi = AltToplam.Key.Split(Sorgula_AltToplamlar_Ayraç);
 
                     //parabirimi_sayısı + Grup
                     //parabirimi_sayısı + Grup + muhatap
@@ -393,6 +398,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     {
                         _1_satır_dizisi_.Cells[i].Style.BackColor = Ortak.Renk_KontrolNoktası;
                     }
+                    _1_satır_dizisi_.Cells[Tablo_Notlar.Index].Style.Font = Sorgula_Kakü_kontrolNoktası;
                 }
                 else
                 {
@@ -424,7 +430,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (Şablon.Diğer_AltToplam != Cari_Döküm_Şablon_.Diğer_AltToplam_.Gerekli_değil && !iptaledildi_olarak_göster &&
                         !(Şablon.Diğer_ÇalışanMaaşHesabı != Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Gerekli_değil && tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansVerilmesi))
                     {
-                        string anahtar = ((int)_ödeme_.ParaBirimi).Yazıya() + AltToplamlar_Ayraç + _ödeme_.MuhatapGrubuAdı;
+                        string anahtar = ((int)_ödeme_.ParaBirimi).Yazıya() + Sorgula_AltToplamlar_Ayraç + _ödeme_.MuhatapGrubuAdı;
                         double miktar = 0;
 
                         if (Şablon.Diğer_AltToplam == Cari_Döküm_Şablon_.Diğer_AltToplam_.Sadece_grup_için_hesapla || Şablon.Diğer_AltToplam == Cari_Döküm_Şablon_.Diğer_AltToplam_.Tümü_için_hesapla)
@@ -437,7 +443,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                         if (Şablon.Diğer_AltToplam == Cari_Döküm_Şablon_.Diğer_AltToplam_.Sadece_muhatap_için_hesapla || Şablon.Diğer_AltToplam == Cari_Döküm_Şablon_.Diğer_AltToplam_.Tümü_için_hesapla)
                         {
-                            anahtar += AltToplamlar_Ayraç + _ödeme_.MuhatapAdı;
+                            anahtar += Sorgula_AltToplamlar_Ayraç + _ödeme_.MuhatapAdı;
                             miktar = 0;
                             if (AltToplamlar.ContainsKey(anahtar)) miktar = AltToplamlar[anahtar];
                             if (gelir_olarak_göster) miktar += _ödeme_.Miktarı;

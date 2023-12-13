@@ -541,13 +541,15 @@
             // Açıklamalar
             // 
             Açıklamalar.Dock = System.Windows.Forms.DockStyle.Fill;
+            Açıklamalar.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             Açıklamalar.Location = new System.Drawing.Point(0, 0);
             Açıklamalar.Multiline = true;
             Açıklamalar.Name = "Açıklamalar";
             Açıklamalar.ReadOnly = true;
-            Açıklamalar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            Açıklamalar.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             Açıklamalar.Size = new System.Drawing.Size(185, 156);
             Açıklamalar.TabIndex = 0;
+            Açıklamalar.WordWrap = false;
             // 
             // KontrolNoktası_Ekranı
             // 
@@ -723,7 +725,7 @@
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(185, 20);
             label1.TabIndex = 24;
-            label1.Text = "Ödemenin Yapılacağı Tarih";
+            label1.Text = "Ödemenin yapılacağı tarih";
             // 
             // Düzenle_Miktar_Paneli
             // 
@@ -917,7 +919,7 @@
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(226, 20);
             label3.TabIndex = 24;
-            label3.Text = "Kalan Ödemenin Yapılacağı Tarih";
+            label3.Text = "Kalan ödemenin yapılacağı tarih";
             // 
             // panel1
             // 
@@ -953,7 +955,7 @@
             Öde_KısmiÖdeme.Size = new System.Drawing.Size(388, 24);
             Öde_KısmiÖdeme.TabIndex = 23;
             Öde_KısmiÖdeme.TabStop = true;
-            Öde_KısmiÖdeme.Text = "Kısmi Ödeme";
+            Öde_KısmiÖdeme.Text = "Kısmi ödeme";
             Öde_KısmiÖdeme.UseVisualStyleBackColor = true;
             // 
             // Öde_TamÖdeme
@@ -966,7 +968,7 @@
             Öde_TamÖdeme.Size = new System.Drawing.Size(388, 24);
             Öde_TamÖdeme.TabIndex = 22;
             Öde_TamÖdeme.TabStop = true;
-            Öde_TamÖdeme.Text = "Tam Ödeme";
+            Öde_TamÖdeme.Text = "Tam ödeme";
             Öde_TamÖdeme.UseVisualStyleBackColor = true;
             Öde_TamÖdeme.CheckedChanged += Öde_TamÖdeme_CheckedChanged;
             // 
