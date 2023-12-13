@@ -679,6 +679,38 @@ namespace Gelir_Gider_Takip
 
                 İşlemler.Add(Anahtar, İşlem);
             }
+            public void Öde(double ÖdenilenMiktar, ParaBirimi_ ÖdenilenParaBirimi, string Notlar, DateTime? KalanÖdemeninYapılacağıTarih)
+            {
+                Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(MuhatapGrubuAdı, MuhatapAdı, true);
+                İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(İlkKayıtTarihi.Year.Yazıya());
+                
+                if (Üyelik_HenüzKaydedilmemişBirÖdeme)
+                {
+                    Üyelik_HenüzKaydedilmemişBirÖdeme = false;
+
+                    muhatap.Üyelik_SisteminTetiklemesiniEngelle(Üyelik_KayıtTarihi.Value, ÖdemeninYapılacağıTarih);
+                    muhatap.GelirGider_Ekle(new List<İşyeri_Ödeme_>() { this }, BirYıllıkDönem);
+                }
+
+                if (ÖdenilenMiktar == Miktarı)
+                {
+                    if (ÖdenilenParaBirimi != ParaBirimi) throw new Exception("ÖdenilenParaBirimi(" + ÖdenilenParaBirimi + ") != ParaBirimi(" + ParaBirimi + ")");
+                    
+                    BirYıllıkDönem.Güncelle(this, Tipi, İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi, Miktarı, Notlar);
+                }
+                else
+                {
+                    //ana ödemenin içine kısmi ödemenin işlenmesi
+                    double YapılanÖdeme_ÖdemeParaBiriminde = Miktarı - ÖdenilenMiktar;
+                    BirYıllıkDönem.Güncelle(this, Tipi, İşyeri_Ödeme_İşlem_.Durum_.KısmenÖdendi, ÖdenilenMiktar, Notlar, DateOnly.FromDateTime(KalanÖdemeninYapılacağıTarih.Value));
+
+                    //ana ödemeden bağımsız tam ödeme oluşturulması
+                    string açıklama = ParaBirimi != ÖdenilenParaBirimi ? "(" + Banka_Ortak.Yazdır_Ücret(ÖdenilenMiktar, ÖdenilenParaBirimi) + ")" : null;
+                    açıklama += (açıklama.DoluMu() ? " " : null) + Notlar;
+
+                    muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(Tipi, İlkKayıtTarihi, YapılanÖdeme_ÖdemeParaBiriminde, ParaBirimi, KalanÖdemeninYapılacağıTarih.Value, açıklama, Taksit, Üyelik_KayıtTarihi));
+                }
+            }
             #endregion
         }
         public class İşyeri_Ödeme_İşlem_

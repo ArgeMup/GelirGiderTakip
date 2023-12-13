@@ -48,6 +48,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             Ödeme_Ekranı.Dock = DockStyle.Fill;
             Düzenleme_Ekranı.Dock = DockStyle.Fill;
             KontrolNoktası_Ekranı.Dock = DockStyle.Fill;
+            ÇokluSeçim_Ekranı.Dock = DockStyle.Fill;
 
             this.Ortak_Kullanım_Ödeme = Ödeme;
             this.AçılışTürü = AçılışTürü;
@@ -61,6 +62,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Düzenle.Visible = false;
                 KontrolNoktasıEkle.Visible = false;
                 Yazdır.Visible = false;
+                ÇokluSeçim.Visible = false;
             }
 
             Ayraç_Filtre_TabloSonuç.SplitterDistance = Height / 5;
@@ -76,6 +78,9 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Şablon = new Cari_Döküm_Şablon_(Sorgula_MuhatapGrubu, Sorgula_Muhatap);
             SorgulamaDetayları.SelectedObject = Şablon;
+
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Tag = ÇokluSeçim_Ertele_TamTarih_Onay;
+            ÇokluSeçim_Ertele_TamTarih_Onay.Tag = ÇokluSeçim_Ertele_SüreKadar_Onay;
         }
         private void Cari_Döküm_Shown(object sender, EventArgs e)
         {
@@ -252,6 +257,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             Öde_Geri_Click(null, null);
             Düzenle_Geri_Click(null, null);
             KontrolNoktası_Geri_Click(null, null);
+            ÇokluSeçim_Geri_Click(null, null);
 
             Şablon.Yenile();
             SorgulamaDetayları.Refresh();
@@ -689,29 +695,57 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Tablo_SelectionChanged(object sender, EventArgs e)
         {
-            if (Tablo.SelectedRows.Count != 1)
+            int SeçilenSatırSayısı = Tablo.SelectedRows.Count;
+
+            if (SeçilenSatırSayısı < 1 || SeçilenSatırSayısı > 1)
             {
                 Öde.Enabled = false;
                 Düzenle.Enabled = false;
                 İlişkiliÖdemeleriListele.Enabled = false;
                 SürümleriListele.Enabled = false;
-                return;
+                ÇokluSeçim.Enabled = false;
             }
 
-            int SatırNo = Tablo.SelectedRows[0].Index;
-            if (SatırNo >= 0 && Tablo.Rows[SatırNo].Tag != null)
+            if (SeçilenSatırSayısı >= 1 && Cari_döküm_içinde_işlem_yapabilir)
             {
-                Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
-                bool Üyelik_HenüzKaydedilmemişBirÖdeme_Değil = !ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme;
-
-                if (Öde.Visible)
+                int adet_Ödenebilir = 0, adet_Ertelenebilir = 0, adet_ÖdenmediOlarakİşaretlenebilir = 0, adet_İptalEdilebilir = 0;
+                foreach (DataGridViewRow str in Tablo.SelectedRows)
                 {
-                    Öde.Enabled = !ödeme.Durumu.ÖdendiMi();
-                    Düzenle.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                    if (!str.Visible) continue;
+
+                    ÇokluSeçim_HangiİşlemlereUygun(str.Index, out bool Ödenebilir, out bool Ertelenebilir, out bool ÖdenmediOlarakİşaretlenebilir, out bool İptalEdilebilir);
+                    if (Ödenebilir) adet_Ödenebilir++;
+                    if (Ertelenebilir) adet_Ertelenebilir++;
+                    if (ÖdenmediOlarakİşaretlenebilir) adet_ÖdenmediOlarakİşaretlenebilir++;
+                    if (İptalEdilebilir) adet_İptalEdilebilir++;
                 }
 
-                İlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
-                SürümleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && ödeme.İşlemler.Count > 1;
+                ÇokluSeçim_TamÖde.Enabled = adet_Ödenebilir == SeçilenSatırSayısı;
+                ÇokluSeçim_Ertele.Enabled = adet_Ertelenebilir == SeçilenSatırSayısı;
+                ÇokluSeçim_ÖdenmediOlarakİşaretler.Enabled = adet_ÖdenmediOlarakİşaretlenebilir == SeçilenSatırSayısı;
+                ÇokluSeçim_İptalEt.Enabled = adet_İptalEdilebilir == SeçilenSatırSayısı;
+
+                ÇokluSeçim.Enabled = ÇokluSeçim_TamÖde.Enabled || ÇokluSeçim_Ertele.Enabled || ÇokluSeçim_ÖdenmediOlarakİşaretler.Enabled || ÇokluSeçim_İptalEt.Enabled;
+                ÇokluSeçim_Ekranı_Açıklama.Text = "Seçilen " + SeçilenSatırSayısı + " ödemeyi";
+            }
+
+            if (SeçilenSatırSayısı == 1)
+            {
+                int SatırNo = Tablo.SelectedRows[0].Index;
+                if (SatırNo >= 0 && Tablo.Rows[SatırNo].Tag != null)
+                {
+                    Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
+                    bool Üyelik_HenüzKaydedilmemişBirÖdeme_Değil = !ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme;
+
+                    if (Cari_döküm_içinde_işlem_yapabilir)
+                    {
+                        Öde.Enabled = !ödeme.Durumu.ÖdendiMi();
+                        Düzenle.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                    }
+
+                    İlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                    SürümleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && ödeme.İşlemler.Count > 1;
+                }
             }
         }
 
@@ -810,37 +844,24 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Dr == DialogResult.No) return;
 
             Banka1.İşyeri_Ödeme_ ödeme = Öde_TamÖdeme.Tag as Banka1.İşyeri_Ödeme_;
-            string yıl = ödeme.İlkKayıtTarihi.Year.Yazıya(); //ilk kayıt tarihi
-            Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
-
-            if (ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme)
-            {
-                ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme = false;
-
-                Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı);
-                muhatap.Üyelik_SisteminTetiklemesiniEngelle(ödeme.Üyelik_KayıtTarihi.Value, ödeme.ÖdemeninYapılacağıTarih);
-                muhatap.GelirGider_Ekle(new List<Banka1.İşyeri_Ödeme_>() { ödeme }, BirYıllıkDönem);
-            }
+            double ÖdenilenMiktar;
+            Banka1.İşyeri_Ödeme_.ParaBirimi_ ÖdenilenParaBirimi;
+            DateTime? KalanÖdemeninYapılacağıTarih;
 
             if (Öde_TamÖdeme.Checked)
             {
-                BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi, ödeme.Miktarı, Öde_Notlar.Text);
+                ÖdenilenMiktar = ödeme.Miktarı;
+                ÖdenilenParaBirimi = ödeme.ParaBirimi;
+                KalanÖdemeninYapılacağıTarih = null;
             }
             else
             {
-                //ana ödemenin içine kısmi ödemenin işlenmesi
-                double KalanÖdemeMiktarı_ÖdemeParaBiriminde = (double)Öde_KısmiÖdeme_Miktar.Tag;
-                double YapılanÖdeme_ÖdemeParaBiriminde = ödeme.Miktarı - KalanÖdemeMiktarı_ÖdemeParaBiriminde;
-                BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.KısmenÖdendi, KalanÖdemeMiktarı_ÖdemeParaBiriminde, Öde_Notlar.Text, DateOnly.FromDateTime(Öde_KalanÖdemeTarihi.Value));
-
-                //ana ödemeden bağımsız tam ödeme oluşturulması
-                Banka1.İşyeri_Ödeme_.ParaBirimi_ İstenenParBirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(Öde_KısmiÖdeme_ParaBirimi.SelectedIndex + 1);
-                string açıklama = ödeme.ParaBirimi != İstenenParBirimi ? "(" + Banka_Ortak.Yazdır_Ücret((double)Öde_KısmiÖdeme_Miktar.Value, İstenenParBirimi) + ")" : null;
-                açıklama += (açıklama.DoluMu() ? " " : null) + Öde_Notlar.Text;
-
-                Banka1.Muhatap_ muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(ödeme.MuhatapGrubuAdı, ödeme.MuhatapAdı, true);
-                muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(ödeme.Tipi, ödeme.İlkKayıtTarihi, YapılanÖdeme_ÖdemeParaBiriminde, ödeme.ParaBirimi, Öde_KalanÖdemeTarihi.Value, açıklama, ödeme.Taksit, ödeme.Üyelik_KayıtTarihi));
+                ÖdenilenMiktar = (double)Öde_KısmiÖdeme_Miktar.Tag;
+                ÖdenilenParaBirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(Öde_KısmiÖdeme_ParaBirimi.SelectedIndex + 1);
+                KalanÖdemeninYapılacağıTarih = Öde_KalanÖdemeTarihi.Value;
             }
+
+            ödeme.Öde(ÖdenilenMiktar, ÖdenilenParaBirimi, Öde_Notlar.Text, KalanÖdemeninYapılacağıTarih);
 
             Banka_Ortak.DeğişiklikleriKaydet();
             Sorgula_Click(null, null);
@@ -890,6 +911,107 @@ namespace Gelir_Gider_Takip.Ekranlar
             Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
 
             BirYıllıkDönem.Güncelle(ödeme, (Banka1.İşyeri_Ödeme_İşlem_.Tipi_)Düzenle_Tip.SelectedIndex + 1, (Banka1.İşyeri_Ödeme_İşlem_.Durum_)Düzenle_Durum.SelectedIndex + 1, (double)Düzenle_Miktar.Value, Düzenle_Notlar.Text, DateOnly.FromDateTime(Düzenle_ÖdemeninYapılacağıTarih.Value));
+
+            Banka_Ortak.DeğişiklikleriKaydet();
+            Sorgula_Click(null, null);
+        }
+        #endregion
+        #region Çoklu Seçim
+        void ÇokluSeçim_HangiİşlemlereUygun(int SatırNo, out bool Ödenebilir, out bool Ertelenebilir, out bool ÖdenmediOlarakİşaretlenebilir, out bool İptalEdilebilir)
+        {
+            Ödenebilir = false;
+            Ertelenebilir = false;
+            ÖdenmediOlarakİşaretlenebilir = false;
+            İptalEdilebilir = false;
+
+            Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
+            if (ödeme == null || ödeme.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.KontrolNoktası) return;
+
+            Ödenebilir = !ödeme.Durumu.ÖdendiMi();
+            Ertelenebilir = Ödenebilir && !ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme;
+            ÖdenmediOlarakİşaretlenebilir = !Ödenebilir;
+            İptalEdilebilir = ödeme.Durumu != Banka1.İşyeri_Ödeme_İşlem_.Durum_.İptalEdildi;
+        }
+        private void ÇokluSeçim_Click(object sender, EventArgs e)
+        {
+            ÇokluSeçim_TamÖde.Checked = false;
+
+            ÇokluSeçim_Ertele.Checked = false;
+            DateTime t = DateTime.Now.AddDays(7);
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Value = new DateTime(t.Year, t.Month, t.Day);
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Value = 1;
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.SelectedIndex = 1;//Hafta
+
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.Checked = false;
+            ÇokluSeçim_İptalEt.Checked = false;
+            ÇokluSeçim_Kaydet.Enabled = false;
+
+            ÇokluSeçim_Ekranı.Visible = true;
+            Sonuçlar_Ekranı.Visible = false;
+        }
+        private void ÇokluSeçim_Geri_Click(object sender, EventArgs e)
+        {
+            Sonuçlar_Ekranı.Visible = true;
+            ÇokluSeçim_Ekranı.Visible = false;
+        }
+        private void ÇokluSeçim_Ertele_x_Onay_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton tıklanan = sender as RadioButton;
+            RadioButton diğeri = tıklanan.Tag as RadioButton;
+            diğeri.Checked = !tıklanan.Checked;
+        }
+        private void ÇokluSeçim_Ertele_SüreKadar_x_AyarDeğişti(object sender, EventArgs e)
+        {
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Checked = true;
+        }
+        private void ÇokluSeçim_Ertele_TamTarih_x_AyarDeğişti(object sender, EventArgs e)
+        {
+            ÇokluSeçim_Ertele_TamTarih_Onay.Checked = true;
+        }
+        private void ÇokluSeçim_Ertele_CheckedChanged(object sender, EventArgs e)
+        {
+            ÇokluSeçim_Ertele_SüreKadar.Enabled = ÇokluSeçim_Ertele.Checked;
+            ÇokluSeçim_Ertele_TamTarih.Enabled = ÇokluSeçim_Ertele.Checked;
+
+            ÇokluSeçim_AyarDeğişti(null, null);
+        }
+        private void ÇokluSeçim_AyarDeğişti(object sender, EventArgs e)
+        {
+            ÇokluSeçim_Kaydet.Enabled = true;
+        }
+        private void ÇokluSeçim_Kaydet_Click(object sender, EventArgs e)
+        {
+            DialogResult Dr = MessageBox.Show("Seçilen " + Tablo.SelectedRows.Count + " adet ödeme için işleme devam etmek istiyor musunuz?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (Dr == DialogResult.No) return;
+
+            foreach (DataGridViewRow satır in Tablo.SelectedRows)
+            {
+                Banka1.İşyeri_Ödeme_ ödeme = satır.Tag as Banka1.İşyeri_Ödeme_;
+
+                if (ÇokluSeçim_TamÖde.Checked)
+                {
+                    ödeme.Öde(ödeme.Miktarı, ödeme.ParaBirimi, null, null);
+                }
+                else
+                {
+                    string yıl = ödeme.İlkKayıtTarihi.Year.Yazıya(); //ilk kayıt tarihi
+                    Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
+
+                    if (ÇokluSeçim_Ertele.Checked)
+                    {
+                        DateOnly ÖdemeninYapılacağıTarih = ÇokluSeçim_Ertele_SüreKadar_Onay.Checked ? Banka_Ortak.SonrakiTarihiHesapla(ödeme.ÖdemeninYapılacağıTarih, (Banka1.Muhatap_Üyelik_.Dönem_)(ÇokluSeçim_Ertele_SüreKadar_Dönem.SelectedIndex + 1), (int)ÇokluSeçim_Ertele_SüreKadar_Adet.Value) : DateOnly.FromDateTime(ÇokluSeçim_Ertele_TamTarih_Tarih.Value);
+                        BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, ödeme.Durumu, ödeme.Miktarı, null, ÖdemeninYapılacağıTarih);
+                    }
+                    else if (ÇokluSeçim_ÖdenmediOlarakİşaretler.Checked)
+                    {
+                        BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, ödeme.Miktarı, null);
+                    }
+                    else if (ÇokluSeçim_İptalEt.Checked)
+                    {
+                        BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.İptalEdildi, ödeme.Miktarı, null);
+                    }
+                }
+            }
 
             Banka_Ortak.DeğişiklikleriKaydet();
             Sorgula_Click(null, null);

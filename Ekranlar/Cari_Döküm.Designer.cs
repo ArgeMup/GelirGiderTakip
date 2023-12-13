@@ -68,6 +68,23 @@
             Ayraç_Şablonlar_SorgulamaSeçenekleri = new System.Windows.Forms.SplitContainer();
             SorgulamaDetayları = new System.Windows.Forms.PropertyGrid();
             Açıklamalar = new System.Windows.Forms.TextBox();
+            ÇokluSeçim_Ekranı = new System.Windows.Forms.Panel();
+            ÇokluSeçim_Ekranı_2 = new System.Windows.Forms.Panel();
+            ÇokluSeçim_İptalEt = new System.Windows.Forms.RadioButton();
+            ÇokluSeçim_ÖdenmediOlarakİşaretler = new System.Windows.Forms.RadioButton();
+            panel5 = new System.Windows.Forms.Panel();
+            ÇokluSeçim_Kaydet = new System.Windows.Forms.Button();
+            ÇokluSeçim_Geri = new System.Windows.Forms.Button();
+            ÇokluSeçim_Ertele_TamTarih = new System.Windows.Forms.Panel();
+            ÇokluSeçim_Ertele_TamTarih_Tarih = new System.Windows.Forms.DateTimePicker();
+            ÇokluSeçim_Ertele_TamTarih_Onay = new System.Windows.Forms.RadioButton();
+            ÇokluSeçim_Ertele_SüreKadar = new System.Windows.Forms.Panel();
+            ÇokluSeçim_Ertele_SüreKadar_Dönem = new System.Windows.Forms.ComboBox();
+            ÇokluSeçim_Ertele_SüreKadar_Adet = new System.Windows.Forms.NumericUpDown();
+            ÇokluSeçim_Ertele_SüreKadar_Onay = new System.Windows.Forms.RadioButton();
+            ÇokluSeçim_Ertele = new System.Windows.Forms.RadioButton();
+            ÇokluSeçim_TamÖde = new System.Windows.Forms.RadioButton();
+            ÇokluSeçim_Ekranı_Açıklama = new System.Windows.Forms.Label();
             KontrolNoktası_Ekranı = new System.Windows.Forms.Panel();
             KontrolNoktası_Ekranı_2 = new System.Windows.Forms.Panel();
             panel8 = new System.Windows.Forms.Panel();
@@ -88,6 +105,7 @@
             Düzenle_MuhatapVeGrupAdı = new System.Windows.Forms.Label();
             Sonuçlar_Ekranı = new System.Windows.Forms.Panel();
             panel6 = new System.Windows.Forms.Panel();
+            ÇokluSeçim = new System.Windows.Forms.Button();
             Düzenle = new System.Windows.Forms.Button();
             İlişkiliÖdemeleriListele = new System.Windows.Forms.Button();
             KontrolNoktasıEkle = new System.Windows.Forms.Button();
@@ -122,6 +140,12 @@
             ((System.ComponentModel.ISupportInitialize)Ayraç_Şablonlar_SorgulamaSeçenekleri).BeginInit();
             Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.SuspendLayout();
             Ayraç_Şablonlar_SorgulamaSeçenekleri.SuspendLayout();
+            ÇokluSeçim_Ekranı.SuspendLayout();
+            ÇokluSeçim_Ekranı_2.SuspendLayout();
+            panel5.SuspendLayout();
+            ÇokluSeçim_Ertele_TamTarih.SuspendLayout();
+            ÇokluSeçim_Ertele_SüreKadar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ÇokluSeçim_Ertele_SüreKadar_Adet).BeginInit();
             KontrolNoktası_Ekranı.SuspendLayout();
             KontrolNoktası_Ekranı_2.SuspendLayout();
             panel8.SuspendLayout();
@@ -261,7 +285,6 @@
             Tablo.DefaultCellStyle = dataGridViewCellStyle8;
             Tablo.Dock = System.Windows.Forms.DockStyle.Fill;
             Tablo.Location = new System.Drawing.Point(0, 34);
-            Tablo.MultiSelect = false;
             Tablo.Name = "Tablo";
             Tablo.ReadOnly = true;
             Tablo.RowHeadersVisible = false;
@@ -395,7 +418,7 @@
             TabloİçeriğiArama.Location = new System.Drawing.Point(0, 0);
             TabloİçeriğiArama.Name = "TabloİçeriğiArama";
             TabloİçeriğiArama.PlaceholderText = "Aranacak metni buraya yazabilirsiniz";
-            TabloİçeriğiArama.Size = new System.Drawing.Size(234, 27);
+            TabloİçeriğiArama.Size = new System.Drawing.Size(134, 27);
             TabloİçeriğiArama.TabIndex = 7;
             TabloİçeriğiArama.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             TabloİçeriğiArama.TextChanged += TabloİçeriğiArama_TextChanged;
@@ -406,7 +429,7 @@
             Öde.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Öde.Dock = System.Windows.Forms.DockStyle.Right;
             Öde.Enabled = false;
-            Öde.Location = new System.Drawing.Point(234, 0);
+            Öde.Location = new System.Drawing.Point(134, 0);
             Öde.Name = "Öde";
             Öde.Size = new System.Drawing.Size(47, 34);
             Öde.TabIndex = 9;
@@ -444,6 +467,7 @@
             // Ayraç_Filtre_TabloSonuç.Panel2
             // 
             Ayraç_Filtre_TabloSonuç.Panel2.AutoScroll = true;
+            Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(ÇokluSeçim_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(KontrolNoktası_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Düzenleme_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Sonuçlar_Ekranı);
@@ -550,6 +574,212 @@
             Açıklamalar.Size = new System.Drawing.Size(185, 156);
             Açıklamalar.TabIndex = 0;
             Açıklamalar.WordWrap = false;
+            // 
+            // ÇokluSeçim_Ekranı
+            // 
+            ÇokluSeçim_Ekranı.AutoScroll = true;
+            ÇokluSeçim_Ekranı.Controls.Add(ÇokluSeçim_Ekranı_2);
+            ÇokluSeçim_Ekranı.Location = new System.Drawing.Point(459, 478);
+            ÇokluSeçim_Ekranı.Name = "ÇokluSeçim_Ekranı";
+            ÇokluSeçim_Ekranı.Size = new System.Drawing.Size(421, 317);
+            ÇokluSeçim_Ekranı.TabIndex = 37;
+            ÇokluSeçim_Ekranı.Visible = false;
+            // 
+            // ÇokluSeçim_Ekranı_2
+            // 
+            ÇokluSeçim_Ekranı_2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            ÇokluSeçim_Ekranı_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_İptalEt);
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_ÖdenmediOlarakİşaretler);
+            ÇokluSeçim_Ekranı_2.Controls.Add(panel5);
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_Ertele_TamTarih);
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_Ertele_SüreKadar);
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_Ertele);
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_TamÖde);
+            ÇokluSeçim_Ekranı_2.Controls.Add(ÇokluSeçim_Ekranı_Açıklama);
+            ÇokluSeçim_Ekranı_2.Location = new System.Drawing.Point(11, 10);
+            ÇokluSeçim_Ekranı_2.Name = "ÇokluSeçim_Ekranı_2";
+            ÇokluSeçim_Ekranı_2.Padding = new System.Windows.Forms.Padding(5);
+            ÇokluSeçim_Ekranı_2.Size = new System.Drawing.Size(400, 299);
+            ÇokluSeçim_Ekranı_2.TabIndex = 31;
+            // 
+            // ÇokluSeçim_İptalEt
+            // 
+            ÇokluSeçim_İptalEt.AutoSize = true;
+            ÇokluSeçim_İptalEt.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_İptalEt.Location = new System.Drawing.Point(5, 174);
+            ÇokluSeçim_İptalEt.Name = "ÇokluSeçim_İptalEt";
+            ÇokluSeçim_İptalEt.Size = new System.Drawing.Size(388, 24);
+            ÇokluSeçim_İptalEt.TabIndex = 35;
+            ÇokluSeçim_İptalEt.Text = "İptal et";
+            ÇokluSeçim_İptalEt.UseVisualStyleBackColor = true;
+            ÇokluSeçim_İptalEt.CheckedChanged += ÇokluSeçim_AyarDeğişti;
+            // 
+            // ÇokluSeçim_ÖdenmediOlarakİşaretler
+            // 
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.AutoSize = true;
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.Location = new System.Drawing.Point(5, 150);
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.Name = "ÇokluSeçim_ÖdenmediOlarakİşaretler";
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.Size = new System.Drawing.Size(388, 24);
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.TabIndex = 34;
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.Text = "Ödenmedi olarak işaretle";
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.UseVisualStyleBackColor = true;
+            ÇokluSeçim_ÖdenmediOlarakİşaretler.CheckedChanged += ÇokluSeçim_AyarDeğişti;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(ÇokluSeçim_Kaydet);
+            panel5.Controls.Add(ÇokluSeçim_Geri);
+            panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            panel5.Location = new System.Drawing.Point(5, 251);
+            panel5.Name = "panel5";
+            panel5.Size = new System.Drawing.Size(388, 41);
+            panel5.TabIndex = 25;
+            // 
+            // ÇokluSeçim_Kaydet
+            // 
+            ÇokluSeçim_Kaydet.AutoSize = true;
+            ÇokluSeçim_Kaydet.Dock = System.Windows.Forms.DockStyle.Fill;
+            ÇokluSeçim_Kaydet.Location = new System.Drawing.Point(127, 0);
+            ÇokluSeçim_Kaydet.Name = "ÇokluSeçim_Kaydet";
+            ÇokluSeçim_Kaydet.Size = new System.Drawing.Size(261, 41);
+            ÇokluSeçim_Kaydet.TabIndex = 23;
+            ÇokluSeçim_Kaydet.Text = "Kaydet";
+            ÇokluSeçim_Kaydet.UseVisualStyleBackColor = true;
+            ÇokluSeçim_Kaydet.Click += ÇokluSeçim_Kaydet_Click;
+            // 
+            // ÇokluSeçim_Geri
+            // 
+            ÇokluSeçim_Geri.AutoSize = true;
+            ÇokluSeçim_Geri.Dock = System.Windows.Forms.DockStyle.Left;
+            ÇokluSeçim_Geri.Location = new System.Drawing.Point(0, 0);
+            ÇokluSeçim_Geri.Name = "ÇokluSeçim_Geri";
+            ÇokluSeçim_Geri.Size = new System.Drawing.Size(127, 41);
+            ÇokluSeçim_Geri.TabIndex = 24;
+            ÇokluSeçim_Geri.Text = "Geri";
+            ÇokluSeçim_Geri.UseVisualStyleBackColor = true;
+            ÇokluSeçim_Geri.Click += ÇokluSeçim_Geri_Click;
+            // 
+            // ÇokluSeçim_Ertele_TamTarih
+            // 
+            ÇokluSeçim_Ertele_TamTarih.Controls.Add(ÇokluSeçim_Ertele_TamTarih_Tarih);
+            ÇokluSeçim_Ertele_TamTarih.Controls.Add(ÇokluSeçim_Ertele_TamTarih_Onay);
+            ÇokluSeçim_Ertele_TamTarih.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_Ertele_TamTarih.Enabled = false;
+            ÇokluSeçim_Ertele_TamTarih.Location = new System.Drawing.Point(5, 109);
+            ÇokluSeçim_Ertele_TamTarih.Name = "ÇokluSeçim_Ertele_TamTarih";
+            ÇokluSeçim_Ertele_TamTarih.Padding = new System.Windows.Forms.Padding(20, 5, 5, 5);
+            ÇokluSeçim_Ertele_TamTarih.Size = new System.Drawing.Size(388, 41);
+            ÇokluSeçim_Ertele_TamTarih.TabIndex = 36;
+            // 
+            // ÇokluSeçim_Ertele_TamTarih_Tarih
+            // 
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Location = new System.Drawing.Point(111, 5);
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Name = "ÇokluSeçim_Ertele_TamTarih_Tarih";
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Size = new System.Drawing.Size(272, 32);
+            ÇokluSeçim_Ertele_TamTarih_Tarih.TabIndex = 23;
+            ÇokluSeçim_Ertele_TamTarih_Tarih.ValueChanged += ÇokluSeçim_Ertele_TamTarih_x_AyarDeğişti;
+            // 
+            // ÇokluSeçim_Ertele_TamTarih_Onay
+            // 
+            ÇokluSeçim_Ertele_TamTarih_Onay.AutoSize = true;
+            ÇokluSeçim_Ertele_TamTarih_Onay.Dock = System.Windows.Forms.DockStyle.Left;
+            ÇokluSeçim_Ertele_TamTarih_Onay.Location = new System.Drawing.Point(20, 5);
+            ÇokluSeçim_Ertele_TamTarih_Onay.Name = "ÇokluSeçim_Ertele_TamTarih_Onay";
+            ÇokluSeçim_Ertele_TamTarih_Onay.Size = new System.Drawing.Size(91, 31);
+            ÇokluSeçim_Ertele_TamTarih_Onay.TabIndex = 28;
+            ÇokluSeçim_Ertele_TamTarih_Onay.Text = "Tam tarih";
+            ÇokluSeçim_Ertele_TamTarih_Onay.UseVisualStyleBackColor = true;
+            ÇokluSeçim_Ertele_TamTarih_Onay.CheckedChanged += ÇokluSeçim_Ertele_x_Onay_CheckedChanged;
+            // 
+            // ÇokluSeçim_Ertele_SüreKadar
+            // 
+            ÇokluSeçim_Ertele_SüreKadar.Controls.Add(ÇokluSeçim_Ertele_SüreKadar_Dönem);
+            ÇokluSeçim_Ertele_SüreKadar.Controls.Add(ÇokluSeçim_Ertele_SüreKadar_Adet);
+            ÇokluSeçim_Ertele_SüreKadar.Controls.Add(ÇokluSeçim_Ertele_SüreKadar_Onay);
+            ÇokluSeçim_Ertele_SüreKadar.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_Ertele_SüreKadar.Enabled = false;
+            ÇokluSeçim_Ertele_SüreKadar.Location = new System.Drawing.Point(5, 73);
+            ÇokluSeçim_Ertele_SüreKadar.Name = "ÇokluSeçim_Ertele_SüreKadar";
+            ÇokluSeçim_Ertele_SüreKadar.Padding = new System.Windows.Forms.Padding(20, 5, 5, 5);
+            ÇokluSeçim_Ertele_SüreKadar.Size = new System.Drawing.Size(388, 36);
+            ÇokluSeçim_Ertele_SüreKadar.TabIndex = 23;
+            // 
+            // ÇokluSeçim_Ertele_SüreKadar_Dönem
+            // 
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.Dock = System.Windows.Forms.DockStyle.Fill;
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.FormattingEnabled = true;
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.Items.AddRange(new object[] { "Gün", "Hafta", "Ay", "Yıl" });
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.Location = new System.Drawing.Point(230, 5);
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.Name = "ÇokluSeçim_Ertele_SüreKadar_Dönem";
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.Size = new System.Drawing.Size(153, 28);
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.TabIndex = 27;
+            ÇokluSeçim_Ertele_SüreKadar_Dönem.SelectedIndexChanged += ÇokluSeçim_Ertele_SüreKadar_x_AyarDeğişti;
+            // 
+            // ÇokluSeçim_Ertele_SüreKadar_Adet
+            // 
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Dock = System.Windows.Forms.DockStyle.Left;
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Location = new System.Drawing.Point(120, 5);
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Name = "ÇokluSeçim_Ertele_SüreKadar_Adet";
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Size = new System.Drawing.Size(110, 27);
+            ÇokluSeçim_Ertele_SüreKadar_Adet.TabIndex = 26;
+            ÇokluSeçim_Ertele_SüreKadar_Adet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            ÇokluSeçim_Ertele_SüreKadar_Adet.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            ÇokluSeçim_Ertele_SüreKadar_Adet.ValueChanged += ÇokluSeçim_Ertele_SüreKadar_x_AyarDeğişti;
+            // 
+            // ÇokluSeçim_Ertele_SüreKadar_Onay
+            // 
+            ÇokluSeçim_Ertele_SüreKadar_Onay.AutoSize = true;
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Checked = true;
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Dock = System.Windows.Forms.DockStyle.Left;
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Location = new System.Drawing.Point(20, 5);
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Name = "ÇokluSeçim_Ertele_SüreKadar_Onay";
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Size = new System.Drawing.Size(100, 26);
+            ÇokluSeçim_Ertele_SüreKadar_Onay.TabIndex = 28;
+            ÇokluSeçim_Ertele_SüreKadar_Onay.TabStop = true;
+            ÇokluSeçim_Ertele_SüreKadar_Onay.Text = "Süre kadar";
+            ÇokluSeçim_Ertele_SüreKadar_Onay.UseVisualStyleBackColor = true;
+            ÇokluSeçim_Ertele_SüreKadar_Onay.CheckedChanged += ÇokluSeçim_Ertele_x_Onay_CheckedChanged;
+            // 
+            // ÇokluSeçim_Ertele
+            // 
+            ÇokluSeçim_Ertele.AutoSize = true;
+            ÇokluSeçim_Ertele.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_Ertele.Location = new System.Drawing.Point(5, 49);
+            ÇokluSeçim_Ertele.Name = "ÇokluSeçim_Ertele";
+            ÇokluSeçim_Ertele.Size = new System.Drawing.Size(388, 24);
+            ÇokluSeçim_Ertele.TabIndex = 23;
+            ÇokluSeçim_Ertele.Text = "Ertele";
+            ÇokluSeçim_Ertele.UseVisualStyleBackColor = true;
+            ÇokluSeçim_Ertele.CheckedChanged += ÇokluSeçim_Ertele_CheckedChanged;
+            // 
+            // ÇokluSeçim_TamÖde
+            // 
+            ÇokluSeçim_TamÖde.AutoSize = true;
+            ÇokluSeçim_TamÖde.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_TamÖde.Location = new System.Drawing.Point(5, 25);
+            ÇokluSeçim_TamÖde.Name = "ÇokluSeçim_TamÖde";
+            ÇokluSeçim_TamÖde.Size = new System.Drawing.Size(388, 24);
+            ÇokluSeçim_TamÖde.TabIndex = 22;
+            ÇokluSeçim_TamÖde.Text = "Tam öde";
+            ÇokluSeçim_TamÖde.UseVisualStyleBackColor = true;
+            ÇokluSeçim_TamÖde.CheckedChanged += ÇokluSeçim_AyarDeğişti;
+            // 
+            // ÇokluSeçim_Ekranı_Açıklama
+            // 
+            ÇokluSeçim_Ekranı_Açıklama.AutoSize = true;
+            ÇokluSeçim_Ekranı_Açıklama.Dock = System.Windows.Forms.DockStyle.Top;
+            ÇokluSeçim_Ekranı_Açıklama.Location = new System.Drawing.Point(5, 5);
+            ÇokluSeçim_Ekranı_Açıklama.Name = "ÇokluSeçim_Ekranı_Açıklama";
+            ÇokluSeçim_Ekranı_Açıklama.Size = new System.Drawing.Size(158, 20);
+            ÇokluSeçim_Ekranı_Açıklama.TabIndex = 25;
+            ÇokluSeçim_Ekranı_Açıklama.Text = "Seçilen tüm ödemeleri";
             // 
             // KontrolNoktası_Ekranı
             // 
@@ -723,7 +953,7 @@
             label1.Dock = System.Windows.Forms.DockStyle.Top;
             label1.Location = new System.Drawing.Point(5, 69);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(185, 20);
+            label1.Size = new System.Drawing.Size(184, 20);
             label1.TabIndex = 24;
             label1.Text = "Ödemenin yapılacağı tarih";
             // 
@@ -775,6 +1005,7 @@
             // 
             panel6.Controls.Add(TabloİçeriğiArama);
             panel6.Controls.Add(Öde);
+            panel6.Controls.Add(ÇokluSeçim);
             panel6.Controls.Add(Düzenle);
             panel6.Controls.Add(İlişkiliÖdemeleriListele);
             panel6.Controls.Add(SürümleriListele);
@@ -785,6 +1016,20 @@
             panel6.Name = "panel6";
             panel6.Size = new System.Drawing.Size(859, 34);
             panel6.TabIndex = 30;
+            // 
+            // ÇokluSeçim
+            // 
+            ÇokluSeçim.AutoSize = true;
+            ÇokluSeçim.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            ÇokluSeçim.Dock = System.Windows.Forms.DockStyle.Right;
+            ÇokluSeçim.Enabled = false;
+            ÇokluSeçim.Location = new System.Drawing.Point(181, 0);
+            ÇokluSeçim.Name = "ÇokluSeçim";
+            ÇokluSeçim.Size = new System.Drawing.Size(100, 34);
+            ÇokluSeçim.TabIndex = 14;
+            ÇokluSeçim.Text = "Seçilenleri ...";
+            ÇokluSeçim.UseVisualStyleBackColor = true;
+            ÇokluSeçim.Click += ÇokluSeçim_Click;
             // 
             // Düzenle
             // 
@@ -917,7 +1162,7 @@
             label3.Dock = System.Windows.Forms.DockStyle.Top;
             label3.Location = new System.Drawing.Point(5, 117);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(226, 20);
+            label3.Size = new System.Drawing.Size(223, 20);
             label3.TabIndex = 24;
             label3.Text = "Kalan ödemenin yapılacağı tarih";
             // 
@@ -1014,6 +1259,16 @@
             Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Ayraç_Şablonlar_SorgulamaSeçenekleri).EndInit();
             Ayraç_Şablonlar_SorgulamaSeçenekleri.ResumeLayout(false);
+            ÇokluSeçim_Ekranı.ResumeLayout(false);
+            ÇokluSeçim_Ekranı_2.ResumeLayout(false);
+            ÇokluSeçim_Ekranı_2.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            ÇokluSeçim_Ertele_TamTarih.ResumeLayout(false);
+            ÇokluSeçim_Ertele_TamTarih.PerformLayout();
+            ÇokluSeçim_Ertele_SüreKadar.ResumeLayout(false);
+            ÇokluSeçim_Ertele_SüreKadar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ÇokluSeçim_Ertele_SüreKadar_Adet).EndInit();
             KontrolNoktası_Ekranı.ResumeLayout(false);
             KontrolNoktası_Ekranı_2.ResumeLayout(false);
             KontrolNoktası_Ekranı_2.PerformLayout();
@@ -1111,5 +1366,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_SonİşlemTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_KayıtTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_KullanıcıAdı;
+        private System.Windows.Forms.Panel ÇokluSeçim_Ekranı;
+        private System.Windows.Forms.Panel ÇokluSeçim_Ekranı_2;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel ÇokluSeçim_Ertele_SüreKadar;
+        private System.Windows.Forms.RadioButton ÇokluSeçim_Ertele;
+        private System.Windows.Forms.Label ÇokluSeçim_Ekranı_Açıklama;
+        private System.Windows.Forms.Button ÇokluSeçim;
+        private System.Windows.Forms.RadioButton ÇokluSeçim_ÖdenmediOlarakİşaretler;
+        private System.Windows.Forms.ComboBox ÇokluSeçim_Ertele_SüreKadar_Dönem;
+        private System.Windows.Forms.NumericUpDown ÇokluSeçim_Ertele_SüreKadar_Adet;
+        private System.Windows.Forms.Panel ÇokluSeçim_Ertele_TamTarih;
+        private System.Windows.Forms.DateTimePicker ÇokluSeçim_Ertele_TamTarih_Tarih;
+        private System.Windows.Forms.RadioButton ÇokluSeçim_Ertele_TamTarih_Onay;
+        private System.Windows.Forms.Button ÇokluSeçim_Kaydet;
+        private System.Windows.Forms.Button ÇokluSeçim_Geri;
+        private System.Windows.Forms.RadioButton ÇokluSeçim_İptalEt;
+        private System.Windows.Forms.RadioButton ÇokluSeçim_TamÖde;
+        private System.Windows.Forms.RadioButton ÇokluSeçim_Ertele_SüreKadar_Onay;
     }
 }
