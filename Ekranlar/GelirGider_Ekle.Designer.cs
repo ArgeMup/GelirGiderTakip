@@ -153,7 +153,7 @@
             // 
             // Miktar
             // 
-            Miktar.DecimalPlaces = 2;
+            Miktar.DecimalPlaces = 1;
             Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
             Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
@@ -163,6 +163,7 @@
             Miktar.Size = new System.Drawing.Size(134, 36);
             Miktar.TabIndex = 4;
             Miktar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Miktar.ThousandsSeparator = true;
             Miktar.ValueChanged += AyarDeğişti;
             // 
             // Gider
@@ -542,7 +543,7 @@
             // 
             // PeşinatMiktarı
             // 
-            PeşinatMiktarı.DecimalPlaces = 2;
+            PeşinatMiktarı.DecimalPlaces = 1;
             PeşinatMiktarı.Dock = System.Windows.Forms.DockStyle.Fill;
             PeşinatMiktarı.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             PeşinatMiktarı.Increment = new decimal(new int[] { 100, 0, 0, 0 });
@@ -552,6 +553,7 @@
             PeşinatMiktarı.Size = new System.Drawing.Size(286, 36);
             PeşinatMiktarı.TabIndex = 4;
             PeşinatMiktarı.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            PeşinatMiktarı.ThousandsSeparator = true;
             PeşinatMiktarı.ValueChanged += AyarDeğişti;
             // 
             // label7

@@ -386,7 +386,7 @@
             // 
             // İzin
             // 
-            İzin.DecimalPlaces = 2;
+            İzin.DecimalPlaces = 1;
             İzin.Dock = System.Windows.Forms.DockStyle.Top;
             İzin.Location = new System.Drawing.Point(3, 23);
             İzin.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
@@ -394,6 +394,7 @@
             İzin.Size = new System.Drawing.Size(326, 27);
             İzin.TabIndex = 4;
             İzin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            İzin.ThousandsSeparator = true;
             // 
             // İzin_Notlar
             // 
@@ -431,7 +432,7 @@
             // 
             // Ücret
             // 
-            Ücret.DecimalPlaces = 2;
+            Ücret.DecimalPlaces = 1;
             Ücret.Dock = System.Windows.Forms.DockStyle.Top;
             Ücret.Location = new System.Drawing.Point(3, 23);
             Ücret.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
@@ -439,6 +440,7 @@
             Ücret.Size = new System.Drawing.Size(326, 27);
             Ücret.TabIndex = 4;
             Ücret.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Ücret.ThousandsSeparator = true;
             // 
             // Ücret_Notlar
             // 

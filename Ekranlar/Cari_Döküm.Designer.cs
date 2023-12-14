@@ -970,7 +970,7 @@
             // Düzenle_Miktar
             // 
             Düzenle_Miktar.BackColor = System.Drawing.SystemColors.Window;
-            Düzenle_Miktar.DecimalPlaces = 2;
+            Düzenle_Miktar.DecimalPlaces = 1;
             Düzenle_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
             Düzenle_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             Düzenle_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
@@ -981,6 +981,7 @@
             Düzenle_Miktar.Size = new System.Drawing.Size(300, 36);
             Düzenle_Miktar.TabIndex = 23;
             Düzenle_Miktar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Düzenle_Miktar.ThousandsSeparator = true;
             // 
             // Düzenle_MuhatapVeGrupAdı
             // 
@@ -1179,7 +1180,7 @@
             // Öde_KısmiÖdeme_Miktar
             // 
             Öde_KısmiÖdeme_Miktar.BackColor = System.Drawing.SystemColors.Window;
-            Öde_KısmiÖdeme_Miktar.DecimalPlaces = 2;
+            Öde_KısmiÖdeme_Miktar.DecimalPlaces = 1;
             Öde_KısmiÖdeme_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
             Öde_KısmiÖdeme_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             Öde_KısmiÖdeme_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
@@ -1189,6 +1190,7 @@
             Öde_KısmiÖdeme_Miktar.Size = new System.Drawing.Size(300, 36);
             Öde_KısmiÖdeme_Miktar.TabIndex = 23;
             Öde_KısmiÖdeme_Miktar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Öde_KısmiÖdeme_Miktar.ThousandsSeparator = true;
             Öde_KısmiÖdeme_Miktar.ValueChanged += Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti;
             // 
             // Öde_KısmiÖdeme
