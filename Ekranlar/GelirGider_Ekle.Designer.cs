@@ -624,6 +624,7 @@
             KeyPreview = true;
             Name = "GelirGider_Ekle";
             Padding = new System.Windows.Forms.Padding(3);
+            Text = "Gelir Gider Ekle";
             Shown += GelirGider_Ekle_Shown;
             KeyPress += GelirGider_Ekle_KeyPress;
             ((System.ComponentModel.ISupportInitialize)Miktar).EndInit();

@@ -8,8 +8,12 @@ using System.Windows.Forms;
 
 namespace Gelir_Gider_Takip.Ekranlar
 {
-    public partial class Cari_Döküm : Form
+    public partial class Cari_Döküm : Form, IEkran_Dürtü
     {
+        public void Güncelle()
+        {
+            Sorgula_Click(null, null);
+        }
         public enum AçılışTürü_ { Normal, İlişkiliOlanlarıListele, SürümleriListele, Gizli };
 
         List<string> Kapsam_Grup = null, Kapsam_Muhatap = null;
@@ -64,6 +68,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Yazdır.Visible = false;
                 ÇokluSeçim.Visible = false;
             }
+            Ekle.Visible = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Gelir_gider_ekleyebilir);
 
             Ayraç_Filtre_TabloSonuç.SplitterDistance = Height / 5;
 
@@ -93,7 +98,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                 case AçılışTürü_.İlişkiliOlanlarıListele:
                     Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi;
-                    Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit;
+                    Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık;
                     Şablon.Zamanlama_Başlangıç = Ortak_Kullanım_Ödeme.İlkKayıtTarihi;
                     Şablon.Zamanlama_Bitiş = Ortak_Kullanım_Ödeme.İlkKayıtTarihi;
                     Şablon.Zamanlama_GecikenleriKesinlikleGöster = Cari_Döküm_Şablon_.Zamanlama_GecikenleriKesinlikleGöster_.Hayır;
@@ -149,7 +154,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     break;
             }
         }
-        private void GelirGider_Ekle_KeyPress(object sender, KeyPressEventArgs e)
+        private void Cari_Döküm_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Escape) Close();
         }
@@ -251,6 +256,14 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             return true;
         }
+        private void SorgulamaDetayları_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (e.ChangedItem.Value == null || e.ChangedItem.Value.GetType() != typeof(DateTime)) return;
+
+            Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık;
+
+            SorgulamaDetayları.Refresh();
+        }
         private void Sorgula_Click(object sender, EventArgs e)
         {
             Sorgula.Enabled = false;
@@ -259,7 +272,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             KontrolNoktası_Geri_Click(null, null);
             ÇokluSeçim_Geri_Click(null, null);
 
-            Şablon.Yenile();
+            if (Şablon.Zamanlama_Aralık != Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık) Şablon.Zamanlama_Aralık = Şablon.Zamanlama_Aralık; //tarihleri güncelle
             SorgulamaDetayları.Refresh();
             DateOnly başlangıç_d = DateOnly.FromDateTime(Şablon.Zamanlama_Başlangıç);
             DateOnly bitiş_d = DateOnly.FromDateTime(Şablon.Zamanlama_Bitiş);
@@ -355,11 +368,12 @@ namespace Gelir_Gider_Takip.Ekranlar
             Tablo.ClearSelection();
 
             Açıklamalar.Text =
-                "Tabloda listelenen işlemler kapsamında" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Toplam_Gelir, Toplam_Gider) + Environment.NewLine + Environment.NewLine +
-                "Genel kapsamda (Tümü)" + Environment.NewLine +
+                "Tablo özeti ( " + Şablon.Zamanlama_Aralık.ToString().Replace('_', ' ') + " )" + Environment.NewLine +
+                Banka_Ortak.Yazdır_GelirGider(Toplam_Gelir, Toplam_Gider, true, false) + Environment.NewLine +
+                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, false, true) + Environment.NewLine + Environment.NewLine +
+                "Genel kapsamda ( Tümü )" + Environment.NewLine +
                 Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider) + Environment.NewLine + Environment.NewLine +
-                "Genel kapsamda (Sadece Ödenen)" + Environment.NewLine +
+                "Genel kapsamda ( Sadece ödenen )" + Environment.NewLine +
                 Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider);
             Sorgula.Enabled = true;
             Yazdır.Enabled = dizi.Count() > 0;
@@ -749,6 +763,10 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
         }
 
+        private void Ekle_Click(object sender, EventArgs e)
+        {
+            Önyüz.Aç(new GelirGider_Ekle());
+        }
         private void İlişkiliÖdemeleriListele_Click(object sender, EventArgs e)
         {
             int SatırNo = Tablo.SelectedCells[0].RowIndex;

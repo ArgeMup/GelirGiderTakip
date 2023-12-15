@@ -743,22 +743,8 @@ namespace Gelir_Gider_Takip
             #region İşlemler
             public bool Üyelik_ZamanıGelenleriKaydet()
             {
-                //Fazlalık kısım silinecek
-                bool Kaydetsin = false;
-                if (Çalışan != null && Çalışan.AylıkNetÜcreti > 0)
-                {
-                    var dty = Maaş_Üyelik_Detaylar(out DateTime ÜyelikKayıtTarihi);
-                    dty.Miktarı = Çalışan.AylıkNetÜcreti;
-                    if (Çalışan.İlkÜcretÖdemesininYapılacağıTarih != default) dty.İlkÖdemeninYapılacağıTarih = Çalışan.İlkÜcretÖdemesininYapılacağıTarih;
-
-                    Çalışan.AylıkNetÜcreti = 0;
-                    Maaş_Üyelik_Değiştir(ÜyelikKayıtTarihi, dty);
-                    Kaydetsin = true;
-                }
-                //
-
                 List<İşyeri_Ödeme_> ödemeler = Üyelik_OlacaklarıHesapla(DateOnly.FromDateTime(DateTime.Now), true);
-                if (ödemeler.Count <= 0 && !Kaydetsin) return false;
+                if (ödemeler.Count <= 0) return false;
                 
                 GelirGider_Ekle(ödemeler);
                 DeğişiklikYapıldı = true;
@@ -820,7 +806,7 @@ namespace Gelir_Gider_Takip
 
                 foreach (İşyeri_Ödeme_ ödeme in ödemeler_tümü)
                 {
-                    ödeme.İşlemler.Last().Value.GerçekleştirenKullanıcıAdı = "Sistem";
+                    ödeme.İşlemler.Last().Value.GerçekleştirenKullanıcıAdı = Ortak.Sistem_KullanıcıAdı;
                     ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme = !VeKaydet;
                 }
 
@@ -1015,7 +1001,7 @@ namespace Gelir_Gider_Takip
                         Muhatap_Üyelik_.Dönem_.Aylık, 1, null, false);
 
                     detaylar = Üyelikler.FirstOrDefault(x => x.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi);
-                    detaylar.Value.GerçekleştirenKullanıcıAdı = "Sistem";
+                    detaylar.Value.GerçekleştirenKullanıcıAdı = Ortak.Sistem_KullanıcıAdı;
                 }
 
                 ÜyelikKayıtTarihi = detaylar.Key;
@@ -1078,10 +1064,8 @@ namespace Gelir_Gider_Takip
         public class Muhatap_Çalışan_
         {
             [Değişken_.Niteliği.Adını_Değiştir("Ç", 0)] public DateOnly İşeGirişTarihi = DateOnly.FromDateTime(DateTime.Now);
-            [Değişken_.Niteliği.Adını_Değiştir("Ç", 1)] public double AylıkNetÜcreti;
-            [Değişken_.Niteliği.Adını_Değiştir("Ç", 2)] public double MevcutİzinGünü;
-            [Değişken_.Niteliği.Adını_Değiştir("Ç", 3)] public DateOnly İlkÜcretÖdemesininYapılacağıTarih = default;
-            [Değişken_.Niteliği.Adını_Değiştir("Ç", 4)] public DateOnly? İştenAyrılışTarihi;
+            [Değişken_.Niteliği.Adını_Değiştir("Ç", 1)] public double MevcutİzinGünü;
+            [Değişken_.Niteliği.Adını_Değiştir("Ç", 2)] public DateOnly? İştenAyrılışTarihi;
 
             [Değişken_.Niteliği.Adını_Değiştir("G")] public Dictionary<DateTime, Muhatap_Çalışan_ÖzlükHakkı_> Geçmişİşlemler = new Dictionary<DateTime, Muhatap_Çalışan_ÖzlükHakkı_>(); //KayıtTarihi ve detayları
 
@@ -1339,7 +1323,7 @@ namespace Gelir_Gider_Takip
             else return ((gün_olarak > 0 ? gün_olarak + " gün " : null) + (saat_olarak > 0 ? saat_olarak + " saat" : null)).TrimEnd();
         }
         public static int[] Yazdır_Ücret_EnGenişÜcretKarakterSayısı = null;
-        static string Yazdır_Ücret_Şablon = "{0:0,0.0;-0,0.0;0}";
+        static string Yazdır_Ücret_Şablon = "{0:#,#.0;-#,#.0;0}";
         public static string Yazdır_Ücret(double Ücret, Banka1.İşyeri_Ödeme_.ParaBirimi_ ParaBirimi, bool SondakiSıfırlarıSil = true, bool EşitGenişlikte = false)
         {
             string çıktı = string.Format(Yazdır_Ücret_Şablon, Ücret);
@@ -1377,25 +1361,33 @@ namespace Gelir_Gider_Takip
 
             return çıktı + (ParaBirimi == Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası ? " ₺" : ParaBirimi == Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro ? " €" : ParaBirimi == Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar ? " $" : throw new Exception("ParaBirimi(" + ParaBirimi + ") uygun değil"));
         }
-        public static string Yazdır_GelirGider(double[] Gelir, double[] Gider)
+        public static string Yazdır_GelirGider(double[] Gelir, double[] Gider, bool GelirGideriYazdır = true, bool KalanıYazdır = true)
         {
             double Toplam_Gelir_TL = Toplam_TürkLirasıOlarak(Gelir), Toplam_Gider_TL = Toplam_TürkLirasıOlarak(Gider);
-          
-            return
-                "Gelir : " + Yazdır_Ücret(Toplam_Gelir_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte:true) + 
-                " ( " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
-                ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
-                ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )" + Environment.NewLine +
-                
-                "Gider : " + Yazdır_Ücret(Toplam_Gider_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
-                " ( " + Yazdır_Ücret(Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
-                ", " + Yazdır_Ücret(Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
-                ", " + Yazdır_Ücret(Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )" + Environment.NewLine +
-                
-                "Kalan : " + Yazdır_Ücret(Toplam_Gelir_TL - Toplam_Gider_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
-                " ( " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
-                ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
-                ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )";
+            string çıktı = null;
+
+            if (GelirGideriYazdır)
+            {
+                çıktı =     "Gelir : " + Yazdır_Ücret(Toplam_Gelir_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                            " ( " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                            ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
+                            ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )" + Environment.NewLine +
+
+                            "Gider : " + Yazdır_Ücret(Toplam_Gider_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                            " ( " + Yazdır_Ücret(Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                            ", " + Yazdır_Ücret(Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
+                            ", " + Yazdır_Ücret(Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )";
+            }
+                 
+            if (KalanıYazdır)
+            {
+                çıktı +=    (GelirGideriYazdır ? Environment.NewLine + "Kalan : " : "Kasa  : ") + Yazdır_Ücret(Toplam_Gelir_TL - Toplam_Gider_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                            " ( " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                            ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
+                            ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )";
+            }
+
+            return çıktı;
         }
         public static DateTime SonrakiTarihiHesapla(DateTime İlkTarih, Banka1.Muhatap_Üyelik_.Dönem_ Dönem, int Dönem_Adet)
         {

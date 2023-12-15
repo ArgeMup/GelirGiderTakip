@@ -317,13 +317,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Tipi, miktar, parabirimi, ÖdemeTarihi_Değeri.Value, Notlar.Text,
                     (int)Taksit_Adet.Value, dönem_taksit, (int)Taksit_Dönem_Adet.Value,
                     dönem_üyelik, (int)Üyelik_Dönem_Adet.Value, Üyelik_BitişTarihi.Checked ? Üyelik_BitişTarihi.Value : null);
-
-                Önyüz.Dürt();
             }
 
             Banka_Ortak.DeğişiklikleriKaydet();
             ÖnYüzler_Kaydet.Enabled = false;
             Close();
+
+            Önyüz.Dürt();
         }
     }
 }

@@ -60,7 +60,7 @@
             KeyPreview = true;
             Margin = new System.Windows.Forms.Padding(2);
             Name = "Ayarlar_Kullanıcılar";
-            Text = "Seçiminiz";
+            Text = "Kullanıcılar";
             TopMost = true;
             KeyPress += Ayarlar_Kullanıcılar_KeyPress;
             panel2.ResumeLayout(false);

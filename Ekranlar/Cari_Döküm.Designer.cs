@@ -105,6 +105,7 @@
             Düzenle_MuhatapVeGrupAdı = new System.Windows.Forms.Label();
             Sonuçlar_Ekranı = new System.Windows.Forms.Panel();
             panel6 = new System.Windows.Forms.Panel();
+            Ekle = new System.Windows.Forms.Button();
             ÇokluSeçim = new System.Windows.Forms.Button();
             Düzenle = new System.Windows.Forms.Button();
             İlişkiliÖdemeleriListele = new System.Windows.Forms.Button();
@@ -415,10 +416,10 @@
             // TabloİçeriğiArama
             // 
             TabloİçeriğiArama.Dock = System.Windows.Forms.DockStyle.Fill;
-            TabloİçeriğiArama.Location = new System.Drawing.Point(0, 0);
+            TabloİçeriğiArama.Location = new System.Drawing.Point(46, 0);
             TabloİçeriğiArama.Name = "TabloİçeriğiArama";
             TabloİçeriğiArama.PlaceholderText = "Aranacak metni buraya yazabilirsiniz";
-            TabloİçeriğiArama.Size = new System.Drawing.Size(134, 27);
+            TabloİçeriğiArama.Size = new System.Drawing.Size(88, 27);
             TabloİçeriğiArama.TabIndex = 7;
             TabloİçeriğiArama.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             TabloİçeriğiArama.TextChanged += TabloİçeriğiArama_TextChanged;
@@ -561,6 +562,7 @@
             SorgulamaDetayları.Size = new System.Drawing.Size(310, 156);
             SorgulamaDetayları.TabIndex = 0;
             SorgulamaDetayları.ToolbarVisible = false;
+            SorgulamaDetayları.PropertyValueChanged += SorgulamaDetayları_PropertyValueChanged;
             // 
             // Açıklamalar
             // 
@@ -1005,6 +1007,7 @@
             // panel6
             // 
             panel6.Controls.Add(TabloİçeriğiArama);
+            panel6.Controls.Add(Ekle);
             panel6.Controls.Add(Öde);
             panel6.Controls.Add(ÇokluSeçim);
             panel6.Controls.Add(Düzenle);
@@ -1017,6 +1020,19 @@
             panel6.Name = "panel6";
             panel6.Size = new System.Drawing.Size(859, 34);
             panel6.TabIndex = 30;
+            // 
+            // Ekle
+            // 
+            Ekle.AutoSize = true;
+            Ekle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            Ekle.Dock = System.Windows.Forms.DockStyle.Left;
+            Ekle.Location = new System.Drawing.Point(0, 0);
+            Ekle.Name = "Ekle";
+            Ekle.Size = new System.Drawing.Size(46, 34);
+            Ekle.TabIndex = 15;
+            Ekle.Text = "Ekle";
+            Ekle.UseVisualStyleBackColor = true;
+            Ekle.Click += Ekle_Click;
             // 
             // ÇokluSeçim
             // 
@@ -1239,8 +1255,9 @@
             KeyPreview = true;
             Name = "Cari_Döküm";
             Padding = new System.Windows.Forms.Padding(3);
+            Text = "Cari Döküm";
             Shown += Cari_Döküm_Shown;
-            KeyPress += GelirGider_Ekle_KeyPress;
+            KeyPress += Cari_Döküm_KeyPress;
             ((System.ComponentModel.ISupportInitialize)Tablo).EndInit();
             Ayraç_Filtre_TabloSonuç.Panel1.ResumeLayout(false);
             Ayraç_Filtre_TabloSonuç.Panel2.ResumeLayout(false);
@@ -1386,5 +1403,6 @@
         private System.Windows.Forms.RadioButton ÇokluSeçim_İptalEt;
         private System.Windows.Forms.RadioButton ÇokluSeçim_TamÖde;
         private System.Windows.Forms.RadioButton ÇokluSeçim_Ertele_SüreKadar_Onay;
+        private System.Windows.Forms.Button Ekle;
     }
 }

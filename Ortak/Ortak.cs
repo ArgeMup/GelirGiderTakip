@@ -18,6 +18,7 @@ namespace Gelir_Gider_Takip
         public static Banka1 Banka;
         public static YeniYazılımKontrolü_ YeniYazılımKontrolü = new YeniYazılımKontrolü_();
         public static Çalıştır_ Çalıştır = new Çalıştır_();
+        public static string Sistem_KullanıcıAdı = "V" + Kendi.Sürümü_Dosya;
 
         public static Color Renk_Kırmızı = Color.FromArgb(int.Parse("FFEF9595", System.Globalization.NumberStyles.HexNumber));
         public static Color Renk_Sarı = Color.FromArgb(int.Parse("FFEBEF95", System.Globalization.NumberStyles.HexNumber));

@@ -569,7 +569,7 @@
             Controls.Add(İşyeri_Grup_Muhatap);
             KeyPreview = true;
             Name = "Ayarlar_Muhataplar";
-            Text = "Çalışan_Detayları";
+            Text = "Muhatap Ayarları";
             Shown += Muhatap_Detayları_Shown;
             KeyPress += Muhatap_Detayları_KeyPress;
             Ayraç_Diğer_Çalışan.Panel1.ResumeLayout(false);

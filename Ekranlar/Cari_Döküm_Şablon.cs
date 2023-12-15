@@ -30,7 +30,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         #endregion
 
         #region Zamanlama
-        public enum Zamanlama_Aralık_ { Bu_ay, Bu_hafta, Bugün, Son_1_gün, Tüm_ödemeler, Sabit };
+        public enum Zamanlama_Aralık_ { Bu_ay, Son_15_gün, Bu_hafta, Bugün, Son_1_gün, Tüm_ödemeler, Sabit_aralık };
         [Değişken_.Niteliği.Adını_Değiştir("Ş", 0)]
         Zamanlama_Aralık_ _Zamanlama_Aralık_;
         [Category("1 Zamanlama"), DisplayName("Aralık"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
@@ -47,6 +47,11 @@ namespace Gelir_Gider_Takip.Ekranlar
                     case Zamanlama_Aralık_.Bu_ay:
                         Zamanlama_Başlangıç = new DateTime(t.Year, t.Month, 1);
                         Zamanlama_Bitiş = new DateTime(t.Year, t.Month, DateTime.DaysInMonth(t.Year, t.Month), 23, 59, 59).AddMilliseconds(999);
+                        break;
+
+                    case Zamanlama_Aralık_.Son_15_gün:
+                        Zamanlama_Başlangıç = t.AddDays(-15);
+                        Zamanlama_Bitiş = t;
                         break;
 
                     case Zamanlama_Aralık_.Bu_hafta:
@@ -506,21 +511,6 @@ namespace Gelir_Gider_Takip.Ekranlar
         #endregion
 
         #region İşlemler
-        public void Yenile()
-        {
-            var gecici_aralık = _Zamanlama_Aralık_;
-            var gecici_başlangıç = _Zamanlama_Başlangıç_;
-            var gecici_bitiş = _Zamanlama_Bitiş_;
-
-            Diğer_ÇalışanMaaşHesabı = _Diğer_ÇalışanMaaşHesabı_;
-
-            Zamanlama_Aralık = gecici_aralık;
-            if (gecici_aralık == Zamanlama_Aralık_.Sabit)
-            {
-                Zamanlama_Başlangıç = gecici_başlangıç;
-                Zamanlama_Bitiş = gecici_bitiş;
-            }
-        }
         public Cari_Döküm_Şablon_ Kopyala(ListeKutusu MuhatapGrubu, ListeKutusu Muhatap)
         {
             Cari_Döküm_Şablon_ kopya = (Cari_Döküm_Şablon_)Banka_Ortak.Sınıf_Kopyala(this);
