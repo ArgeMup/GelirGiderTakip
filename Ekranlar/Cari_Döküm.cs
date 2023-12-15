@@ -293,6 +293,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             int sutun_sayısı = Tablo.ColumnCount;
             List<DataGridViewRow> dizi = new List<DataGridViewRow>();
             Dictionary<string, double> AltToplamlar = new Dictionary<string, double>();
+            bool EnAz1_TaksitsizAvansÖdemesi_Var = false;
 
             foreach (string yıl in Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_Yıllar())
             {
@@ -378,6 +379,11 @@ namespace Gelir_Gider_Takip.Ekranlar
             Sorgula.Enabled = true;
             Yazdır.Enabled = dizi.Count() > 0;
 
+            if (EnAz1_TaksitsizAvansÖdemesi_Var &&
+                Şablon.Diğer_ÇalışanMaaşHesabı == Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Basit &&
+                (Önyüz.İlkAçılışAyarları == null || Önyüz.İlkAçılışAyarları.Kullanıcı_Komut == Banka1.İlkAçılışAyarları_Komut_.Sayfa_CariDöküm) &&
+                Cari_döküm_içinde_işlem_yapabilir) MessageBox.Show("5 Diğer - Çalışan maaş hesabı - BASİT" + Environment.NewLine + "olarak ayarlandığı için avans hesabı tam olarak yapılamadı" + Environment.NewLine + "Lütfen DETAYLI görünüme geçiniz", Text);
+
             Döviz.KurlarıAl(_GeriBildirimİşlemi_DövizKurları_);
             void _GeriBildirimİşlemi_DövizKurları_(double Avro, double Dolar)
             {
@@ -447,8 +453,18 @@ namespace Gelir_Gider_Takip.Ekranlar
                                    (Kapsam_Muhatap == null || Kapsam_Muhatap.Contains(_ödeme_.MuhatapAdı));
                     if (!listele) return; //kapsam dışında
 
-                    if (Şablon.Diğer_AltToplam != Cari_Döküm_Şablon_.Diğer_AltToplam_.Gerekli_değil && !iptaledildi_olarak_göster &&
-                        !(Şablon.Diğer_ÇalışanMaaşHesabı != Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Gerekli_değil && tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansVerilmesi))
+                    listele = Şablon.Diğer_AltToplam != Cari_Döküm_Şablon_.Diğer_AltToplam_.Gerekli_değil && !iptaledildi_olarak_göster;
+                    if (Şablon.Diğer_ÇalışanMaaşHesabı != Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Gerekli_değil)
+                    {
+                        if (tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansÖdemesi && _ödeme_.Taksit == null)
+                        {
+                            EnAz1_TaksitsizAvansÖdemesi_Var = true;
+
+                            if (durumu == Banka1.İşyeri_Ödeme_İşlem_.Durum_.KısmenÖdendi) listele = false; //kısmen ödenmiş taksitsiz avans ödemesi
+                        }
+                        else if (tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansVerilmesi) listele = false;
+                    }
+                    if (listele)
                     {
                         string anahtar = ((int)_ödeme_.ParaBirimi).Yazıya() + Sorgula_AltToplamlar_Ayraç + _ödeme_.MuhatapGrubuAdı;
                         double miktar = 0;
