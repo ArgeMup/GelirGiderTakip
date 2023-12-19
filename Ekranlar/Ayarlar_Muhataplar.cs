@@ -33,7 +33,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Tablo_Üyelik.ClearSelection();
             }
 
-            if (Muhatap.GrupAdı == Banka1.Çalışan_Yazısı)
+            if (Muhatap.MuhatapGrubuAdı == Banka1.Çalışan_Yazısı)
             {
                 //çalışan
                 Çalışan_P1.Visible = true;
@@ -157,7 +157,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Muhatap.Notlar = Notlar.Text;
 
-            if (Muhatap.GrupAdı == Banka1.Çalışan_Yazısı)
+            if (Muhatap.MuhatapGrubuAdı == Banka1.Çalışan_Yazısı)
             {
                 if (Muhatap.Çalışan == null) Muhatap.Çalışan = new Banka1.Muhatap_Çalışan_();
 

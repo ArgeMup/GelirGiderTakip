@@ -295,7 +295,7 @@
             Tablo.ShowCellErrors = false;
             Tablo.ShowEditingIcon = false;
             Tablo.ShowRowErrors = false;
-            Tablo.Size = new System.Drawing.Size(859, 80);
+            Tablo.Size = new System.Drawing.Size(980, 80);
             Tablo.TabIndex = 28;
             Tablo.SelectionChanged += Tablo_SelectionChanged;
             // 
@@ -416,10 +416,10 @@
             // TabloİçeriğiArama
             // 
             TabloİçeriğiArama.Dock = System.Windows.Forms.DockStyle.Fill;
-            TabloİçeriğiArama.Location = new System.Drawing.Point(46, 0);
+            TabloİçeriğiArama.Location = new System.Drawing.Point(120, 0);
             TabloİçeriğiArama.Name = "TabloİçeriğiArama";
             TabloİçeriğiArama.PlaceholderText = "Aranacak metni buraya yazabilirsiniz";
-            TabloİçeriğiArama.Size = new System.Drawing.Size(88, 27);
+            TabloİçeriğiArama.Size = new System.Drawing.Size(135, 27);
             TabloİçeriğiArama.TabIndex = 7;
             TabloİçeriğiArama.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             TabloİçeriğiArama.TextChanged += TabloİçeriğiArama_TextChanged;
@@ -430,7 +430,7 @@
             Öde.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Öde.Dock = System.Windows.Forms.DockStyle.Right;
             Öde.Enabled = false;
-            Öde.Location = new System.Drawing.Point(134, 0);
+            Öde.Location = new System.Drawing.Point(255, 0);
             Öde.Name = "Öde";
             Öde.Size = new System.Drawing.Size(47, 34);
             Öde.TabIndex = 9;
@@ -444,7 +444,7 @@
             SürümleriListele.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             SürümleriListele.Dock = System.Windows.Forms.DockStyle.Right;
             SürümleriListele.Enabled = false;
-            SürümleriListele.Location = new System.Drawing.Point(525, 0);
+            SürümleriListele.Location = new System.Drawing.Point(646, 0);
             SürümleriListele.Name = "SürümleriListele";
             SürümleriListele.Size = new System.Drawing.Size(125, 34);
             SürümleriListele.TabIndex = 8;
@@ -473,7 +473,7 @@
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Düzenleme_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Sonuçlar_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Ödeme_Ekranı);
-            Ayraç_Filtre_TabloSonuç.Size = new System.Drawing.Size(965, 554);
+            Ayraç_Filtre_TabloSonuç.Size = new System.Drawing.Size(1037, 554);
             Ayraç_Filtre_TabloSonuç.SplitterDistance = 160;
             Ayraç_Filtre_TabloSonuç.TabIndex = 30;
             // 
@@ -492,8 +492,8 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Size = new System.Drawing.Size(965, 160);
-            splitContainer1.SplitterDistance = 304;
+            splitContainer1.Size = new System.Drawing.Size(1037, 160);
+            splitContainer1.SplitterDistance = 326;
             splitContainer1.TabIndex = 0;
             // 
             // Ayraç_MuhatapGrubu_Muhatap
@@ -502,8 +502,8 @@
             Ayraç_MuhatapGrubu_Muhatap.Dock = System.Windows.Forms.DockStyle.Fill;
             Ayraç_MuhatapGrubu_Muhatap.Location = new System.Drawing.Point(0, 0);
             Ayraç_MuhatapGrubu_Muhatap.Name = "Ayraç_MuhatapGrubu_Muhatap";
-            Ayraç_MuhatapGrubu_Muhatap.Size = new System.Drawing.Size(304, 130);
-            Ayraç_MuhatapGrubu_Muhatap.SplitterDistance = 151;
+            Ayraç_MuhatapGrubu_Muhatap.Size = new System.Drawing.Size(326, 130);
+            Ayraç_MuhatapGrubu_Muhatap.SplitterDistance = 161;
             Ayraç_MuhatapGrubu_Muhatap.TabIndex = 2;
             // 
             // Sorgula
@@ -514,7 +514,7 @@
             Sorgula.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             Sorgula.Location = new System.Drawing.Point(0, 130);
             Sorgula.Name = "Sorgula";
-            Sorgula.Size = new System.Drawing.Size(304, 30);
+            Sorgula.Size = new System.Drawing.Size(326, 30);
             Sorgula.TabIndex = 9;
             Sorgula.Text = "Sorgula";
             Sorgula.UseVisualStyleBackColor = true;
@@ -534,8 +534,8 @@
             // splitContainer2.Panel2
             // 
             splitContainer2.Panel2.Controls.Add(Açıklamalar);
-            splitContainer2.Size = new System.Drawing.Size(657, 160);
-            splitContainer2.SplitterDistance = 464;
+            splitContainer2.Size = new System.Drawing.Size(707, 160);
+            splitContainer2.SplitterDistance = 499;
             splitContainer2.TabIndex = 0;
             // 
             // Ayraç_Şablonlar_SorgulamaSeçenekleri
@@ -548,8 +548,8 @@
             // Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2
             // 
             Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.Controls.Add(SorgulamaDetayları);
-            Ayraç_Şablonlar_SorgulamaSeçenekleri.Size = new System.Drawing.Size(464, 160);
-            Ayraç_Şablonlar_SorgulamaSeçenekleri.SplitterDistance = 146;
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Size = new System.Drawing.Size(499, 160);
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.SplitterDistance = 157;
             Ayraç_Şablonlar_SorgulamaSeçenekleri.TabIndex = 0;
             // 
             // SorgulamaDetayları
@@ -559,7 +559,7 @@
             SorgulamaDetayları.Location = new System.Drawing.Point(0, 0);
             SorgulamaDetayları.Name = "SorgulamaDetayları";
             SorgulamaDetayları.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            SorgulamaDetayları.Size = new System.Drawing.Size(310, 156);
+            SorgulamaDetayları.Size = new System.Drawing.Size(334, 156);
             SorgulamaDetayları.TabIndex = 0;
             SorgulamaDetayları.ToolbarVisible = false;
             SorgulamaDetayları.PropertyValueChanged += SorgulamaDetayları_PropertyValueChanged;
@@ -573,7 +573,7 @@
             Açıklamalar.Name = "Açıklamalar";
             Açıklamalar.ReadOnly = true;
             Açıklamalar.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            Açıklamalar.Size = new System.Drawing.Size(185, 156);
+            Açıklamalar.Size = new System.Drawing.Size(200, 156);
             Açıklamalar.TabIndex = 0;
             Açıklamalar.WordWrap = false;
             // 
@@ -1001,7 +1001,7 @@
             Sonuçlar_Ekranı.Controls.Add(panel6);
             Sonuçlar_Ekranı.Location = new System.Drawing.Point(21, 12);
             Sonuçlar_Ekranı.Name = "Sonuçlar_Ekranı";
-            Sonuçlar_Ekranı.Size = new System.Drawing.Size(859, 114);
+            Sonuçlar_Ekranı.Size = new System.Drawing.Size(980, 114);
             Sonuçlar_Ekranı.TabIndex = 33;
             // 
             // panel6
@@ -1018,7 +1018,7 @@
             panel6.Dock = System.Windows.Forms.DockStyle.Top;
             panel6.Location = new System.Drawing.Point(0, 0);
             panel6.Name = "panel6";
-            panel6.Size = new System.Drawing.Size(859, 34);
+            panel6.Size = new System.Drawing.Size(980, 34);
             panel6.TabIndex = 30;
             // 
             // Ekle
@@ -1028,9 +1028,9 @@
             Ekle.Dock = System.Windows.Forms.DockStyle.Left;
             Ekle.Location = new System.Drawing.Point(0, 0);
             Ekle.Name = "Ekle";
-            Ekle.Size = new System.Drawing.Size(46, 34);
+            Ekle.Size = new System.Drawing.Size(120, 34);
             Ekle.TabIndex = 15;
-            Ekle.Text = "Ekle";
+            Ekle.Text = "Gelir gider ekle";
             Ekle.UseVisualStyleBackColor = true;
             Ekle.Click += Ekle_Click;
             // 
@@ -1040,7 +1040,7 @@
             ÇokluSeçim.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             ÇokluSeçim.Dock = System.Windows.Forms.DockStyle.Right;
             ÇokluSeçim.Enabled = false;
-            ÇokluSeçim.Location = new System.Drawing.Point(181, 0);
+            ÇokluSeçim.Location = new System.Drawing.Point(302, 0);
             ÇokluSeçim.Name = "ÇokluSeçim";
             ÇokluSeçim.Size = new System.Drawing.Size(100, 34);
             ÇokluSeçim.TabIndex = 14;
@@ -1054,7 +1054,7 @@
             Düzenle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Düzenle.Dock = System.Windows.Forms.DockStyle.Right;
             Düzenle.Enabled = false;
-            Düzenle.Location = new System.Drawing.Point(281, 0);
+            Düzenle.Location = new System.Drawing.Point(402, 0);
             Düzenle.Name = "Düzenle";
             Düzenle.Size = new System.Drawing.Size(73, 34);
             Düzenle.TabIndex = 11;
@@ -1068,7 +1068,7 @@
             İlişkiliÖdemeleriListele.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             İlişkiliÖdemeleriListele.Dock = System.Windows.Forms.DockStyle.Right;
             İlişkiliÖdemeleriListele.Enabled = false;
-            İlişkiliÖdemeleriListele.Location = new System.Drawing.Point(354, 0);
+            İlişkiliÖdemeleriListele.Location = new System.Drawing.Point(475, 0);
             İlişkiliÖdemeleriListele.Name = "İlişkiliÖdemeleriListele";
             İlişkiliÖdemeleriListele.Size = new System.Drawing.Size(171, 34);
             İlişkiliÖdemeleriListele.TabIndex = 10;
@@ -1081,7 +1081,7 @@
             KontrolNoktasıEkle.AutoSize = true;
             KontrolNoktasıEkle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             KontrolNoktasıEkle.Dock = System.Windows.Forms.DockStyle.Right;
-            KontrolNoktasıEkle.Location = new System.Drawing.Point(650, 0);
+            KontrolNoktasıEkle.Location = new System.Drawing.Point(771, 0);
             KontrolNoktasıEkle.Name = "KontrolNoktasıEkle";
             KontrolNoktasıEkle.Size = new System.Drawing.Size(150, 34);
             KontrolNoktasıEkle.TabIndex = 12;
@@ -1094,7 +1094,7 @@
             Yazdır.AutoSize = true;
             Yazdır.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Yazdır.Dock = System.Windows.Forms.DockStyle.Right;
-            Yazdır.Location = new System.Drawing.Point(800, 0);
+            Yazdır.Location = new System.Drawing.Point(921, 0);
             Yazdır.Name = "Yazdır";
             Yazdır.Size = new System.Drawing.Size(59, 34);
             Yazdır.TabIndex = 13;
@@ -1249,7 +1249,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(971, 560);
+            ClientSize = new System.Drawing.Size(1043, 560);
             Controls.Add(Ayraç_Filtre_TabloSonuç);
             DoubleBuffered = true;
             KeyPreview = true;

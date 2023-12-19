@@ -72,7 +72,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
             else
             {
-                İşyeri_Grup_Muhatap.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + "          " + Muhatap.GrupAdı + "          " + Muhatap.MuhatapAdı;
+                İşyeri_Grup_Muhatap.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + "          " + Muhatap.MuhatapGrubuAdı + "          " + Muhatap.MuhatapAdı;
                 İşyeri_Grup_Muhatap.Enabled = false;
 
                 Banka1.Muhatap_Üyelik_ ÜyelikDetayları = Muhatap.Üyelikler[ÜyelikKayıtTarihi.Value];

@@ -23,7 +23,8 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Ortak.Banka.Seçilenİşyeri != null) Seçim_GeriBildirimİşlemi(Ortak.Banka.Seçilenİşyeri.İşyeriAdı, null);
             else
             {
-                if (Ortak.Banka.İşyerleri.Count > 0) Seçim_GeriBildirimİşlemi(Ortak.Banka.İşyerleri.First().Key, null);
+                var kvp = Ortak.Banka.İşyerleri.FirstOrDefault(x => !x.Key.StartsWith(Ortak.GizliElemanBaşlangıcı));
+                if (kvp.Key.DoluMu()) Seçim_GeriBildirimİşlemi(kvp.Key, null);
                 else İşyeriSeçimi_Click(null, null);
             }
         }

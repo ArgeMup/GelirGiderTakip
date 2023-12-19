@@ -236,13 +236,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     break;
 
                 case ListeKutusu.İşlemTürü.KonumDeğişikliğiKaydedildi:
-                    Dictionary<string, Cari_Döküm_Şablon_> YeniListe = new Dictionary<string, Cari_Döküm_Şablon_>();
-                    foreach (string şablonadı in Sorgula_Şablonlar.Tüm_Elemanlar)
-                    {
-                        Cari_Döküm_Şablon_ şablon = Ortak.Banka.Ayarlar.CariDökümŞablonlar[şablonadı];
-                        YeniListe.Add(şablonadı, şablon);
-                    }
-                    Ortak.Banka.Ayarlar.CariDökümŞablonlar = YeniListe;
+                    Ortak.Banka.Ayarlar.CariDökümŞablonlar = Ortak.Banka.Ayarlar.CariDökümŞablonlar.Sırala(Sorgula_Şablonlar.Tüm_Elemanlar) as Dictionary<string, Ekranlar.Cari_Döküm_Şablon_>;
                     Ortak.Banka.Ayarlar.DeğişiklikYapıldı = true;
                     Banka_Ortak.DeğişiklikleriKaydet();
                     break;

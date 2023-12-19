@@ -107,15 +107,15 @@ namespace Gelir_Gider_Takip
             işyeri.DeğişiklikYapıldı = true;
             İşyerleri.Add(Adı, işyeri);
         }
-        //public void İşyeri_AdınıDeğiştir(string Adı, string YeniAdı)
-        //{
-        //    İşyeri_ işyeri = İşyerleri[Adı];
-        //    işyeri.İşyeriAdı = YeniAdı;
-        //    işyeri.DeğişiklikYapıldı = true;
+        public void İşyeri_AdınıDeğiştir(string Adı, string YeniAdı)
+        {
+            İşyeri_ işyeri = İşyerleri[Adı];
+            işyeri.İşyeriAdı = YeniAdı;
+            işyeri.DeğişiklikYapıldı = true;
 
-        //    İşyerleri.Remove(Adı);
-        //    İşyerleri.Add(YeniAdı, işyeri);
-        //}
+            İşyerleri.Remove(Adı);
+            İşyerleri.Add(YeniAdı, işyeri);
+        }
         public İşyeri_? İşyeri_Aç(string Adı)
         {
             if (Adı.BoşMu(true) || !İşyerleri.TryGetValue(Adı, out İşyeri_ işyeri)) return null;
@@ -190,36 +190,48 @@ namespace Gelir_Gider_Takip
 
                 DeğişiklikYapıldı = true;
             }
-            //public void MuhatapGrubu_AdınıDeğiştir(string GrupAdı, string YeniGrupAdı)
-            //{
-            //    List<string> içeriği1 = MuhatapGrubuVeMuhatapİsimleri_Okunan[GrupAdı];
-            //    MuhatapGrubuVeMuhatapİsimleri_Okunan.Remove(GrupAdı);
-            //    MuhatapGrubuVeMuhatapİsimleri_Okunan.Add(YeniGrupAdı, içeriği1);
+            public void MuhatapGrubu_AdınıDeğiştir(string GrupAdı, string YeniGrupAdı)
+            {
+                Dictionary<string, string> içeriği1 = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı];
+                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Remove(GrupAdı);
+                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Add(YeniGrupAdı, içeriği1);
 
-            //    Dictionary<string, Muhatap_> içeriği2 = Muhataplar[GrupAdı];
-            //    Muhataplar.Remove(GrupAdı);
-            //    Muhataplar.Add(YeniGrupAdı, içeriği2);
+                foreach (var muhatap in Muhataplar.Where(x => x.Value.MuhatapGrubuAdı == GrupAdı))
+                {
+                    muhatap.Value.MuhatapGrubuAdı = YeniGrupAdı;
+                    muhatap.Value.DeğişiklikYapıldı = true;
+                }
+                
+                foreach (string yıl in Ödemeler_Listele_Yıllar())
+                {
+                    İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ödemeler_Listele_BirYıllıkDönem(yıl);
 
-            //    foreach (string yıl in Ödemeler_Listele_Yıllar())
-            //    {
-            //        İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ödemeler_Listele_BirYıllıkDönem(yıl);
-            //        if (BirYıllıkDönem == null) continue;
-            //        if (BirYıllıkDönem.Yıl != yıl) throw new Exception("İşyeri:" + İşyeriAdı + " Grup:" + GrupAdı + " BirYıllıkDönem.Yıl(" + BirYıllıkDönem.Yıl + ") != yıl(" + yıl + ")");
+                    foreach (İşyeri_Ödeme_ Ödeme in BirYıllıkDönem.Ödemeler)
+                    {
+                        if (Ödeme.MuhatapGrubuAdı == GrupAdı)
+                        {
+                            Ödeme.MuhatapGrubuAdı = YeniGrupAdı;
+                            BirYıllıkDönem.DeğişiklikYapıldı = true;
+                        }
+                    }
+                }
 
-            //        foreach (İşyeri_Ödeme_ Ödeme in BirYıllıkDönem.Ödemeler)
-            //        {
-            //            if (Ödeme.MuhatapGrubuAdı == GrupAdı)
-            //            {
-            //                Ödeme.MuhatapGrubuAdı = YeniGrupAdı;
-            //                BirYıllıkDönem.DeğişiklikYapıldı = true;
-            //            }
-            //        }
-            //    }
+                DeğişiklikYapıldı = true;
+            }
+            public void MuhatapGrubu_SıralamasınıDeğiştir(List<string> YeniSıralama)
+            {
+                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Sırala(YeniSıralama) as Dictionary<string, Dictionary<string, string>>;
 
-            //    DeğişiklikYapıldı = true;
-            //}
+                DeğişiklikYapıldı = true;
+            }
             public void MuhatapGrubu_Sil(string Adı)
             {
+                foreach (string GöbekAdı in MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[Adı].Values)
+                {
+                    string kls = İşyeri_Klasörü + "Mu\\" + GöbekAdı;
+                    if (!Klasör.Sil(kls)) throw new System.Exception("Klasör silinemedi " + kls);
+                }
+
                 MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Remove(Adı);
                 Muhataplar.Clear();
 
@@ -271,37 +283,49 @@ namespace Gelir_Gider_Takip
 
                 return GöbekAdı;
             }
-            //public void Muhatap_AdınıDeğiştir(string GrupAdı, string MuhatapAdı, string YeniMuhatapAdı)
-            //{
-            //    List<string> grup = MuhatapGrubuVeMuhatapİsimleri_Okunan[GrupAdı];
-            //    grup.Remove(MuhatapAdı);
-            //    grup.Add(YeniMuhatapAdı);
-            //    Muhataplar.Clear();
+            public void Muhatap_AdınıDeğiştir(string GrupAdı, string MuhatapAdı, string YeniMuhatapAdı)
+            {
+                Dictionary<string, string> grup = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı];
+                string GöbekAdı = grup[MuhatapAdı];
+                grup.Remove(MuhatapAdı);
+                grup.Add(YeniMuhatapAdı, GöbekAdı);
 
-            //    foreach (string yıl in Ödemeler_Listele_Yıllar())
-            //    {
-            //        İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ödemeler_Listele_BirYıllıkDönem(yıl);
-            //        if (BirYıllıkDönem == null) continue;
-            //        if (BirYıllıkDönem.Yıl != yıl) throw new Exception("İşyeri:" + İşyeriAdı + " Grup:" + GrupAdı + " Muhatap:" + MuhatapAdı + " BirYıllıkDönem.Yıl(" + BirYıllıkDönem.Yıl + ") != yıl(" + yıl + ")");
+                foreach (var muhatap in Muhataplar.Where(x => x.Value.MuhatapGrubuAdı == GrupAdı && x.Value.MuhatapAdı == MuhatapAdı))
+                {
+                    muhatap.Value.MuhatapAdı = YeniMuhatapAdı;
+                    muhatap.Value.DeğişiklikYapıldı = true;
+                }
 
-            //        foreach (İşyeri_Ödeme_ Ödeme in BirYıllıkDönem.Ödemeler)
-            //        {
-            //            if (Ödeme.MuhatapGrubuAdı == GrupAdı && Ödeme.MuhatapAdı == MuhatapAdı)
-            //            {
-            //                Ödeme.MuhatapAdı = YeniMuhatapAdı;
-            //                BirYıllıkDönem.DeğişiklikYapıldı = true;
-            //            }
-            //        }
-            //    }
+                foreach (string yıl in Ödemeler_Listele_Yıllar())
+                {
+                    İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ödemeler_Listele_BirYıllıkDönem(yıl);
 
-            //    DeğişiklikYapıldı = true;
-            //}
+                    foreach (İşyeri_Ödeme_ Ödeme in BirYıllıkDönem.Ödemeler)
+                    {
+                        if (Ödeme.MuhatapGrubuAdı == GrupAdı && Ödeme.MuhatapAdı == MuhatapAdı)
+                        {
+                            Ödeme.MuhatapAdı = YeniMuhatapAdı;
+                            BirYıllıkDönem.DeğişiklikYapıldı = true;
+                        }
+                    }
+                }
+
+                DeğişiklikYapıldı = true;
+            }
+            public void Muhatap_SıralamasınıDeğiştir(string GrupAdı, List<string> YeniSıralama)
+            {
+                Dictionary<string, string> EskiGrupİçeriği = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı];
+                Dictionary<string, string> YeniGrupİçeriği = EskiGrupİçeriği.Sırala(YeniSıralama) as Dictionary<string, string>;
+                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı] = YeniGrupİçeriği;
+
+                DeğişiklikYapıldı = true;
+            }
             public void Muhatap_Sil(string GrupAdı, string MuhatapAdı)
             {
                 Muhatap_ muhatap = Muhatap_Aç(GrupAdı, MuhatapAdı);
                 if (muhatap != null)
                 {
-                    string kls = İşyeri_Klasörü + "Mu\\" + muhatap.GöbekAdı;
+                    string kls = İşyeri_Klasörü + "Mu\\" + muhatap.MuhatapGöbekAdı;
                     if (!Klasör.Sil(kls)) throw new System.Exception("Klasör silinemedi " + kls);
 
                     MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı].Remove(MuhatapAdı);
@@ -334,21 +358,21 @@ namespace Gelir_Gider_Takip
                     {
                         muhatap = (Muhatap_)Banka_Ortak.Sınıf_Oluştur(typeof(Muhatap_), null);
                         muhatap.DeğişiklikYapıldı = true;
-                        muhatap.GrupAdı = GrupAdı;
+                        muhatap.MuhatapGrubuAdı = GrupAdı;
                         muhatap.MuhatapAdı = MuhatapAdı;
-                        muhatap.GöbekAdı = _GrupİçindekiMuhatabınGöbekAdı_;
+                        muhatap.MuhatapGöbekAdı = _GrupİçindekiMuhatabınGöbekAdı_;
                     }
                     else
                     {
                         muhatap = Banka_Ortak.Sınıf_Aç(typeof(Muhatap_), dsy_muhatap_ay) as Muhatap_;
                         if (muhatap == null ||
-                            muhatap.GöbekAdı != _GrupİçindekiMuhatabınGöbekAdı_ ||
-                            muhatap.GrupAdı != GrupAdı ||
+                            muhatap.MuhatapGöbekAdı != _GrupİçindekiMuhatabınGöbekAdı_ ||
+                            muhatap.MuhatapGrubuAdı != GrupAdı ||
                             muhatap.MuhatapAdı != MuhatapAdı
                             ) throw new Exception("İşyeri:" + İşyeriAdı + " uyumsuz. " +
                                 "muhatap:" + (muhatap == null) + " " +
-                                "GöbekAdı:" + muhatap.GöbekAdı + "|" + _GrupİçindekiMuhatabınGöbekAdı_ + " " +
-                                "GrupAdı:" + muhatap.GrupAdı + "|" + GrupAdı + " " +
+                                "GöbekAdı:" + muhatap.MuhatapGöbekAdı + "|" + _GrupİçindekiMuhatabınGöbekAdı_ + " " +
+                                "GrupAdı:" + muhatap.MuhatapGrubuAdı + "|" + GrupAdı + " " +
                                 "MuhatapAdı:" + muhatap.MuhatapAdı + "|" + MuhatapAdı);
                     }
 
@@ -754,7 +778,9 @@ namespace Gelir_Gider_Takip
             {
                 List<İşyeri_Ödeme_> ödemeler_tümü = new List<İşyeri_Ödeme_>();
 
-                if (Üyelikler != null)
+                if (!MuhatapGrubuAdı.StartsWith(Ortak.GizliElemanBaşlangıcı) && 
+                    !MuhatapAdı.StartsWith(Ortak.GizliElemanBaşlangıcı) &&
+                    Üyelikler != null)
                 {
                     foreach (KeyValuePair<DateTime, Muhatap_Üyelik_> üyelik in Üyelikler)
                     {
@@ -771,7 +797,7 @@ namespace Gelir_Gider_Takip
                             string notlar = null;
                             if (üyelik.Value.Tipi == İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi)
                             {
-                                if (Çalışan != null && Çalışan.İştenAyrılışTarihi == null && üyelik.Value.Miktarı > 0)
+                                if (MuhatapGrubuAdı == Çalışan_Yazısı && Çalışan != null && Çalışan.İştenAyrılışTarihi == null && üyelik.Value.Miktarı > 0)
                                 {
                                     Üret = true;
                                     notlar = İlkÖdemeTarihi.Yazıya("MMM yyyy", System.Threading.Thread.CurrentThread.CurrentCulture);
@@ -802,12 +828,12 @@ namespace Gelir_Gider_Takip
 
                         ödemeler_tümü.AddRange(ödemeler_üyelik);
                     }
-                }
 
-                foreach (İşyeri_Ödeme_ ödeme in ödemeler_tümü)
-                {
-                    ödeme.İşlemler.Last().Value.GerçekleştirenKullanıcıAdı = Ortak.Sistem_KullanıcıAdı;
-                    ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme = !VeKaydet;
+                    foreach (İşyeri_Ödeme_ ödeme in ödemeler_tümü)
+                    {
+                        ödeme.İşlemler.Last().Value.GerçekleştirenKullanıcıAdı = Ortak.Sistem_KullanıcıAdı;
+                        ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme = !VeKaydet;
+                    }
                 }
 
                 return ödemeler_tümü;
@@ -902,7 +928,7 @@ namespace Gelir_Gider_Takip
                         işlem.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
 
                         İşyeri_Ödeme_ Ödeme = new İşyeri_Ödeme_();
-                        Ödeme.MuhatapGrubuAdı = GrupAdı;
+                        Ödeme.MuhatapGrubuAdı = MuhatapGrubuAdı;
                         Ödeme.MuhatapAdı = MuhatapAdı;
                         Ödeme.ParaBirimi = ParaBirimi;
                         Ödeme.Üyelik_KayıtTarihi = ÜyelikKayıtTarihi;
@@ -935,7 +961,7 @@ namespace Gelir_Gider_Takip
                         işlem.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
 
                         İşyeri_Ödeme_ Ödeme = new İşyeri_Ödeme_();
-                        Ödeme.MuhatapGrubuAdı = GrupAdı;
+                        Ödeme.MuhatapGrubuAdı = MuhatapGrubuAdı;
                         Ödeme.MuhatapAdı = MuhatapAdı;
                         Ödeme.ParaBirimi = ParaBirimi;
                         Ödeme.Üyelik_KayıtTarihi = ÜyelikKayıtTarihi;
@@ -962,7 +988,7 @@ namespace Gelir_Gider_Takip
                 işlem.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
 
                 İşyeri_Ödeme_ Ödeme = new İşyeri_Ödeme_();
-                Ödeme.MuhatapGrubuAdı = GrupAdı;
+                Ödeme.MuhatapGrubuAdı = MuhatapGrubuAdı;
                 Ödeme.MuhatapAdı = MuhatapAdı;
                 Ödeme.ParaBirimi = ParaBirimi;
                 Ödeme.Taksit = Taksit;
@@ -1021,15 +1047,15 @@ namespace Gelir_Gider_Takip
             #region Kayıt
             string Banka_Ortak.IBanka_Tanımlayıcı_.SınıfAdı { get => _SınıfAdı_; set => _SınıfAdı_ = value; }
             [Değişken_.Niteliği.Adını_Değiştir("A", 0)] string _SınıfAdı_;
-            [Değişken_.Niteliği.Adını_Değiştir("A", 1)] public string GrupAdı;
+            [Değişken_.Niteliği.Adını_Değiştir("A", 1)] public string MuhatapGrubuAdı;
             [Değişken_.Niteliği.Adını_Değiştir("A", 2)] public string MuhatapAdı;
-            [Değişken_.Niteliği.Adını_Değiştir("A", 3)] public string GöbekAdı;
+            [Değişken_.Niteliği.Adını_Değiştir("A", 3)] public string MuhatapGöbekAdı;
             [Değişken_.Niteliği.Bunu_Kesinlikle_Kullanma] public bool DeğişiklikYapıldı;
             public bool Kaydet(string İşyeriGöbekAdı)
             {
                 if (!DeğişiklikYapıldı) return false;
 
-                Banka_Ortak.Sınıf_Kaydet(this, İşyeriGöbekAdı + "\\Mu\\" + GöbekAdı + "\\Ay");
+                Banka_Ortak.Sınıf_Kaydet(this, İşyeriGöbekAdı + "\\Mu\\" + MuhatapGöbekAdı + "\\Ay");
                   
                 DeğişiklikYapıldı = false;
                 return true;
@@ -1462,6 +1488,7 @@ namespace Gelir_Gider_Takip
             {
                 Depo_ depo = null;
                 if (Sınıf_DosyaVarMı(DosyaYolu)) depo = Depo_Aç(DosyaYolu);
+                
                 return Sınıf_Oluştur(Tipi, depo);
             }
             catch (Exception ex)

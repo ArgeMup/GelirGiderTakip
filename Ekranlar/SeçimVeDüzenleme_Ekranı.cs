@@ -12,12 +12,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         Türü_ Türü;
         Action<string, string> GeriBildirimİşlemi;
         string MuhatapGrubuAdı;
-        ListeKutusu.Ayarlar_ ListeKutusu_Ayarlar = 
-                        new ListeKutusu.Ayarlar_(
-                            Eklenebilir: Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir), 
-                            Silinebilir: Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir), 
-                            GizliOlanlarıGöster: Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir),
-                            AdıDeğiştirilebilir: false, ElemanKonumu:ListeKutusu.Ayarlar_.ElemanKonumu_.OlduğuGibi, Gizlenebilir: false);
+        ListeKutusu.Ayarlar_ ListeKutusu_Ayarlar_İşyeri, ListeKutusu_Ayarlar_MuhatapGrupVeAdı;
 
         public SeçimVeDüzenleme_Ekranı(Türü_ Türü, Action<string, string> GeriBildirimİşlemi)
         {
@@ -26,6 +21,22 @@ namespace Gelir_Gider_Takip.Ekranlar
             this.Türü = Türü;
             this.GeriBildirimİşlemi = GeriBildirimİşlemi;
 
+            bool Ayarları_değiştirebilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir);
+            ListeKutusu_Ayarlar_İşyeri = new ListeKutusu.Ayarlar_(
+                            Eklenebilir: Ayarları_değiştirebilir,
+                            Silinebilir: Ayarları_değiştirebilir,
+                            AdıDeğiştirilebilir: Ayarları_değiştirebilir, 
+                            Gizlenebilir: Ayarları_değiştirebilir,
+                            GizliOlanlarıGöster: Ayarları_değiştirebilir,
+                            ElemanKonumu: ListeKutusu.Ayarlar_.ElemanKonumu_.AdanZyeSıralanmış);
+            ListeKutusu_Ayarlar_MuhatapGrupVeAdı = new ListeKutusu.Ayarlar_(
+                            Eklenebilir: Ayarları_değiştirebilir,
+                            Silinebilir: Ayarları_değiştirebilir,
+                            AdıDeğiştirilebilir: Ayarları_değiştirebilir,
+                            Gizlenebilir: Ayarları_değiştirebilir,
+                            GizliOlanlarıGöster: Ayarları_değiştirebilir,
+                            ElemanKonumu: Ayarları_değiştirebilir ? ListeKutusu.Ayarlar_.ElemanKonumu_.Değiştirilebilir : ListeKutusu.Ayarlar_.ElemanKonumu_.OlduğuGibi);
+
             switch (Türü)
             {
                 case Türü_.İşyeri:
@@ -33,7 +44,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Açıklama.Text = "İşyerini seçiniz";
                     İşyerleriVeMuhatapGrupları.Başlat(null, Ortak.Banka.İşyeri_Listele(),
                         "İşyerleri",
-                        ListeKutusu_Ayarlar);
+                        ListeKutusu_Ayarlar_İşyeri);
                     break;
 
                 case Türü_.MuhatapGrubu:
@@ -47,15 +58,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                     }
                     İşyerleriVeMuhatapGrupları.Başlat(l_sabit,l_normal,
                         "Muhatap Grupları" + Environment.NewLine + "Maaş ve izin denetimlerini kullanabilmek için Çalışan grubunu oluşturabilirsiniz",
-                        ListeKutusu_Ayarlar);
+                        ListeKutusu_Ayarlar_MuhatapGrupVeAdı);
                     break;
 
                 default:
                     throw new System.Exception(Text + " Büyük Hata");
             }
         }
-
-        //muhatap adı ve grubu adı şimdilik değiştirtme, bu isimlerin nerelerde geçtiği kesinleşince yapılacak
 
         private bool İşyerleriVeMuhatapGrupları_GeriBildirim_İşlemi(string Adı, ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü İşlemTürü, string YeniAdı)
         {
@@ -64,17 +73,25 @@ namespace Gelir_Gider_Takip.Ekranlar
                 case Türü_.İşyeri:
                     switch (İşlemTürü)
                     {
-                        case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.YeniEklendi:
+                        case ListeKutusu.İşlemTürü.YeniEklendi:
                             Ortak.Banka.İşyeri_Ekle(Adı);
                             Banka_Ortak.DeğişiklikleriKaydet();
                             break;
 
-                        //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.AdıDeğiştirildi:
-                        //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.Gizlendi:
-                        //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.GörünürDurumaGetirildi:
-                        //    break;
+                        case ListeKutusu.İşlemTürü.AdıDeğiştirildi:
+                        case ListeKutusu.İşlemTürü.Gizlendi:
+                        case ListeKutusu.İşlemTürü.GörünürDurumaGetirildi:
+                            Ortak.Banka.İşyeri_AdınıDeğiştir(Adı, YeniAdı);
+                            Banka_Ortak.DeğişiklikleriKaydet();
+                            break;
 
-                        case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.Silindi:
+                        case ListeKutusu.İşlemTürü.Silindi:
+                            DialogResult Dr = MessageBox.Show("Bu işyerinin silinmesiyle altında kayıtlı olan" + Environment.NewLine + 
+                                "tüm muhataplar ve tüm ödemeler" + Environment.NewLine +
+                                "KALICI olarak SİLİNECEKTİR." + Environment.NewLine +
+                                "İşleme devam etmek istiyor musunuz?", "İşyerinin Silinmesi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                            if (Dr == DialogResult.No) return false;
+
                             Ortak.Banka.İşyeri_Sil(Adı);
                             break;
                     }
@@ -83,12 +100,12 @@ namespace Gelir_Gider_Takip.Ekranlar
                 case Türü_.MuhatapGrubu:
                     switch (İşlemTürü)
                     {
-                        case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.YeniEklendi:
+                        case ListeKutusu.İşlemTürü.YeniEklendi:
                             Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Ekle(Adı);
                             Banka_Ortak.DeğişiklikleriKaydet();
                             break;
 
-                        case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.ElemanSeçildi:
+                        case ListeKutusu.İşlemTürü.ElemanSeçildi:
                             MuhatapGrubuAdı = İşyerleriVeMuhatapGrupları.SeçilenEleman_Adı;
                             if (MuhatapGrubuAdı.BoşMu(true))
                             {
@@ -102,17 +119,28 @@ namespace Gelir_Gider_Takip.Ekranlar
                             Açıklama.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + " " + MuhatapGrubuAdı + " için" + Environment.NewLine + "Muhatabı seçiniz";
                             Muhataplar.Başlat(Ortak.Banka.Seçilenİşyeri.Muhatap_Listele(MuhatapGrubuAdı, true), Ortak.Banka.Seçilenİşyeri.Muhatap_Listele(MuhatapGrubuAdı), 
                                 "Muhataplar",
-                                ListeKutusu_Ayarlar);
+                                ListeKutusu_Ayarlar_MuhatapGrupVeAdı);
                             break;
 
-                        //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.AdıDeğiştirildi:
-                        //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.Gizlendi:
-                        //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.GörünürDurumaGetirildi:
-                        //    break;
+                        case ListeKutusu.İşlemTürü.AdıDeğiştirildi:
+                        case ListeKutusu.İşlemTürü.Gizlendi:
+                        case ListeKutusu.İşlemTürü.GörünürDurumaGetirildi:
+                            Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_AdınıDeğiştir(Adı, YeniAdı);
+                            Banka_Ortak.DeğişiklikleriKaydet();
+                            break;
 
-                        case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.Silindi:
-                            //DialogResult Dr = MessageBox.Show("Bu grubun silinmesiyle altında katıtlı olan tüm muhataplar da aynı şekilde SİLİNECEKTİR. İşleme devam etmek istiyor musunuz?", "Muhatap Grubunun Silinmesi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                            //if (Dr == DialogResult.No) return false;
+                        case ListeKutusu.İşlemTürü.KonumDeğişikliğiKaydedildi:
+                            Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_SıralamasınıDeğiştir(İşyerleriVeMuhatapGrupları.Tüm_Elemanlar);
+                            Banka_Ortak.DeğişiklikleriKaydet();
+                            break;
+
+                        case ListeKutusu.İşlemTürü.Silindi:
+                            DialogResult Dr = MessageBox.Show("Bu muhatap grubunun silinmesiyle altında kayıtlı olan" + Environment.NewLine +
+                                "tüm muhataplar ve onlara ait üyelik ve ayarlar" + Environment.NewLine +
+                                "KALICI olarak SİLİNECEKTİR." + Environment.NewLine +
+                                "*İlgili ödemeler tutulmaya devam edilecek." + Environment.NewLine +
+                                "İşleme devam etmek istiyor musunuz?", "İşyerinin Silinmesi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                            if (Dr == DialogResult.No) return false;
 
                             Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Sil(Adı);
                             Banka_Ortak.DeğişiklikleriKaydet();
@@ -129,17 +157,31 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             switch (İşlemTürü)
             {
-                case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.YeniEklendi:
+                case ListeKutusu.İşlemTürü.YeniEklendi:
                     Ortak.Banka.Seçilenİşyeri.Muhatap_Ekle(MuhatapGrubuAdı, Adı);
                     Banka_Ortak.DeğişiklikleriKaydet();
                     break;
 
-                //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.AdıDeğiştirildi:
-                //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.Gizlendi:
-                //case ArgeMup.HazirKod.ListeKutusu.İşlemTürü.GörünürDurumaGetirildi:
-                //    break;
+                case ListeKutusu.İşlemTürü.AdıDeğiştirildi:
+                case ListeKutusu.İşlemTürü.Gizlendi:
+                case ListeKutusu.İşlemTürü.GörünürDurumaGetirildi:
+                    Ortak.Banka.Seçilenİşyeri.Muhatap_AdınıDeğiştir(MuhatapGrubuAdı, Adı, YeniAdı);
+                    Banka_Ortak.DeğişiklikleriKaydet();
+                    break;
 
-                case ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü.Silindi:
+                case ListeKutusu.İşlemTürü.KonumDeğişikliğiKaydedildi:
+                    Ortak.Banka.Seçilenİşyeri.Muhatap_SıralamasınıDeğiştir(MuhatapGrubuAdı, Muhataplar.Tüm_Elemanlar);
+                    Banka_Ortak.DeğişiklikleriKaydet();
+                    break;
+
+                case ListeKutusu.İşlemTürü.Silindi:
+                    DialogResult Dr = MessageBox.Show("Bu muhatabın silinmesiyle" + Environment.NewLine +
+                                "ona ait olan üyelik ve ayarlar" + Environment.NewLine +
+                                "KALICI olarak SİLİNECEKTİR." + Environment.NewLine +
+                                "*İlgili ödemeler tutulmaya devam edilecek." + Environment.NewLine +
+                                "İşleme devam etmek istiyor musunuz?", "İşyerinin Silinmesi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    if (Dr == DialogResult.No) return false;
+
                     Ortak.Banka.Seçilenİşyeri.Muhatap_Sil(MuhatapGrubuAdı, Adı);
                     Banka_Ortak.DeğişiklikleriKaydet();
                     break;
