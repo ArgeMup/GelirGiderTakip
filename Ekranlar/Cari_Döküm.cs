@@ -364,12 +364,12 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Açıklamalar.Text =
                 "Tablo özeti ( " + Şablon.Zamanlama_Aralık.ToString().Replace('_', ' ') + " )" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Toplam_Gelir, Toplam_Gider, true, false) + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, false, true) + Environment.NewLine + Environment.NewLine +
+                Banka_Ortak.Yazdır_GelirGider(Toplam_Gelir, Toplam_Gider, true, false, true) + Environment.NewLine +
+                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, false, true, true) + Environment.NewLine + Environment.NewLine +
                 "Genel kapsamda ( Tümü )" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider) + Environment.NewLine + Environment.NewLine +
+                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false) + Environment.NewLine + Environment.NewLine +
                 "Genel kapsamda ( Sadece ödenen )" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider);
+                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, true, true, true);
             Sorgula.Enabled = true;
             Yazdır.Enabled = dizi.Count() > 0;
 
@@ -1067,9 +1067,9 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             if (KontrolNoktası_Notları.Text.DoluMu()) KontrolNoktası_Notları.Text += Environment.NewLine + Environment.NewLine;
             KontrolNoktası_Notları.Text += "Genel kapsamda (Tümü)" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider) + Environment.NewLine + Environment.NewLine +
+                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false) + Environment.NewLine + Environment.NewLine +
                 "Genel kapsamda (Sadece Ödenen)" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider);
+                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, true, true, true);
 
             Ortak.Banka.Seçilenİşyeri.KontrolNoktasıEkle(KontrolNoktası_Tarihi.Value, KontrolNoktası_Notları.Text);
             Banka_Ortak.DeğişiklikleriKaydet();

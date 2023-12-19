@@ -25,7 +25,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             ListeKutusu_Ayarlar_İşyeri = new ListeKutusu.Ayarlar_(
                             Eklenebilir: Ayarları_değiştirebilir,
                             Silinebilir: Ayarları_değiştirebilir,
-                            AdıDeğiştirilebilir: Ayarları_değiştirebilir, 
+                            AdıDeğiştirilebilir: Ayarları_değiştirebilir,
                             Gizlenebilir: Ayarları_değiştirebilir,
                             GizliOlanlarıGöster: Ayarları_değiştirebilir,
                             ElemanKonumu: ListeKutusu.Ayarlar_.ElemanKonumu_.AdanZyeSıralanmış);
@@ -56,7 +56,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                         l_sabit.Remove(Banka1.Çalışan_Yazısı);
                         l_normal.Remove(Banka1.Çalışan_Yazısı);
                     }
-                    İşyerleriVeMuhatapGrupları.Başlat(l_sabit,l_normal,
+                    İşyerleriVeMuhatapGrupları.Başlat(l_sabit, l_normal,
                         "Muhatap Grupları" + Environment.NewLine + "Maaş ve izin denetimlerini kullanabilmek için Çalışan grubunu oluşturabilirsiniz",
                         ListeKutusu_Ayarlar_MuhatapGrupVeAdı);
                     break;
@@ -86,7 +86,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                             break;
 
                         case ListeKutusu.İşlemTürü.Silindi:
-                            DialogResult Dr = MessageBox.Show("Bu işyerinin silinmesiyle altında kayıtlı olan" + Environment.NewLine + 
+                            DialogResult Dr = MessageBox.Show("Bu işyerinin silinmesiyle altında kayıtlı olan" + Environment.NewLine +
                                 "tüm muhataplar ve tüm ödemeler" + Environment.NewLine +
                                 "KALICI olarak SİLİNECEKTİR." + Environment.NewLine +
                                 "İşleme devam etmek istiyor musunuz?", "İşyerinin Silinmesi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
@@ -117,7 +117,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                             }
 
                             Açıklama.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + " " + MuhatapGrubuAdı + " için" + Environment.NewLine + "Muhatabı seçiniz";
-                            Muhataplar.Başlat(Ortak.Banka.Seçilenİşyeri.Muhatap_Listele(MuhatapGrubuAdı, true), Ortak.Banka.Seçilenİşyeri.Muhatap_Listele(MuhatapGrubuAdı), 
+                            Muhataplar.Başlat(Ortak.Banka.Seçilenİşyeri.Muhatap_Listele(MuhatapGrubuAdı, true), Ortak.Banka.Seçilenİşyeri.Muhatap_Listele(MuhatapGrubuAdı),
                                 "Muhataplar",
                                 ListeKutusu_Ayarlar_MuhatapGrupVeAdı);
                             break;

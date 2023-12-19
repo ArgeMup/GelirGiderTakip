@@ -51,7 +51,7 @@
             İşyerleriVeMuhatapGrupları.Margin = new System.Windows.Forms.Padding(2);
             İşyerleriVeMuhatapGrupları.Name = "İşyerleriVeMuhatapGrupları";
             İşyerleriVeMuhatapGrupları.Padding = new System.Windows.Forms.Padding(3);
-            İşyerleriVeMuhatapGrupları.Size = new System.Drawing.Size(148, 317);
+            İşyerleriVeMuhatapGrupları.Size = new System.Drawing.Size(189, 317);
             İşyerleriVeMuhatapGrupları.TabIndex = 0;
             İşyerleriVeMuhatapGrupları.GeriBildirim_İşlemi += İşyerleriVeMuhatapGrupları_GeriBildirim_İşlemi;
             // 
@@ -60,7 +60,7 @@
             Geri.Dock = System.Windows.Forms.DockStyle.Left;
             Geri.Location = new System.Drawing.Point(0, 0);
             Geri.Name = "Geri";
-            Geri.Size = new System.Drawing.Size(149, 30);
+            Geri.Size = new System.Drawing.Size(190, 30);
             Geri.TabIndex = 1;
             Geri.Text = "Geri";
             Geri.UseVisualStyleBackColor = true;
@@ -69,9 +69,9 @@
             // Seç
             // 
             Seç.Dock = System.Windows.Forms.DockStyle.Fill;
-            Seç.Location = new System.Drawing.Point(149, 0);
+            Seç.Location = new System.Drawing.Point(190, 0);
             Seç.Name = "Seç";
-            Seç.Size = new System.Drawing.Size(251, 30);
+            Seç.Size = new System.Drawing.Size(320, 30);
             Seç.TabIndex = 2;
             Seç.Text = "Seç";
             Seç.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             panel1.Location = new System.Drawing.Point(0, 393);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(400, 30);
+            panel1.Size = new System.Drawing.Size(510, 30);
             panel1.TabIndex = 3;
             // 
             // panel2
@@ -93,10 +93,10 @@
             panel2.Controls.Add(Ayraç);
             panel2.Controls.Add(Açıklama);
             panel2.Controls.Add(panel1);
-            panel2.Location = new System.Drawing.Point(21, 13);
+            panel2.Location = new System.Drawing.Point(11, 13);
             panel2.Margin = new System.Windows.Forms.Padding(2);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(400, 423);
+            panel2.Size = new System.Drawing.Size(510, 423);
             panel2.TabIndex = 4;
             // 
             // Ayraç
@@ -113,8 +113,8 @@
             // Ayraç.Panel2
             // 
             Ayraç.Panel2.Controls.Add(Muhataplar);
-            Ayraç.Size = new System.Drawing.Size(400, 319);
-            Ayraç.SplitterDistance = 150;
+            Ayraç.Size = new System.Drawing.Size(510, 319);
+            Ayraç.SplitterDistance = 191;
             Ayraç.TabIndex = 5;
             // 
             // Muhataplar
@@ -124,7 +124,7 @@
             Muhataplar.Margin = new System.Windows.Forms.Padding(2);
             Muhataplar.Name = "Muhataplar";
             Muhataplar.Padding = new System.Windows.Forms.Padding(3);
-            Muhataplar.Size = new System.Drawing.Size(244, 317);
+            Muhataplar.Size = new System.Drawing.Size(313, 317);
             Muhataplar.TabIndex = 1;
             Muhataplar.GeriBildirim_İşlemi += Muhataplar_GeriBildirim_İşlemi;
             // 
@@ -134,7 +134,7 @@
             Açıklama.Location = new System.Drawing.Point(0, 0);
             Açıklama.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             Açıklama.Name = "Açıklama";
-            Açıklama.Size = new System.Drawing.Size(400, 74);
+            Açıklama.Size = new System.Drawing.Size(510, 74);
             Açıklama.TabIndex = 4;
             Açıklama.Text = "Açıklama\r\n_";
             Açıklama.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -145,7 +145,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = Geri;
-            ClientSize = new System.Drawing.Size(440, 451);
+            ClientSize = new System.Drawing.Size(532, 451);
             Controls.Add(panel2);
             Margin = new System.Windows.Forms.Padding(2);
             Name = "SeçimVeDüzenleme_Ekranı";

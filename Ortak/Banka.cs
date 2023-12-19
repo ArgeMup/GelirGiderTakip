@@ -1387,7 +1387,7 @@ namespace Gelir_Gider_Takip
 
             return çıktı + (ParaBirimi == Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası ? " ₺" : ParaBirimi == Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro ? " €" : ParaBirimi == Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar ? " $" : throw new Exception("ParaBirimi(" + ParaBirimi + ") uygun değil"));
         }
-        public static string Yazdır_GelirGider(double[] Gelir, double[] Gider, bool GelirGideriYazdır = true, bool KalanıYazdır = true)
+        public static string Yazdır_GelirGider(double[] Gelir, double[] Gider, bool GelirGideriYazdır, bool KalanıYazdır, bool KalanıKasaOlarakYazdır)
         {
             double Toplam_Gelir_TL = Toplam_TürkLirasıOlarak(Gelir), Toplam_Gider_TL = Toplam_TürkLirasıOlarak(Gider);
             string çıktı = null;
@@ -1407,7 +1407,7 @@ namespace Gelir_Gider_Takip
                  
             if (KalanıYazdır)
             {
-                çıktı +=    (GelirGideriYazdır ? Environment.NewLine + "Kalan : " : "Kasa  : ") + Yazdır_Ücret(Toplam_Gelir_TL - Toplam_Gider_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
+                çıktı +=    (GelirGideriYazdır ? Environment.NewLine : null) + (KalanıKasaOlarakYazdır ? "Kasa  : " : "Kalan : ") + Yazdır_Ücret(Toplam_Gelir_TL - Toplam_Gider_TL, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
                             " ( " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası], Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası, EşitGenişlikte: true) +
                             ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro], Banka1.İşyeri_Ödeme_.ParaBirimi_.Avro, EşitGenişlikte: true) +
                             ", " + Yazdır_Ücret(Gelir[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar] - Gider[(int)Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar], Banka1.İşyeri_Ödeme_.ParaBirimi_.Dolar, EşitGenişlikte: true) + " )";
