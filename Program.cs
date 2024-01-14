@@ -11,6 +11,7 @@ namespace Gelir_Gider_Takip
     internal static class Program
     {
         static UygulamaOncedenCalistirildiMi_ UyÖnÇa;
+        static bool İstisnaOluştu = false;
 
         /// <summary>
         ///  The main entry point for the application.
@@ -98,7 +99,7 @@ namespace Gelir_Gider_Takip
 
             ApplicationConfiguration.Initialize();
             Application.Run(new AnaEkran());
-            Açıkla(null);
+            if (!İstisnaOluştu) Açıkla(null);
         }
 
         static void BeklenmeyenDurum_Uygulama(object sender, UnhandledExceptionEventArgs e)
@@ -113,6 +114,7 @@ namespace Gelir_Gider_Takip
         }
         static void BeklenmeyenDurum(Exception ex)
         {
+            İstisnaOluştu = true;
             ex.Günlük(Hemen: true);
 
             try

@@ -57,7 +57,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             this.Ortak_Kullanım_Ödeme = Ödeme;
             this.AçılışTürü = AçılışTürü;
 
-            ListeKutusu_Ayarlar = new ArgeMup.HazirKod.Ekranlar.ListeKutusu.Ayarlar_() { ÇokluSeçim = ListeKutusu.Ayarlar_.ÇokluSeçim_.SolFareTuşuİle };
+            ListeKutusu_Ayarlar = new ArgeMup.HazirKod.Ekranlar.ListeKutusu.Ayarlar_() { ÇokluSeçim = ListeKutusu.Ayarlar_.ÇokluSeçim_.CtrlTuşuİle };
             ListeKutusu_Ayarlar.TümTuşlarıKapat();
 
             if (!Cari_döküm_içinde_işlem_yapabilir)

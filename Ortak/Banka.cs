@@ -192,16 +192,16 @@ namespace Gelir_Gider_Takip
             }
             public void MuhatapGrubu_AdınıDeğiştir(string GrupAdı, string YeniGrupAdı)
             {
-                Dictionary<string, string> içeriği1 = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı];
-                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Remove(GrupAdı);
-                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Add(YeniGrupAdı, içeriği1);
-
-                foreach (var muhatap in Muhataplar.Where(x => x.Value.MuhatapGrubuAdı == GrupAdı))
+                Dictionary<string, string> grup_içeriği = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı];
+                foreach (var muhatap_adı in grup_içeriği.Keys)
                 {
-                    muhatap.Value.MuhatapGrubuAdı = YeniGrupAdı;
-                    muhatap.Value.DeğişiklikYapıldı = true;
+                    Muhatap_ muhatap = Muhatap_Aç(GrupAdı, muhatap_adı, true);
+                    muhatap.MuhatapGrubuAdı = YeniGrupAdı;
+                    muhatap.DeğişiklikYapıldı = true;
                 }
-                
+                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Remove(GrupAdı);
+                MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Add(YeniGrupAdı, grup_içeriği);
+
                 foreach (string yıl in Ödemeler_Listele_Yıllar())
                 {
                     İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ödemeler_Listele_BirYıllıkDönem(yıl);
@@ -285,16 +285,13 @@ namespace Gelir_Gider_Takip
             }
             public void Muhatap_AdınıDeğiştir(string GrupAdı, string MuhatapAdı, string YeniMuhatapAdı)
             {
+                Muhatap_ muhatap = Muhatap_Aç(GrupAdı, MuhatapAdı, true);
+                muhatap.MuhatapAdı = YeniMuhatapAdı;
+                muhatap.DeğişiklikYapıldı = true;
                 Dictionary<string, string> grup = MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı];
                 string GöbekAdı = grup[MuhatapAdı];
                 grup.Remove(MuhatapAdı);
                 grup.Add(YeniMuhatapAdı, GöbekAdı);
-
-                foreach (var muhatap in Muhataplar.Where(x => x.Value.MuhatapGrubuAdı == GrupAdı && x.Value.MuhatapAdı == MuhatapAdı))
-                {
-                    muhatap.Value.MuhatapAdı = YeniMuhatapAdı;
-                    muhatap.Value.DeğişiklikYapıldı = true;
-                }
 
                 foreach (string yıl in Ödemeler_Listele_Yıllar())
                 {
@@ -342,8 +339,7 @@ namespace Gelir_Gider_Takip
                 if(!MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.TryGetValue(GrupAdı, out Dictionary<string, string> _GrupİçindekiMuhatapAdları_) ||
                    !_GrupİçindekiMuhatapAdları_.TryGetValue(MuhatapAdı, out string _GrupİçindekiMuhatabınGöbekAdı_))
                 {
-                    if (!MuhatapGrubuVeMuhatapİsimleri_Sabit.TryGetValue(GrupAdı, out List<string> _GrupİçindekiMuhatapAdları_2_) ||
-                        !_GrupİçindekiMuhatapAdları_2_.Contains(MuhatapAdı) ||
+                    if ((!MuhatapGrubuVeMuhatapİsimleri_Sabit.TryGetValue(GrupAdı, out List<string> _GrupİçindekiMuhatapAdları_2_) || !_GrupİçindekiMuhatapAdları_2_.Contains(MuhatapAdı)) &&
                         !YoksaOluştur) return null;
 
                     if (_GrupİçindekiMuhatapAdları_ == null) MuhatapGrubu_Ekle(GrupAdı);
@@ -369,11 +365,15 @@ namespace Gelir_Gider_Takip
                             muhatap.MuhatapGöbekAdı != _GrupİçindekiMuhatabınGöbekAdı_ ||
                             muhatap.MuhatapGrubuAdı != GrupAdı ||
                             muhatap.MuhatapAdı != MuhatapAdı
-                            ) throw new Exception("İşyeri:" + İşyeriAdı + " uyumsuz. " +
-                                "muhatap:" + (muhatap == null) + " " +
-                                "GöbekAdı:" + muhatap.MuhatapGöbekAdı + "|" + _GrupİçindekiMuhatabınGöbekAdı_ + " " +
-                                "GrupAdı:" + muhatap.MuhatapGrubuAdı + "|" + GrupAdı + " " +
-                                "MuhatapAdı:" + muhatap.MuhatapAdı + "|" + MuhatapAdı);
+                            ) throw new Exception("Uyumsuzluk hatası." +
+                                "İşyeri:" + İşyeriAdı +
+                                ", muhatap == null:" + (muhatap == null) +
+                                ", muhatap.MuhatapGöbekAdı:" + muhatap.MuhatapGöbekAdı +
+                                ", _GrupİçindekiMuhatabınGöbekAdı_:" + _GrupİçindekiMuhatabınGöbekAdı_ +
+                                ", muhatap.MuhatapGrubuAdı:" + muhatap.MuhatapGrubuAdı +
+                                ", GrupAdı:" + GrupAdı +
+                                ", muhatap.MuhatapAdı:" + muhatap.MuhatapAdı +
+                                ", MuhatapAdı:" + MuhatapAdı);
                     }
 
                     muhatap.İşyeri = this;
