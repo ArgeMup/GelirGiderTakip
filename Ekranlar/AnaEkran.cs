@@ -29,14 +29,14 @@ namespace Gelir_Gider_Takip
                 {
                     case Banka1.İlkAçılışAyarları_Komut_.Sayfa_Ayarlar:
                         YeniYazılımKontrolünüYap = true;
-                        Önyüz.Aç(new Ayarlar()); 
+                        Önyüz.Aç(new Ayarlar());
                         break;
 
                     case Banka1.İlkAçılışAyarları_Komut_.Sayfa_CariDöküm:
-                        YeniYazılımKontrolünüYap = true; 
-                        Önyüz.Aç(new Cari_Döküm()); 
+                        YeniYazılımKontrolünüYap = true;
+                        Önyüz.Aç(new Cari_Döküm());
                         break;
-                    
+
                     case Banka1.İlkAçılışAyarları_Komut_.Sayfa_GelirGiderEkle:
                         Rectangle rr = Screen.PrimaryScreen.WorkingArea;
                         Width = rr.Width / 2;
@@ -44,7 +44,7 @@ namespace Gelir_Gider_Takip
                         Left = rr.Width / 4;
                         Top = rr.Height / 4;
                         WindowState = FormWindowState.Normal;
-                        Önyüz.Aç(new GelirGider_Ekle()); 
+                        Önyüz.Aç(new GelirGider_Ekle());
                         break;
 
                     default: throw new Exception("İlkAçılışAyarları.Kullanıcı_Komut (" + Önyüz.İlkAçılışAyarları.Kullanıcı_Komut + ")");

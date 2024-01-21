@@ -133,7 +133,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (şablon != null)
             {
                 Tablo_Durum.Visible = şablon.Sütunlar_Durum == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
-                Tablo_KayıtTarihi.Visible = şablon.Sütunlar_KayıtTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+                Tablo_KayıtTarihi.Visible = şablon.Sütunlar_İlkİşlemTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
                 Tablo_KullanıcıAdı.Visible = şablon.Sütunlar_Kullanıcı == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
                 Tablo_Notlar.Visible = şablon.Sütunlar_Notlar == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
                 Tablo_SonİşlemTarihi.Visible = şablon.Sütunlar_SonİşlemTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
@@ -168,7 +168,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 string notlar = "Örnek not";
                 if ((int)tipi > 2)
                 {
-                    notlar += Environment.NewLine + Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false);
+                    notlar += Environment.NewLine + Banka_Ortak.Yazdır_Dizi_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false);
                 }
                 if ((int)tipi > 4)
                 {
@@ -278,11 +278,9 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             public float KontrolNoktası_Genişlik_Sutun_Başlık;
 
-            public İşlemler_Bir_Satır_Bilgi_ GüncelDurum_Tümü, GüncelDurum_Ödenen;
-            public float GüncelDrum_Yükseklik;
+            public Bir_Yazı_ Özet;
 
             public Bir_Yazı_ SonrakiSayfaYazısı = new Bir_Yazı_();
-            public float YazılarİçinToplamYükseklik = 0;
             public int ŞimdikiSayfaSayısı = 1, ToplamSayfaSayısı = 0;
 
             #region İşlemler
@@ -350,6 +348,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 ev.Graphics.PageUnit = GraphicsUnit.Millimeter;
                 ev.Graphics.ResetTransform();
                 ev.Graphics.Clear(Color.White);
+                bool BuİlkSayfa = Sayfa == null;
 
                 if (Sayfa == null)
                 {
@@ -407,6 +406,25 @@ namespace Gelir_Gider_Takip.Ekranlar
                 #region Çerçeveler
                 //Pen k = new Pen(Color.Red, 0.1f);
                 ev.Graphics.DrawRectangle(y.ÇerçeveKalemi, Sayfa.Sol, Sayfa.Üst, Sayfa.Genişlik, Sayfa.Yükseklik); //dış çerçeve
+                #endregion
+
+                #region Özet
+                if (BuİlkSayfa)
+                {
+                    y.YataydaOrtalanmış = true;
+                    y.KarakterKümesi = Sayfa.Kakü_KontrolNoktası;
+                    y.Üst = YazdırmaKonumu_Üst;
+                    y.Yükseklik = Sayfa.Özet.Yükseklik;
+                    y.Çerçeve = true;
+
+                    y.Yazı.Yazı = Sayfa.Özet.Yazı;
+                    y.Sol = Sayfa.Sol;
+                    y.Genişlik = Sayfa.Genişlik;
+                    y.Yazdır();
+
+                    YazdırmaKonumu_Üst += y.Yükseklik;
+                    YazdırmaKonumu_Yükseklik -= y.Yükseklik;
+                }
                 #endregion
 
                 #region Başlıklar
@@ -482,54 +500,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                     YazdırmaKonumu_Yükseklik -= y.Yükseklik;
                     Sayfa.Yazılar.RemoveAt(0);
                 }
-
-                do
-                {
-                    //Güncel Durum
-                    if (Sayfa.GüncelDrum_Yükseklik + Sayfa.SonrakiSayfaYazısı.Yükseklik > YazdırmaKonumu_Yükseklik)
-                    {
-                        //sonraki sayfaya geç
-                        SonrakiSayfaYazısınıYazdır();
-                        ev.HasMorePages = true;
-                        return;
-                    }
-
-                    //Tümü
-                    y.Üst = Sayfa.Üst + Sayfa.Yükseklik - Sayfa.SonrakiSayfaYazısı.Yükseklik - Sayfa.GüncelDrum_Yükseklik;
-                    y.Yükseklik = Sayfa.GüncelDurum_Tümü.EnYüksek_Yükseklik;
-
-                    y.KarakterKümesi = Sayfa.KaKü;
-                    y.Yazı = Sayfa.GüncelDurum_Tümü.Yazılar[0];
-                    y.Sol = Sayfa.Sol;
-                    y.Genişlik = Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık;
-                    y.YataydaOrtalanmış = true;
-                    y.Yazdır();
-
-                    y.KarakterKümesi = Sayfa.Kakü_KontrolNoktası;
-                    y.Yazı = Sayfa.GüncelDurum_Tümü.Yazılar[1];
-                    y.Sol += y.Genişlik;
-                    y.Genişlik = Sayfa.Genişlik - y.Genişlik;
-                    y.YataydaOrtalanmış = false;
-                    y.Yazdır();
-
-                    //Ödenen
-                    y.Üst += y.Yükseklik;
-                    y.Yükseklik = Sayfa.GüncelDurum_Ödenen.EnYüksek_Yükseklik;
-
-                    y.KarakterKümesi = Sayfa.KaKü;
-                    y.Yazı = Sayfa.GüncelDurum_Ödenen.Yazılar[0];
-                    y.Sol = Sayfa.Sol;
-                    y.Genişlik = Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık;
-                    y.YataydaOrtalanmış = true;
-                    y.Yazdır();
-
-                    y.KarakterKümesi = Sayfa.Kakü_KontrolNoktası;
-                    y.Yazı = Sayfa.GüncelDurum_Ödenen.Yazılar[1];
-                    y.Sol += y.Genişlik;
-                    y.Genişlik = Sayfa.Genişlik - y.Genişlik;
-                    y.YataydaOrtalanmış = false;
-                    y.Yazdır();
-                } while (false);
 
                 SonrakiSayfaYazısınıYazdır();
                 #endregion
@@ -650,7 +620,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             //Kontrol noktası başlık genişliği
             s = new SizeF(1000, 1000);//a4 ten büyük
             int Geçerlisutunsayısı = Sayfa.Sutunlar.Count(x => x != null);
-            if (Geçerlisutunsayısı >= 2) 
+            if (Geçerlisutunsayısı >= 2)
             {
                 string örnek_başlık = "   88 Ağustos 8888 Pazartesi   " + Environment.NewLine + DateOnly.MaxValue.Yazıya();
                 float genişlik_hesaplanan_kontrol_noktası_açıklama = Grafik.MeasureString(örnek_başlık, Sayfa.KaKü, s).Width;
@@ -689,7 +659,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                     İşlemler_Bir_Satır_Bilgi.Yazılar[1].Yükseklik = Grafik.MeasureString(İşlemler_Bir_Satır_Bilgi.Yazılar[1].Yazı, Sayfa.Kakü_KontrolNoktası, s).Height;
 
                     İşlemler_Bir_Satır_Bilgi.EnYüksek_Yükseklik = İşlemler_Bir_Satır_Bilgi.Yazılar[1].Yükseklik;
-                    Sayfa.YazılarİçinToplamYükseklik += İşlemler_Bir_Satır_Bilgi.EnYüksek_Yükseklik;
 
                     if (RenkliHücreler.Checked)
                     {
@@ -716,7 +685,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                         {
                             İşlemler_Bir_Satır_Bilgi.EnYüksek_Yükseklik = İşlemler_Bir_Satır_Bilgi.Yazılar[x].Yükseklik;
                         }
-                        Sayfa.YazılarİçinToplamYükseklik += İşlemler_Bir_Satır_Bilgi.EnYüksek_Yükseklik;
 
                         if (RenkliHücreler.Checked &&
                             Tablo[x, y].Style != null &&
@@ -731,42 +699,11 @@ namespace Gelir_Gider_Takip.Ekranlar
             //Güncel durumun eklenmesi
             do
             {
-                //Tümü
-                Sayfa.GüncelDurum_Tümü = new İşlemler_Bir_Satır_Bilgi_();
-                Sayfa.GüncelDurum_Tümü.Yazılar = new Bir_Yazı_[SutunSayısı];
+                Sayfa.Özet = new Bir_Yazı_();
+                Sayfa.Özet.Yazı = Banka_Ortak.Yazdır_Özet(null, null, false, true);
 
-                Sayfa.GüncelDurum_Tümü.Yazılar[0] = new Bir_Yazı_();
-                Sayfa.GüncelDurum_Tümü.Yazılar[0].Yazı = "Güncel durum" + Environment.NewLine + "Tümü";
-                s.Width = Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık;
-                Sayfa.GüncelDurum_Tümü.Yazılar[0].Yükseklik = Grafik.MeasureString(Sayfa.GüncelDurum_Tümü.Yazılar[0].Yazı, Sayfa.KaKü, s).Height;
-
-                Sayfa.GüncelDurum_Tümü.Yazılar[1] = new Bir_Yazı_();
-                Sayfa.GüncelDurum_Tümü.Yazılar[1].Yazı = Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false);
-                s.Width = Sayfa.Genişlik - s.Width;
-                Sayfa.GüncelDurum_Tümü.Yazılar[1].Yükseklik = Grafik.MeasureString(Sayfa.GüncelDurum_Tümü.Yazılar[1].Yazı, Sayfa.Kakü_KontrolNoktası, s).Height;
-
-                Sayfa.GüncelDurum_Tümü.EnYüksek_Yükseklik = Sayfa.GüncelDurum_Tümü.Yazılar[1].Yükseklik;
-                Sayfa.YazılarİçinToplamYükseklik += Sayfa.GüncelDurum_Tümü.EnYüksek_Yükseklik;
-
-                //Ödenen
-                Sayfa.GüncelDurum_Ödenen = new İşlemler_Bir_Satır_Bilgi_();
-                Sayfa.GüncelDurum_Ödenen.Yazılar = new Bir_Yazı_[SutunSayısı];
-
-                Sayfa.GüncelDurum_Ödenen.Yazılar[0] = new Bir_Yazı_();
-                Sayfa.GüncelDurum_Ödenen.Yazılar[0].Yazı = "Güncel durum" + Environment.NewLine + "Sadece ödenen";
-                s.Width = Sayfa.KontrolNoktası_Genişlik_Sutun_Başlık;
-                Sayfa.GüncelDurum_Ödenen.Yazılar[0].Yükseklik = Grafik.MeasureString(Sayfa.GüncelDurum_Ödenen.Yazılar[0].Yazı, Sayfa.KaKü, s).Height;
-
-                Sayfa.GüncelDurum_Ödenen.Yazılar[1] = new Bir_Yazı_();
-                Sayfa.GüncelDurum_Ödenen.Yazılar[1].Yazı = Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, true, true, true);
-                s.Width = Sayfa.Genişlik - s.Width;
-                Sayfa.GüncelDurum_Ödenen.Yazılar[1].Yükseklik = Grafik.MeasureString(Sayfa.GüncelDurum_Ödenen.Yazılar[1].Yazı, Sayfa.Kakü_KontrolNoktası, s).Height;
-
-                Sayfa.GüncelDurum_Ödenen.EnYüksek_Yükseklik = Sayfa.GüncelDurum_Ödenen.Yazılar[1].Yükseklik;
-                Sayfa.YazılarİçinToplamYükseklik += Sayfa.GüncelDurum_Ödenen.EnYüksek_Yükseklik;
-
-                //Ortak
-                Sayfa.GüncelDrum_Yükseklik = Sayfa.GüncelDurum_Tümü.EnYüksek_Yükseklik + Sayfa.GüncelDurum_Ödenen.EnYüksek_Yükseklik;
+                s.Width = Sayfa.Genişlik;
+                Sayfa.Özet.Yükseklik = Grafik.MeasureString(Sayfa.Özet.Yazı, Sayfa.Kakü_KontrolNoktası, s).Height;
             } while (false);
 
             //Sonraki sayfa yazısının ölçülmesi
@@ -790,7 +727,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Yazılar2.RemoveAt(0);
                 }
             }
-            if (konum + Sayfa.GüncelDrum_Yükseklik > Kullanılabilir_Yükseklik) Sayfa.ToplamSayfaSayısı++;
+            if (konum + Sayfa.Özet.Yükseklik > Kullanılabilir_Yükseklik) Sayfa.ToplamSayfaSayısı++;
             Sayfa.SonrakiSayfaYazısı.Yazı = "Toplam " + (Sayfa.Yazılar.Count) + " işlem, sayfa _ArGeMuP_ / " + Sayfa.ToplamSayfaSayısı + ", #" + System.IO.Path.GetRandomFileName().Replace(".", "");
         }
         #endregion

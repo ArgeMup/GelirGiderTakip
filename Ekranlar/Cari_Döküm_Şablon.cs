@@ -31,7 +31,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
         #region Zamanlama
         public enum Zamanlama_Aralık_ { Bu_ay, Son_15_gün, Bu_hafta, Bugün, Son_1_gün, Tüm_ödemeler, Sabit_aralık };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 0)]
+        [Değişken_.Niteliği.Adını_Değiştir("Z", 0)]
         Zamanlama_Aralık_ _Zamanlama_Aralık_;
         [Category("1 Zamanlama"), DisplayName("Aralık"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Zamanlama_Aralık_ Zamanlama_Aralık
@@ -80,7 +80,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
 
         public enum Zamanlama_GecikenleriKesinlikleGöster_ { Evet, Hayır };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 1)]
+        [Değişken_.Niteliği.Adını_Değiştir("Z", 1)]
         Zamanlama_GecikenleriKesinlikleGöster_ _Zamanlama_GecikenleriKesinlikleGöster_;
         [Category("1 Zamanlama"), DisplayName("Gecikenleri kesinlikle göster"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Zamanlama_GecikenleriKesinlikleGöster_ Zamanlama_GecikenleriKesinlikleGöster
@@ -89,8 +89,8 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Zamanlama_GecikenleriKesinlikleGöster_ = value;
         }
 
-        public enum Zamanlama_Türü_ { Ödeme_tarihi, Son_işlem_tarihi, Kayıt_tarihi };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 2)]
+        public enum Zamanlama_Türü_ { Ödeme_tarihi, İlk_işlem_tarihi, Son_işlem_tarihi, İşlem_tarihi };
+        [Değişken_.Niteliği.Adını_Değiştir("Z", 2)]
         Zamanlama_Türü_ _Zamanlama_Türü_;
         [Category("1 Zamanlama"), DisplayName("Türü"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Zamanlama_Türü_ Zamanlama_Türü
@@ -99,7 +99,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Zamanlama_Türü_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 3)]
+        [Değişken_.Niteliği.Adını_Değiştir("Z", 3)]
         DateTime _Zamanlama_Başlangıç_;
         [Category("1 Zamanlama"), DisplayName("Başlangıç"), TypeConverter(typeof(TipDönüştürücü_TarihSaat))]
         public DateTime Zamanlama_Başlangıç
@@ -108,7 +108,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Zamanlama_Başlangıç_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 4)]
+        [Değişken_.Niteliği.Adını_Değiştir("Z", 4)]
         DateTime _Zamanlama_Bitiş_;
         [Category("1 Zamanlama"), DisplayName("Bitiş"), TypeConverter(typeof(TipDönüştürücü_TarihSaat))]
         public DateTime Zamanlama_Bitiş
@@ -121,7 +121,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         #region Durumu
         public enum Sıralama_ÜçSeçenek_ { Farketmez, Dahil_et, Hariç_tut };
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 5)]
+        [Değişken_.Niteliği.Adını_Değiştir("D", 0)]
         Sıralama_ÜçSeçenek_ _Durumu_Ödenmedi_;
         [Category("2 Durumu"), DisplayName("Ödenmedi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Durumu_Ödenmedi
@@ -130,7 +130,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Durumu_Ödenmedi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 6)]
+        [Değişken_.Niteliği.Adını_Değiştir("D", 1)]
         Sıralama_ÜçSeçenek_ _Durumu_KısmenÖdendi_;
         [Category("2 Durumu"), DisplayName("Kısmen ödendi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Durumu_KısmenÖdendi
@@ -139,7 +139,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Durumu_KısmenÖdendi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 7)]
+        [Değişken_.Niteliği.Adını_Değiştir("D", 2)]
         Sıralama_ÜçSeçenek_ _Durumu_TamÖdendi_;
         [Category("2 Durumu"), DisplayName("Tam ödendi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Durumu_TamÖdendi
@@ -148,7 +148,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Durumu_TamÖdendi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 8)]
+        [Değişken_.Niteliği.Adını_Değiştir("D", 3)]
         Sıralama_ÜçSeçenek_ _Durumu_KısmiÖdemeYapıldı_;
         [Category("2 Durumu"), DisplayName("Kısmi ödeme yapıldı"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Durumu_KısmiÖdemeYapıldı
@@ -157,7 +157,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Durumu_KısmiÖdemeYapıldı_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 9)]
+        [Değişken_.Niteliği.Adını_Değiştir("D", 4)]
         Sıralama_ÜçSeçenek_ _Durumu_PeşinatÖdendi_;
         [Category("2 Durumu"), DisplayName("Peşinat ödendi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Durumu_PeşinatÖdendi
@@ -166,7 +166,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Durumu_PeşinatÖdendi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 10)]
+        [Değişken_.Niteliği.Adını_Değiştir("D", 5)]
         Sıralama_ÜçSeçenek_ _Durumu_İptalEdildi_;
         [Category("2 Durumu"), DisplayName("İptal edildi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Durumu_İptalEdildi
@@ -177,7 +177,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         #endregion
 
         #region Tipi
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 11)]
+        [Değişken_.Niteliği.Adını_Değiştir("T", 0)]
         Sıralama_ÜçSeçenek_ _Tipi_Gelir_;
         [Category("3 Tipi"), DisplayName("Gelir"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Tipi_Gelir
@@ -186,7 +186,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Tipi_Gelir_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 12)]
+        [Değişken_.Niteliği.Adını_Değiştir("T", 1)]
         Sıralama_ÜçSeçenek_ _Tipi_Gider_;
         [Category("3 Tipi"), DisplayName("Gider"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Tipi_Gider
@@ -195,7 +195,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Tipi_Gider_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 13)]
+        [Değişken_.Niteliği.Adını_Değiştir("T", 2)]
         Sıralama_ÜçSeçenek_ _Tipi_MaaşÖdemesi_;
         [Category("3 Tipi"), DisplayName("Maaş ödemesi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Tipi_MaaşÖdemesi
@@ -204,7 +204,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Tipi_MaaşÖdemesi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 14)]
+        [Değişken_.Niteliği.Adını_Değiştir("T", 3)]
         Sıralama_ÜçSeçenek_ _Tipi_AvansVerilmesi_;
         [Category("3 Tipi"), DisplayName("Avans verilmesi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Tipi_AvansVerilmesi
@@ -213,7 +213,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Tipi_AvansVerilmesi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 15)]
+        [Değişken_.Niteliği.Adını_Değiştir("T", 4)]
         Sıralama_ÜçSeçenek_ _Tipi_AvansÖdemesi_;
         [Category("3 Tipi"), DisplayName("Avans ödemesi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Tipi_AvansÖdemesi
@@ -222,7 +222,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Tipi_AvansÖdemesi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 16)]
+        [Değişken_.Niteliği.Adını_Değiştir("T", 5)]
         Sıralama_ÜçSeçenek_ _Tipi_KontrolNoktası_;
         [Category("3 Tipi"), DisplayName("Kontrol noktası"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sıralama_ÜçSeçenek_ Tipi_KontrolNoktası
@@ -234,7 +234,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
         #region Miktar
         public enum Miktar_ParaBirimi_ { Farketmez, Türk_lirası, Avro, Dolar };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 17)]
+        [Değişken_.Niteliği.Adını_Değiştir("Ü", 0)]
         Miktar_ParaBirimi_ _Miktar_ParaBirimi_;
         [Category("4 Miktar"), DisplayName("Para birimi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Miktar_ParaBirimi_ Miktar_ParaBirimi
@@ -243,7 +243,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Miktar_ParaBirimi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 18)]
+        [Değişken_.Niteliği.Adını_Değiştir("Ü", 1)]
         double _Miktar_EnAz_ = -1;
         [Category("4 Miktar"), DisplayName("En az"), TypeConverter(typeof(TipDönüştürücü_NoktalıSayı))]
         public double Miktar_EnAz
@@ -252,7 +252,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Miktar_EnAz_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 19)]
+        [Değişken_.Niteliği.Adını_Değiştir("Ü", 2)]
         double _Miktar_EnÇok_ = -1;
         [Category("4 Miktar"), DisplayName("En çok"), TypeConverter(typeof(TipDönüştürücü_NoktalıSayı))]
         public double Miktar_EnÇok
@@ -264,7 +264,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
         #region Diğer
         public enum Diğer_AltToplam_ { Gerekli_değil, Sadece_grup_için_hesapla, Sadece_muhatap_için_hesapla, Tümü_için_hesapla };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 20)]
+        [Değişken_.Niteliği.Adını_Değiştir("F", 0)]
         Diğer_AltToplam_ _Diğer_AltToplam_;
         [Category("5 Diğer"), DisplayName("Alt toplam"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Diğer_AltToplam_ Diğer_AltToplam
@@ -273,58 +273,17 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Diğer_AltToplam_ = value;
         }
 
-        public enum Diğer_ÇalışanMaaşHesabı_ { Gerekli_değil, Basit, Detaylı };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 21)]
-        Diğer_ÇalışanMaaşHesabı_ _Diğer_ÇalışanMaaşHesabı_;
-        [Category("5 Diğer"), DisplayName("Çalışan maaş hesabı"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
-        public Diğer_ÇalışanMaaşHesabı_ Diğer_ÇalışanMaaşHesabı
+        public enum Diğer_Şablon_ { Kullanma, Bu_ayın_gelirleri, Bu_ayın_giderleri, Bu_ayın_ödenmesi_gereken_giderleri, Bu_ayın_toplam_gideri, Tüm_borçlar, Kasa, Her_şey };
+        [Değişken_.Niteliği.Bunu_Kesinlikle_Kullanma()]
+        Diğer_Şablon_ _Diğer_Şablon_;
+        [Category("5 Diğer"), DisplayName("Şablon"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
+        public Diğer_Şablon_ Diğer_Şablon
         {
-            get => _Diğer_ÇalışanMaaşHesabı_;
+            get => _Diğer_Şablon_;
             set
             {
-                if (value != Diğer_ÇalışanMaaşHesabı_.Gerekli_değil)
-                {
-                    Diğer_MevcutTümÖdemeleriListele = Diğer_MevcutTümÖdemeleriListele_.Evet;
-                    Diğer_AltToplam = Diğer_AltToplam_.Sadece_muhatap_için_hesapla;
-                    Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Muhatap;
-
-                    Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
-                    Zamanlama_Türü = Zamanlama_Türü_.Ödeme_tarihi;
-
-                    Tipi_KontrolNoktası = Sıralama_ÜçSeçenek_.Hariç_tut;
-                   
-                    Sütunlar_Grup = Sütunlar_Durum_.Gizle;
-
-                    if (value == Diğer_ÇalışanMaaşHesabı_.Basit)
-                    {
-                        Sütunlar_Kullanıcı = Sütunlar_Durum_.Gizle;
-                        Sütunlar_Tip = Sütunlar_Durum_.Gizle;
-                        Sütunlar_ÖdemeGünü = Sütunlar_Durum_.Gizle;
-                        Sütunlar_Notlar = Sütunlar_Durum_.Gizle;
-                        Sütunlar_Durum = Sütunlar_Durum_.Gizle;
-                        Sütunlar_KayıtTarihi = Sütunlar_Durum_.Gizle;
-                        Sütunlar_SonİşlemTarihi = Sütunlar_Durum_.Gizle;
-                        Sütunlar_Taksit = Sütunlar_Durum_.Gizle;
-                        Sütunlar_Üyelik = Sütunlar_Durum_.Gizle;
-                    }
-                   
-                    if (MuhatapGrubu != null) MuhatapGrubu.SeçilenEleman_Adı = Banka1.Çalışan_Yazısı;
-                }
-
-                _Diğer_ÇalışanMaaşHesabı_ = value;
-            }
-        }
-
-        public enum Diğer_MevcutTümÖdemeleriListele_ { Hayır, Evet };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 22)]
-        Diğer_MevcutTümÖdemeleriListele_ _Diğer_MevcutTümÖdemeleriListele_;
-        [Category("5 Diğer"), DisplayName("Mevcut tüm ödemeleri listele"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
-        public Diğer_MevcutTümÖdemeleriListele_ Diğer_MevcutTümÖdemeleriListele
-        {
-            get => _Diğer_MevcutTümÖdemeleriListele_;
-            set
-            {
-                if (value == Diğer_MevcutTümÖdemeleriListele_.Evet)
+                if (value == Diğer_Şablon_.Kullanma) return;
+                else if (value == Diğer_Şablon_.Her_şey)
                 {
                     Zamanlama_Aralık = Zamanlama_Aralık_.Tüm_ödemeler;
                     Zamanlama_GecikenleriKesinlikleGöster = Zamanlama_GecikenleriKesinlikleGöster_.Evet;
@@ -349,14 +308,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Miktar_EnÇok = -1;
 
                     Diğer_AltToplam = Diğer_AltToplam_.Gerekli_değil;
-                    Diğer_ÇalışanMaaşHesabı = Diğer_ÇalışanMaaşHesabı_.Gerekli_değil;
                     Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Ödeme_Günü;
                     Sütunlar_Sırala = Sütunlar_Sırala_.Büyükten_küçüğe;
 
                     Sütunlar_Grup = Sütunlar_Durum_.Göster;
                     Sütunlar_Muhatap = Sütunlar_Durum_.Göster;
                     Sütunlar_Durum = Sütunlar_Durum_.Göster;
-                    Sütunlar_KayıtTarihi = Sütunlar_Durum_.Göster;
+                    Sütunlar_İlkİşlemTarihi = Sütunlar_Durum_.Göster;
                     Sütunlar_Kullanıcı = Sütunlar_Durum_.Göster;
                     Sütunlar_Miktar = Sütunlar_Durum_.Göster;
                     Sütunlar_Notlar = Sütunlar_Durum_.Göster;
@@ -372,15 +330,83 @@ namespace Gelir_Gider_Takip.Ekranlar
                         Muhatap.SeçilenEleman_Adı = null;
                     }
                 }
+                else
+                {
+                    Diğer_Şablon = Diğer_Şablon_.Her_şey;
+                    Zamanlama_Türü = Zamanlama_Türü_.Ödeme_tarihi;
+                    Zamanlama_GecikenleriKesinlikleGöster = Zamanlama_GecikenleriKesinlikleGöster_.Hayır;
+                    Durumu_İptalEdildi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    Tipi_KontrolNoktası = Sıralama_ÜçSeçenek_.Hariç_tut;
 
-                _Diğer_MevcutTümÖdemeleriListele_ = Diğer_MevcutTümÖdemeleriListele_.Hayır;
+                    if (value == Diğer_Şablon_.Bu_ayın_gelirleri)
+                    {
+                        Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
+
+                        Durumu_KısmenÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_Ödenmedi = Sıralama_ÜçSeçenek_.Hariç_tut;
+
+                        Tipi_Gider = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Tipi_AvansVerilmesi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Tipi_MaaşÖdemesi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    }
+                    else if (value == Diğer_Şablon_.Bu_ayın_giderleri)
+                    {
+                        Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
+
+                        Durumu_KısmenÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_Ödenmedi = Sıralama_ÜçSeçenek_.Hariç_tut;
+
+                        Tipi_Gelir = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Tipi_AvansÖdemesi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    }
+                    else if (value == Diğer_Şablon_.Bu_ayın_ödenmesi_gereken_giderleri)
+                    {
+                        Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
+
+                        Durumu_KısmiÖdemeYapıldı = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_PeşinatÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_TamÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+
+                        Tipi_Gelir = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Tipi_AvansÖdemesi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    }
+                    else if (value == Diğer_Şablon_.Bu_ayın_toplam_gideri)
+                    {
+                        Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
+
+                        Tipi_Gelir = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Tipi_AvansÖdemesi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    }
+                    else if (value == Diğer_Şablon_.Tüm_borçlar)
+                    {
+                        Zamanlama_Aralık = Zamanlama_Aralık_.Tüm_ödemeler;
+                        Zamanlama_Türü = Zamanlama_Türü_.Son_işlem_tarihi;
+
+                        Durumu_KısmiÖdemeYapıldı = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_PeşinatÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_TamÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+
+                        Tipi_Gelir = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Tipi_AvansÖdemesi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    }
+                    else if (value == Diğer_Şablon_.Kasa)
+                    {
+                        Zamanlama_Aralık = Zamanlama_Aralık_.Tüm_ödemeler;
+                        Zamanlama_Türü = Zamanlama_Türü_.Son_işlem_tarihi;
+
+                        Durumu_KısmenÖdendi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                        Durumu_Ödenmedi = Sıralama_ÜçSeçenek_.Hariç_tut;
+                    }
+                }
+
+                _Diğer_Şablon_ = Diğer_Şablon_.Kullanma;
             }
         }
         #endregion
 
         #region Sütunlar
         public enum Sütunlar_Sırala_ { Küçükten_büyüğe, Büyükten_küçüğe };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 23)]
+        [Değişken_.Niteliği.Adını_Değiştir("Ş", 0)]
         Sütunlar_Sırala_ _Sütunlar_Sırala_;
         [Category("6 Sütunlar"), DisplayName("Sırala"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Sırala_ Sütunlar_Sırala
@@ -389,8 +415,8 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Sırala_ = value;
         }
 
-        public enum Sütunlar_Sırala_Sütun_ { Grup, Muhatap, Ödeme_Günü, Tip, Durum, Notlar, Taksit, Son_İşlem_Tarihi, Kayıt_Tarihi, Kullanıcı };
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 24)]
+        public enum Sütunlar_Sırala_Sütun_ { Grup, Muhatap, Ödeme_Günü, Tip, Durum, Notlar, Taksit, Son_İşlem_Tarihi, İlk_İşlem_Tarihi, Kullanıcı };
+        [Değişken_.Niteliği.Adını_Değiştir("Ş", 1)]
         Sütunlar_Sırala_Sütun_ _Sütunlar_Sırala_Sütun_;
         [Category("6 Sütunlar"), DisplayName("Sıralanacak Sütun"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Sırala_Sütun_ Sütunlar_Sırala_Sütun
@@ -401,7 +427,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
         public enum Sütunlar_Durum_ { Göster, Gizle };
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 25)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 0)]
         Sütunlar_Durum_ _Sütunlar_Grup_;
         [Category("6 Sütunlar"), DisplayName("Grup"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Grup
@@ -410,7 +436,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Grup_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 26)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 1)]
         Sütunlar_Durum_ _Sütunlar_Muhatap_;
         [Category("6 Sütunlar"), DisplayName("Muhatap"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Muhatap
@@ -419,7 +445,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Muhatap_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 27)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 2)]
         Sütunlar_Durum_ _Sütunlar_ÖdemeGünü_;
         [Category("6 Sütunlar"), DisplayName("Ödeme günü"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_ÖdemeGünü
@@ -428,7 +454,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_ÖdemeGünü_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 28)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 3)]
         Sütunlar_Durum_ _Sütunlar_Tip_;
         [Category("6 Sütunlar"), DisplayName("Tip"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Tip
@@ -437,7 +463,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Tip_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 29)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 4)]
         Sütunlar_Durum_ _Sütunlar_Durum_;
         [Category("6 Sütunlar"), DisplayName("Durum"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Durum
@@ -446,7 +472,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Durum_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 30)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 5)]
         Sütunlar_Durum_ _Sütunlar_Miktar_;
         [Category("6 Sütunlar"), DisplayName("Miktar"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Miktar
@@ -455,7 +481,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Miktar_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 31)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 6)]
         Sütunlar_Durum_ _Sütunlar_Notlar_;
         [Category("6 Sütunlar"), DisplayName("Notlar"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Notlar
@@ -464,7 +490,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Notlar_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 32)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 7)]
         Sütunlar_Durum_ _Sütunlar_Taksit_;
         [Category("6 Sütunlar"), DisplayName("Taksit"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Taksit
@@ -473,7 +499,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Taksit_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 33)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 8)]
         Sütunlar_Durum_ _Sütunlar_Üyelik_;
         [Category("6 Sütunlar"), DisplayName("Üyelik"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Üyelik
@@ -482,7 +508,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_Üyelik_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 34)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 9)]
         Sütunlar_Durum_ _Sütunlar_SonİşlemTarihi_;
         [Category("6 Sütunlar"), DisplayName("Son işlem tarihi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_SonİşlemTarihi
@@ -491,16 +517,16 @@ namespace Gelir_Gider_Takip.Ekranlar
             set => _Sütunlar_SonİşlemTarihi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 35)]
-        Sütunlar_Durum_ _Sütunlar_KayıtTarihi_;
-        [Category("6 Sütunlar"), DisplayName("Kayıt tarihi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
-        public Sütunlar_Durum_ Sütunlar_KayıtTarihi
+        [Değişken_.Niteliği.Adını_Değiştir("S", 10)]
+        Sütunlar_Durum_ _Sütunlar_İlkİşlemTarihi_;
+        [Category("6 Sütunlar"), DisplayName("İlk işlem tarihi"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
+        public Sütunlar_Durum_ Sütunlar_İlkİşlemTarihi
         {
-            get => _Sütunlar_KayıtTarihi_;
-            set => _Sütunlar_KayıtTarihi_ = value;
+            get => _Sütunlar_İlkİşlemTarihi_;
+            set => _Sütunlar_İlkİşlemTarihi_ = value;
         }
 
-        [Değişken_.Niteliği.Adını_Değiştir("Ş", 36)]
+        [Değişken_.Niteliği.Adını_Değiştir("S", 11)]
         Sütunlar_Durum_ _Sütunlar_Kullanıcı_;
         [Category("6 Sütunlar"), DisplayName("Kullanıcı"), TypeConverter(typeof(TipDönüştürücü_Sıralama))]
         public Sütunlar_Durum_ Sütunlar_Kullanıcı

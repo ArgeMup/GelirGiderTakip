@@ -1,4 +1,5 @@
-﻿using ArgeMup.HazirKod.Ekİşlemler;
+﻿using ArgeMup.HazirKod;
+using ArgeMup.HazirKod.Ekİşlemler;
 using ArgeMup.HazirKod.Ekranlar;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
             Ekle.Visible = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Gelir_gider_ekleyebilir);
 
-            Ayraç_Filtre_TabloSonuç.SplitterDistance = Height / 5;
+            Ayraç_Filtre_TabloSonuç.SplitterDistance = Height * 30 / 100;
 
             Sorgula_MuhatapGrubu.Başlat(Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Listele(true), Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Listele(), "Muhatap Grupları", ListeKutusu_Ayarlar);
 
@@ -97,10 +98,10 @@ namespace Gelir_Gider_Takip.Ekranlar
                     break;
 
                 case AçılışTürü_.İlişkiliOlanlarıListele:
-                    Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi;
+                    Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.İşlem_tarihi;
                     Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık;
-                    Şablon.Zamanlama_Başlangıç = Ortak_Kullanım_Ödeme.İlkKayıtTarihi;
-                    Şablon.Zamanlama_Bitiş = Ortak_Kullanım_Ödeme.İlkKayıtTarihi;
+                    Şablon.Zamanlama_Başlangıç = Ortak_Kullanım_Ödeme.İlkİşlemTarihi;
+                    Şablon.Zamanlama_Bitiş = Ortak_Kullanım_Ödeme.İlkİşlemTarihi;
                     Şablon.Zamanlama_GecikenleriKesinlikleGöster = Cari_Döküm_Şablon_.Zamanlama_GecikenleriKesinlikleGöster_.Hayır;
 
                     Sorgula_MuhatapGrubu.SeçilenEleman_Adı = Ortak_Kullanım_Ödeme.MuhatapGrubuAdı;
@@ -116,6 +117,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     List<DataGridViewRow> dizi = new List<DataGridViewRow>();
                     Tablo_SonİşlemTarihi.Visible = false;
                     string Son_Not = null;
+                    Tablo_İlkİşlemTarihi.HeaderText = "İşlem Tarihi";
 
                     foreach (KeyValuePair<DateTime, Banka1.İşyeri_Ödeme_İşlem_> işlem in Ortak_Kullanım_Ödeme.İşlemler)
                     {
@@ -134,7 +136,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                         dizin[Tablo_Miktar.Index] = Banka_Ortak.Yazdır_Ücret(işlem.Value.Miktarı, Ortak_Kullanım_Ödeme.ParaBirimi);
                         dizin[Tablo_Taksit.Index] = Ortak_Kullanım_Ödeme.Taksit.Yazdır();
                         dizin[Tablo_Üyelik.Index] = üyelik_olarak_göster;
-                        dizin[Tablo_KayıtTarihi.Index] = işlem.Key;
+                        dizin[Tablo_İlkİşlemTarihi.Index] = işlem.Key;
                         dizin[Tablo_KullanıcıAdı.Index] = işlem.Value.GerçekleştirenKullanıcıAdı;
 
                         DataGridViewRow _1_satır_dizisi_ = new DataGridViewRow();
@@ -145,7 +147,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                         _1_satır_dizisi_.Cells[Tablo_Miktar.Index].ToolTipText = gelir_olarak_göster ? "Gelir" : "Gider";
                         if (üyelik_olarak_göster) _1_satır_dizisi_.Cells[Tablo_Üyelik.Index].ToolTipText = Ortak_Kullanım_Ödeme.Üyelik_KayıtTarihi.Value.Yazıya();
                         _1_satır_dizisi_.Cells[Tablo_Durum.Index].Style.BackColor = DurumRengi(işlem.Value.Durumu);
-                        if (Ortak_Kullanım_Ödeme.GeciktiMi) _1_satır_dizisi_.Cells[Tablo_ÖdemeTarihi.Index].Style.BackColor = Ortak.Renk_Kırmızı;
                     }
 
                     dizi.Reverse();
@@ -261,10 +262,12 @@ namespace Gelir_Gider_Takip.Ekranlar
         private void Sorgula_Click(object sender, EventArgs e)
         {
             Sorgula.Enabled = false;
+            TabloİçeriğiArama.BackColor = Ortak.Renk_Kırmızı;
             Öde_Geri_Click(null, null);
             Düzenle_Geri_Click(null, null);
             KontrolNoktası_Geri_Click(null, null);
             ÇokluSeçim_Geri_Click(null, null);
+            Application.DoEvents();
 
             if (Şablon.Zamanlama_Aralık != Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık) Şablon.Zamanlama_Aralık = Şablon.Zamanlama_Aralık; //tarihleri güncelle
             SorgulamaDetayları.Refresh();
@@ -273,6 +276,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Açıklamalar.Text = null;
             Tablo.Rows.Clear();
+            TabloİçeriğiArama.Text = null;
             Tablo_SelectionChanged(null, null);
             if (Tablo.SortedColumn != null)
             {
@@ -287,13 +291,12 @@ namespace Gelir_Gider_Takip.Ekranlar
             int sutun_sayısı = Tablo.ColumnCount;
             List<DataGridViewRow> dizi = new List<DataGridViewRow>();
             Dictionary<string, double> AltToplamlar = new Dictionary<string, double>();
-            bool EnAz1_TaksitsizAvansÖdemesi_Var = false;
 
             foreach (string yıl in Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_Yıllar())
             {
                 //istenmeyen yılları atla
                 int yıll = yıl.TamSayıya();
-                if (Şablon.Zamanlama_Türü == Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi && (yıll < başlangıç_d.Year || yıll > bitiş_d.Year)) continue;
+                if (Şablon.Zamanlama_Türü == Cari_Döküm_Şablon_.Zamanlama_Türü_.İlk_işlem_tarihi && (yıll < başlangıç_d.Year || yıll > bitiş_d.Year)) continue;
 
                 Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
                 foreach (Banka1.İşyeri_Ödeme_ ödeme in BirYıllıkDönem.Ödemeler)
@@ -311,7 +314,6 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Şablon.Diğer_AltToplam != Cari_Döküm_Şablon_.Diğer_AltToplam_.Gerekli_değil)
             {
                 if (AltToplamlar.Keys.Count == 0) AltToplamlar.Add("1" + Sorgula_AltToplamlar_Ayraç + "Geçerli kayıt bulunamadı" + Sorgula_AltToplamlar_Ayraç + "Geçerli kayıt bulunamadı", 0);
-                bool MaaşÖdemeleriİçin = Şablon.Diğer_ÇalışanMaaşHesabı != Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Gerekli_değil;
 
                 foreach (KeyValuePair<string, double> AltToplam in AltToplamlar)
                 {
@@ -322,8 +324,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                     //parabirimi_sayısı + Grup + muhatap
                     if (AltToplam_Ad_Dizisi.Length == 3) dizin[Tablo_Muhatap.Index] = AltToplam_Ad_Dizisi[2];
                     dizin[Tablo_MuhatapGrubu.Index] = AltToplam_Ad_Dizisi[1];
-                    dizin[Tablo_Tip.Index] = MaaşÖdemeleriİçin ? "Net ücret" : "Alt toplam";
-                    dizin[Tablo_Miktar.Index] = Banka_Ortak.Yazdır_Ücret(MaaşÖdemeleriİçin ? AltToplam.Value * -1 : AltToplam.Value, (Banka1.İşyeri_Ödeme_.ParaBirimi_)AltToplam_Ad_Dizisi[0].TamSayıya());
+                    dizin[Tablo_Tip.Index] = "Alt toplam";
+                    dizin[Tablo_Miktar.Index] = Banka_Ortak.Yazdır_Ücret(AltToplam.Value, (Banka1.İşyeri_Ödeme_.ParaBirimi_)AltToplam_Ad_Dizisi[0].TamSayıya());
 
                     DataGridViewRow _1_satır_dizisi_ = new DataGridViewRow();
                     dizi.Add(_1_satır_dizisi_);
@@ -333,7 +335,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
 
             Tablo_Durum.Visible = Şablon.Sütunlar_Durum == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
-            Tablo_KayıtTarihi.Visible = Şablon.Sütunlar_KayıtTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
+            Tablo_İlkİşlemTarihi.Visible = Şablon.Sütunlar_İlkİşlemTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
             Tablo_KullanıcıAdı.Visible = Şablon.Sütunlar_Kullanıcı == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
             Tablo_Notlar.Visible = Şablon.Sütunlar_Notlar == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
             Tablo_SonİşlemTarihi.Visible = Şablon.Sütunlar_SonİşlemTarihi == Cari_Döküm_Şablon_.Sütunlar_Durum_.Göster;
@@ -356,37 +358,17 @@ namespace Gelir_Gider_Takip.Ekranlar
                 case Cari_Döküm_Şablon_.Sütunlar_Sırala_Sütun_.Notlar: sıralama_sütunu = Tablo_Notlar; break;
                 case Cari_Döküm_Şablon_.Sütunlar_Sırala_Sütun_.Taksit: sıralama_sütunu = Tablo_Taksit; break;
                 case Cari_Döküm_Şablon_.Sütunlar_Sırala_Sütun_.Son_İşlem_Tarihi: sıralama_sütunu = Tablo_SonİşlemTarihi; break;
-                case Cari_Döküm_Şablon_.Sütunlar_Sırala_Sütun_.Kayıt_Tarihi: sıralama_sütunu = Tablo_KayıtTarihi; break;
+                case Cari_Döküm_Şablon_.Sütunlar_Sırala_Sütun_.İlk_İşlem_Tarihi: sıralama_sütunu = Tablo_İlkİşlemTarihi; break;
                 case Cari_Döküm_Şablon_.Sütunlar_Sırala_Sütun_.Kullanıcı: sıralama_sütunu = Tablo_KullanıcıAdı; break;
             }
             Tablo.Sort(sıralama_sütunu, Şablon.Sütunlar_Sırala == Cari_Döküm_Şablon_.Sütunlar_Sırala_.Büyükten_küçüğe ? System.ComponentModel.ListSortDirection.Descending : System.ComponentModel.ListSortDirection.Ascending);
             Tablo.ClearSelection();
 
-            Açıklamalar.Text =
-                "Tablo özeti ( " + Şablon.Zamanlama_Aralık.ToString().Replace('_', ' ') + " )" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Toplam_Gelir, Toplam_Gider, true, false, true) + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, false, true, true) + Environment.NewLine + Environment.NewLine +
-                "Genel kapsamda ( Tümü )" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false) + Environment.NewLine + Environment.NewLine +
-                "Genel kapsamda ( Sadece ödenen )" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, true, true, true);
+            Açıklamalar.Text = Banka_Ortak.Yazdır_Özet(Toplam_Gelir, Toplam_Gider, true, false);
             Sorgula.Enabled = true;
             Yazdır.Enabled = dizi.Count() > 0;
-
-            if (EnAz1_TaksitsizAvansÖdemesi_Var &&
-                Şablon.Diğer_ÇalışanMaaşHesabı == Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Basit &&
-                (Önyüz.İlkAçılışAyarları == null || Önyüz.İlkAçılışAyarları.Kullanıcı_Komut == Banka1.İlkAçılışAyarları_Komut_.Sayfa_CariDöküm) &&
-                Cari_döküm_içinde_işlem_yapabilir) MessageBox.Show("5 Diğer - Çalışan maaş hesabı - BASİT" + Environment.NewLine + "olarak ayarlandığı için avans hesabı tam olarak yapılamadı" + Environment.NewLine + "Lütfen DETAYLI görünüme geçiniz", Text);
-
-            Döviz.KurlarıAl(_GeriBildirimİşlemi_DövizKurları_);
-            void _GeriBildirimİşlemi_DövizKurları_(double Avro, double Dolar)
-            {
-                Ödeme_Ekranı.Invoke(new Action(() =>
-                {
-                    Açıklamalar.Text = "Avro : " + Banka_Ortak.Yazdır_Ücret(Avro, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası) + ", Dolar : " + Banka_Ortak.Yazdır_Ücret(Dolar, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası) +
-                        Environment.NewLine + Environment.NewLine + Açıklamalar.Text;
-                }));
-            }
+            TabloİçeriğiArama.BackColor = Color.White;
+            Sorgula.Text = "Sorgula (" + Tablo.RowCount + ")";
 
             void _TabloyaEkle_(Banka1.İşyeri_Ödeme_ _ödeme_)
             {
@@ -399,7 +381,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 {
                     if (Şablon.Tipi_KontrolNoktası == Cari_Döküm_Şablon_.Sıralama_ÜçSeçenek_.Hariç_tut) return;
 
-                    DateTime trh = Şablon.Zamanlama_Türü == Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi ? ilk_işlem.Key : ilk_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly());
+                    DateTime trh = Şablon.Zamanlama_Türü == Cari_Döküm_Şablon_.Zamanlama_Türü_.İlk_işlem_tarihi ? ilk_işlem.Key : ilk_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly());
                     if (trh < Şablon.Zamanlama_Başlangıç || trh > Şablon.Zamanlama_Bitiş) return; //kapsam dışında
 
                     object[] dizin = new object[sutun_sayısı];
@@ -407,7 +389,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     dizin[Tablo_ÖdemeTarihi.Index] = ilk_işlem.Value.ÖdemeninYapılacağıTarih;
                     dizin[Tablo_Notlar.Index] = _ödeme_.Notlar;
                     dizin[Tablo_SonİşlemTarihi.Index] = ilk_işlem.Key;
-                    dizin[Tablo_KayıtTarihi.Index] = ilk_işlem.Key;
+                    dizin[Tablo_İlkİşlemTarihi.Index] = ilk_işlem.Key;
                     dizin[Tablo_KullanıcıAdı.Index] = son_işlem.Value.GerçekleştirenKullanıcıAdı;
 
                     _1_satır_dizisi_ = new DataGridViewRow();
@@ -431,16 +413,36 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (gecikti_olarak_göster && Şablon.Zamanlama_GecikenleriKesinlikleGöster == Cari_Döküm_Şablon_.Zamanlama_GecikenleriKesinlikleGöster_.Evet) { }
                     else
                     {
-                        DateTime trh;
-                        switch (Şablon.Zamanlama_Türü)
+                        if (Şablon.Zamanlama_Türü == Cari_Döküm_Şablon_.Zamanlama_Türü_.İşlem_tarihi)
                         {
-                            case Cari_Döküm_Şablon_.Zamanlama_Türü_.Ödeme_tarihi: trh = son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()); break;
-                            case Cari_Döküm_Şablon_.Zamanlama_Türü_.Son_işlem_tarihi: trh = son_işlem.Key; break;
-                            case Cari_Döküm_Şablon_.Zamanlama_Türü_.Kayıt_tarihi: trh = ilk_işlem.Key; break;
-                            default: trh = DateTime.MinValue; break;
-                        }
+                            foreach (DateTime trh in _ödeme_.İşlemler.Keys)
+                            {
+                                if (Ortak_Kullanım_Ödeme != null)
+                                {
+                                    if (Ortak_Kullanım_Ödeme.İşlemler.ContainsKey(trh)) goto _ödeme_İşlemler_Keys_Devam_;
+                                }
+                                else
+                                {
+                                    if (trh >= Şablon.Zamanlama_Başlangıç && trh <= Şablon.Zamanlama_Bitiş) goto _ödeme_İşlemler_Keys_Devam_;
+                                }
+                            }
+                            return; //kapsam dışında
 
-                        if (trh < Şablon.Zamanlama_Başlangıç || trh > Şablon.Zamanlama_Bitiş) return; //kapsam dışında
+                        _ödeme_İşlemler_Keys_Devam_:;
+                        }
+                        else
+                        {
+                            DateTime trh;
+                            switch (Şablon.Zamanlama_Türü)
+                            {
+                                case Cari_Döküm_Şablon_.Zamanlama_Türü_.Ödeme_tarihi: trh = son_işlem.Value.ÖdemeninYapılacağıTarih.ToDateTime(new TimeOnly()); break;
+                                case Cari_Döküm_Şablon_.Zamanlama_Türü_.Son_işlem_tarihi: trh = son_işlem.Key; break;
+                                case Cari_Döküm_Şablon_.Zamanlama_Türü_.İlk_işlem_tarihi: trh = ilk_işlem.Key; break;
+                                default: trh = DateTime.MinValue; break;
+                            }
+
+                            if (trh < Şablon.Zamanlama_Başlangıç || trh > Şablon.Zamanlama_Bitiş) return; //kapsam dışında
+                        }
                     }
 
                     bool listele = (Kapsam_Grup == null || Kapsam_Grup.Contains(_ödeme_.MuhatapGrubuAdı)) &&
@@ -448,16 +450,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (!listele) return; //kapsam dışında
 
                     listele = Şablon.Diğer_AltToplam != Cari_Döküm_Şablon_.Diğer_AltToplam_.Gerekli_değil && !iptaledildi_olarak_göster;
-                    if (Şablon.Diğer_ÇalışanMaaşHesabı != Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Gerekli_değil)
-                    {
-                        if (tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansÖdemesi && _ödeme_.Taksit == null)
-                        {
-                            EnAz1_TaksitsizAvansÖdemesi_Var = true;
-
-                            if (durumu == Banka1.İşyeri_Ödeme_İşlem_.Durum_.KısmenÖdendi) listele = false; //kısmen ödenmiş taksitsiz avans ödemesi
-                        }
-                        else if (tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansVerilmesi) listele = false;
-                    }
                     if (listele)
                     {
                         string anahtar = ((int)_ödeme_.ParaBirimi).Yazıya() + Sorgula_AltToplamlar_Ayraç + _ödeme_.MuhatapGrubuAdı;
@@ -481,8 +473,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                             AltToplamlar[anahtar] = miktar;
                         }
                     }
-
-                    if (Şablon.Diğer_ÇalışanMaaşHesabı == Cari_Döküm_Şablon_.Diğer_ÇalışanMaaşHesabı_.Basit) return;
 
                     switch (durumu)
                     {
@@ -598,7 +588,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     dizin[Tablo_Taksit.Index] = _ödeme_.Taksit.Yazdır();
                     dizin[Tablo_Üyelik.Index] = üyelik_olarak_göster;
                     dizin[Tablo_SonİşlemTarihi.Index] = son_işlem.Key;
-                    dizin[Tablo_KayıtTarihi.Index] = _ödeme_.İşlemler.First().Key;
+                    dizin[Tablo_İlkİşlemTarihi.Index] = _ödeme_.İşlemler.First().Key;
                     dizin[Tablo_KullanıcıAdı.Index] = son_işlem.Value.GerçekleştirenKullanıcıAdı;
 
                     _1_satır_dizisi_ = new DataGridViewRow();
@@ -658,6 +648,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     TabloİçeriğiArama_Sayac_Bulundu = 0;
                 }
 
+                Sorgula.Text = "Sorgula (" + Tablo.RowCount + ")";
                 return;
             }
 
@@ -709,6 +700,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             }
 
             if (TabloİçeriğiArama_Sayac_Bulundu == 0) TabloİçeriğiArama_Sayac_Bulundu = -1;
+            else Sorgula.Text = "Sorgula (" + TabloİçeriğiArama_Sayac_Bulundu + "/" + Tablo.RowCount + ")";
 
             TabloİçeriğiArama.BackColor = Color.White;
             TabloİçeriğiArama_Çalışıyor = false;
@@ -767,7 +759,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                         Düzenle.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
                     }
 
-                    İlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                    İlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && Ortak_Kullanım_Ödeme != ödeme;
                     SürümleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && ödeme.İşlemler.Count > 1;
                 }
             }
@@ -809,6 +801,33 @@ namespace Gelir_Gider_Takip.Ekranlar
             int SatırNo = Tablo.SelectedCells[0].RowIndex;
             Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
 
+            Öde_AvansÖdemesi_Onay.Checked = false;
+            bool avans_ödeme_ekranını_kapat = true;
+            if (ödeme.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi)
+            {
+                List<Banka1.İşyeri_Ödeme_> avans_ödemeleri = Ortak.Banka.Seçilenİşyeri.Muhatap_Ödenmemiş_AvansÖdemeleri(ödeme.MuhatapAdı);
+                if (avans_ödemeleri.Count > 0)
+                {
+                    avans_ödeme_ekranını_kapat = false;
+
+                    Ödeme_Ekranı_AvansÖdemesi.Tag = avans_ödemeleri;
+                    Ödeme_Ekranı_AvansÖdemesi.Visible = true;
+                    Ödeme_Ekranı_2.Left = Ödeme_Ekranı_AvansÖdemesi.Left - 10 - Ödeme_Ekranı_2.Width;
+
+                    double toplam_avans = 0;
+                    avans_ödemeleri.ForEach(x => toplam_avans += x.Miktarı);
+                    Öde_AvansÖdemesi_Onay.Text = "Avans ödemesi al ( Toplam : " + Banka_Ortak.Yazdır_Ücret(toplam_avans, Banka1.İşyeri_Ödeme_.ParaBirimi_.TürkLirası) + " )";
+
+                    Öde_AvansÖdemesi_Miktar.Value = 0;
+                    Öde_AvansÖdemesi_Miktar.Maximum = (decimal)Hesapla.EnKüçük(ödeme.Miktarı, toplam_avans);
+                }
+            }
+            if (avans_ödeme_ekranını_kapat)
+            {
+                Ödeme_Ekranı_AvansÖdemesi.Visible = false;
+                Ödeme_Ekranı_2.Left = (Ödeme_Ekranı.Width - Ödeme_Ekranı_2.Width) / 2;
+            }
+
             Öde_TamÖdeme.Text = "Tam Ödeme ( " + ödeme.Yazdır_Miktarı() + " )";
             Öde_TamÖdeme.Tag = ödeme;
             Öde_KısmiÖdeme.Text = "Kısmi Ödeme";
@@ -821,14 +840,16 @@ namespace Gelir_Gider_Takip.Ekranlar
             Öde_TamÖdeme.Checked = true;
             Ödeme_Ekranı.Visible = true;
             Sonuçlar_Ekranı.Visible = false;
+
+            if (!avans_ödeme_ekranını_kapat) Öde_AvansÖdemesi_Miktar_ValueChanged(null, null);
         }
         private void Öde_TamÖdeme_CheckedChanged(object sender, EventArgs e)
         {
-            Öde_Kaydet.Enabled = Öde_TamÖdeme.Checked || Öde_KısmiÖdeme_Miktar.Value > 0;
+            Öde_Kaydet.Enabled = Öde_TamÖdeme.Checked || (Öde_KısmiÖdeme.Checked && Öde_KısmiÖdeme_Miktar.Value > 0);
+            Öde_KısmiÖdeme_Ekran.Enabled = Öde_KısmiÖdeme.Checked;
         }
         private void Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti(object sender, EventArgs e)
         {
-            Öde_KısmiÖdeme.Checked = true;
             Öde_Kaydet.Enabled = false;
             if (Öde_KısmiÖdeme_Miktar.Value == 0) return;
 
@@ -842,7 +863,6 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (KalanÖdemeMiktarı_ÖdemeParaBiriminde > 0)
             {
                 Öde_KısmiÖdeme_Miktar.BackColor = Color.White;
-                Öde_KısmiÖdeme_Miktar.Tag = KalanÖdemeMiktarı_ÖdemeParaBiriminde;
                 Öde_Kaydet.Enabled = true;
             }
             else
@@ -872,28 +892,125 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Dr == DialogResult.No) return;
 
             Banka1.İşyeri_Ödeme_ ödeme = Öde_TamÖdeme.Tag as Banka1.İşyeri_Ödeme_;
-            double ÖdenilenMiktar;
-            Banka1.İşyeri_Ödeme_.ParaBirimi_ ÖdenilenParaBirimi;
-            DateTime? KalanÖdemeninYapılacağıTarih;
-
-            if (Öde_TamÖdeme.Checked)
+            if (ödeme.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansÖdemesi)
             {
-                ÖdenilenMiktar = ödeme.Miktarı;
-                ÖdenilenParaBirimi = ödeme.ParaBirimi;
-                KalanÖdemeninYapılacağıTarih = null;
+                Dr = MessageBox.Show("Seçtiğiniz avans ödemesi, maaş ödemesi aşamasında uygulama tarafından ödenecektir, elle ödeme yapılması gerekli değildir." + Environment.NewLine + Environment.NewLine +
+                    "Yinede işleme devam etmek istiyor musunuz?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (Dr == DialogResult.No) return;
+            }
+
+            if (Öde_AvansÖdemesi_Onay.Checked && Öde_AvansÖdemesi_Miktar.Value > 0)
+            {
+                bool en_az_1_kayıt_yapıldı = false;
+                DateTime KayıtTarihi = DateTime.Now;
+                foreach (DataGridViewRow satır in Öde_AvansÖdemesi_Tablo.Rows)
+                {
+                    double satır_miktar = (double)satır.Cells[Öde_AvansÖdemesi_Tablo_Mikar.Index].Tag;
+                    if (satır_miktar == 0) continue;
+                    Banka1.İşyeri_Ödeme_ satır_ödeme = satır.Tag as Banka1.İşyeri_Ödeme_;
+
+                    switch (satır_ödeme.Tipi)
+                    {
+                        case Banka1.İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi:
+                            ödeme.YeniİşlemEkle(satır_ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi, satır_ödeme.Miktarı, Öde_Notlar.Text + Environment.NewLine + Banka_Ortak.Yazdır_Ücret(satır_ödeme.Miktarı - satır_miktar, satır_ödeme.ParaBirimi) + " avans ödemesi alındı" + Environment.NewLine + "Maaş olarak " + Banka_Ortak.Yazdır_Ücret(satır_miktar, satır_ödeme.ParaBirimi) + " ödendi", null, KayıtTarihi);
+                            en_az_1_kayıt_yapıldı = true;
+                            break;
+
+                        case Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansÖdemesi:
+                            satır_ödeme.Öde(satır_miktar, satır_ödeme.ParaBirimi, satır_ödeme.Notlar, null, KayıtTarihi);
+                            en_az_1_kayıt_yapıldı = true;
+                            break;
+
+                        default: continue;
+                    }
+                }
+
+                if (!en_az_1_kayıt_yapıldı) return;
             }
             else
             {
-                ÖdenilenMiktar = (double)Öde_KısmiÖdeme_Miktar.Tag;
-                ÖdenilenParaBirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(Öde_KısmiÖdeme_ParaBirimi.SelectedIndex + 1);
-                KalanÖdemeninYapılacağıTarih = Öde_KalanÖdemeTarihi.Value;
-            }
+                double ÖdenilenMiktar;
+                Banka1.İşyeri_Ödeme_.ParaBirimi_ ÖdenilenParaBirimi;
+                DateTime? KalanÖdemeninYapılacağıTarih;
 
-            ödeme.Öde(ÖdenilenMiktar, ÖdenilenParaBirimi, Öde_Notlar.Text, KalanÖdemeninYapılacağıTarih);
+                if (Öde_TamÖdeme.Checked)
+                {
+                    ÖdenilenMiktar = ödeme.Miktarı;
+                    ÖdenilenParaBirimi = ödeme.ParaBirimi;
+                    KalanÖdemeninYapılacağıTarih = null;
+                }
+                else if (Öde_KısmiÖdeme.Checked)
+                {
+                    ÖdenilenMiktar = (double)Öde_KısmiÖdeme_Miktar.Value;
+                    ÖdenilenParaBirimi = (Banka1.İşyeri_Ödeme_.ParaBirimi_)(Öde_KısmiÖdeme_ParaBirimi.SelectedIndex + 1);
+                    KalanÖdemeninYapılacağıTarih = Öde_KalanÖdemeTarihi.Value;
+                }
+                else return;
+
+                ödeme.Öde(ÖdenilenMiktar, ÖdenilenParaBirimi, Öde_Notlar.Text, KalanÖdemeninYapılacağıTarih);
+            }
 
             Banka_Ortak.DeğişiklikleriKaydet();
             Sorgula_Click(null, null);
         }
+        #region Avans ödemesi
+        private void Öde_AvansÖdemesi_Onay_CheckedChanged(object sender, EventArgs e)
+        {
+            Öde_TamÖdeme.Checked = Öde_AvansÖdemesi_Onay.Checked;
+            Öde_TamÖdeme.Checked = false;
+            Öde_TamÖdeme.Enabled = !Öde_AvansÖdemesi_Onay.Checked;
+            Öde_KısmiÖdeme.Enabled = !Öde_AvansÖdemesi_Onay.Checked;
+
+            Öde_AvansÖdemesi_Miktar_ValueChanged(null, null);
+        }
+        private void Öde_AvansÖdemesi_Miktar_ValueChanged(object sender, EventArgs e)
+        {
+            Banka1.İşyeri_Ödeme_ maaş_ödemesi = Öde_TamÖdeme.Tag as Banka1.İşyeri_Ödeme_;
+            List<Banka1.İşyeri_Ödeme_> avans_ödemeleri = Ödeme_Ekranı_AvansÖdemesi.Tag as List<Banka1.İşyeri_Ödeme_>;
+
+            double ödenecek_avans = Öde_AvansÖdemesi_Onay.Checked ? (double)Öde_AvansÖdemesi_Miktar.Value : 0;
+            double ödenecek_maaş = maaş_ödemesi.Miktarı - ödenecek_avans;
+
+            Öde_AvansÖdemesi_Tablo.Rows.Clear(); ;
+            _Ekle_(maaş_ödemesi, ödenecek_maaş, null);
+
+            foreach (var ödeme in avans_ödemeleri)
+            {
+                if (ödenecek_avans > 0)
+                {
+                    if (ödeme.Miktarı <= ödenecek_avans)
+                    {
+                        ödenecek_avans -= ödeme.Miktarı;
+
+                        _Ekle_(ödeme, ödeme.Miktarı, ödeme.Taksit);
+                    }
+                    else
+                    {
+                        _Ekle_(ödeme, ödenecek_avans, ödeme.Taksit);
+
+                        ödenecek_avans = 0;
+                    }
+                }
+                else _Ekle_(ödeme, 0, ödeme.Taksit);
+            }
+
+            Öde_AvansÖdemesi_Tablo.ClearSelection();
+            Öde_Kaydet.Enabled = Öde_AvansÖdemesi_Onay.Checked && Öde_AvansÖdemesi_Miktar.Value > 0;
+
+            void _Ekle_(Banka1.İşyeri_Ödeme_ _ödeme_, double _miktar_, Banka1.İşyeri_Ödeme_Taksit_ Taksit)
+            {
+                int satır_no = Öde_AvansÖdemesi_Tablo.Rows.Add(new object[] {
+                    _ödeme_.Tipi.Yazdır() + (Taksit == null ? null : ", taksit " + Taksit.Yazdır()) + Environment.NewLine + _ödeme_.Notlar,
+                    Banka_Ortak.Yazdır_Ücret(_ödeme_.Miktarı, maaş_ödemesi.ParaBirimi),
+                    Banka_Ortak.Yazdır_Ücret(_miktar_, maaş_ödemesi.ParaBirimi)
+                });
+
+                Öde_AvansÖdemesi_Tablo.Rows[satır_no].Tag = _ödeme_;
+                Öde_AvansÖdemesi_Tablo.Rows[satır_no].Cells[Öde_AvansÖdemesi_Tablo_Mikar.Index].Tag = _miktar_;
+                Öde_AvansÖdemesi_Tablo.Rows[satır_no].Cells[Öde_AvansÖdemesi_Tablo_Ödenecek.Index].Style.BackColor = Cari_Döküm.DurumRengi(_miktar_ == 0 ? Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi : _miktar_ == _ödeme_.Miktarı ? Banka1.İşyeri_Ödeme_İşlem_.Durum_.TamÖdendi : Banka1.İşyeri_Ödeme_İşlem_.Durum_.KısmenÖdendi);
+            }
+        }
+        #endregion
         #endregion
         #region Düzenleme
         private void Düzenle_Click(object sender, EventArgs e)
@@ -935,10 +1052,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Dr == DialogResult.No) return;
 
             Banka1.İşyeri_Ödeme_ ödeme = Düzenle_Kaydet.Tag as Banka1.İşyeri_Ödeme_;
-            string yıl = ödeme.İlkKayıtTarihi.Year.Yazıya(); //ilk kayıt tarihi
-            Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
-
-            BirYıllıkDönem.Güncelle(ödeme, (Banka1.İşyeri_Ödeme_İşlem_.Tipi_)Düzenle_Tip.SelectedIndex + 1, (Banka1.İşyeri_Ödeme_İşlem_.Durum_)Düzenle_Durum.SelectedIndex + 1, (double)Düzenle_Miktar.Value, Düzenle_Notlar.Text, DateOnly.FromDateTime(Düzenle_ÖdemeninYapılacağıTarih.Value));
+            ödeme.YeniİşlemEkle((Banka1.İşyeri_Ödeme_İşlem_.Tipi_)Düzenle_Tip.SelectedIndex + 1, (Banka1.İşyeri_Ödeme_İşlem_.Durum_)Düzenle_Durum.SelectedIndex + 1, (double)Düzenle_Miktar.Value, Düzenle_Notlar.Text, DateOnly.FromDateTime(Düzenle_ÖdemeninYapılacağıTarih.Value));
 
             Banka_Ortak.DeğişiklikleriKaydet();
             Sorgula_Click(null, null);
@@ -959,6 +1073,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             Ertelenebilir = Ödenebilir && !ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme;
             ÖdenmediOlarakİşaretlenebilir = !Ödenebilir;
             İptalEdilebilir = ödeme.Durumu != Banka1.İşyeri_Ödeme_İşlem_.Durum_.İptalEdildi;
+            Ödenebilir &= !(ödeme.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansÖdemesi || ödeme.Tipi == Banka1.İşyeri_Ödeme_İşlem_.Tipi_.MaaşÖdemesi);
         }
         private void ÇokluSeçim_Click(object sender, EventArgs e)
         {
@@ -1018,25 +1133,22 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                 if (ÇokluSeçim_TamÖde.Checked)
                 {
-                    ödeme.Öde(ödeme.Miktarı, ödeme.ParaBirimi, null, null);
+                    ödeme.Öde(ödeme.Miktarı, ödeme.ParaBirimi);
                 }
                 else
                 {
-                    string yıl = ödeme.İlkKayıtTarihi.Year.Yazıya(); //ilk kayıt tarihi
-                    Banka1.İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(yıl);
-
                     if (ÇokluSeçim_Ertele.Checked)
                     {
                         DateOnly ÖdemeninYapılacağıTarih = ÇokluSeçim_Ertele_SüreKadar_Onay.Checked ? Banka_Ortak.SonrakiTarihiHesapla(ödeme.ÖdemeninYapılacağıTarih, (Banka1.Muhatap_Üyelik_.Dönem_)(ÇokluSeçim_Ertele_SüreKadar_Dönem.SelectedIndex + 1), (int)ÇokluSeçim_Ertele_SüreKadar_Adet.Value) : DateOnly.FromDateTime(ÇokluSeçim_Ertele_TamTarih_Tarih.Value);
-                        BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, ödeme.Durumu, ödeme.Miktarı, null, ÖdemeninYapılacağıTarih);
+                        ödeme.YeniİşlemEkle(ödeme.Tipi, ödeme.Durumu, ödeme.Miktarı, null, ÖdemeninYapılacağıTarih);
                     }
                     else if (ÇokluSeçim_ÖdenmediOlarakİşaretler.Checked)
                     {
-                        BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, ödeme.Miktarı, null);
+                        ödeme.YeniİşlemEkle(ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.Ödenmedi, ödeme.Miktarı);
                     }
                     else if (ÇokluSeçim_İptalEt.Checked)
                     {
-                        BirYıllıkDönem.Güncelle(ödeme, ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.İptalEdildi, ödeme.Miktarı, null);
+                        ödeme.YeniİşlemEkle(ödeme.Tipi, Banka1.İşyeri_Ödeme_İşlem_.Durum_.İptalEdildi, ödeme.Miktarı);
                     }
                 }
             }
@@ -1066,10 +1178,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Dr == DialogResult.No) return;
 
             if (KontrolNoktası_Notları.Text.DoluMu()) KontrolNoktası_Notları.Text += Environment.NewLine + Environment.NewLine;
-            KontrolNoktası_Notları.Text += "Genel kapsamda (Tümü)" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ToplamGelir, Ortak.Banka.Seçilenİşyeri.ToplamGider, true, true, false) + Environment.NewLine + Environment.NewLine +
-                "Genel kapsamda (Sadece Ödenen)" + Environment.NewLine +
-                Banka_Ortak.Yazdır_GelirGider(Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGelir, Ortak.Banka.Seçilenİşyeri.ÖdenmişToplamGider, true, true, true);
+            KontrolNoktası_Notları.Text += Banka_Ortak.Yazdır_Özet(null, null, true, true);
 
             Ortak.Banka.Seçilenİşyeri.KontrolNoktasıEkle(KontrolNoktası_Tarihi.Value, KontrolNoktası_Notları.Text);
             Banka_Ortak.DeğişiklikleriKaydet();

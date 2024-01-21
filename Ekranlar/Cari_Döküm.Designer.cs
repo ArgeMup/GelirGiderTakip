@@ -30,32 +30,38 @@
         {
             components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             İpucu = new System.Windows.Forms.ToolTip(components);
-            Öde_KısmiÖdeme_ParaBirimi = new System.Windows.Forms.ComboBox();
             Öde_Notlar = new System.Windows.Forms.TextBox();
             Düzenle_Notlar = new System.Windows.Forms.TextBox();
             Düzenle_ParaBirimi = new System.Windows.Forms.ComboBox();
             Düzenle_Durum = new System.Windows.Forms.ComboBox();
             KontrolNoktası_Notları = new System.Windows.Forms.TextBox();
+            Öde_KısmiÖdeme_ParaBirimi = new System.Windows.Forms.ComboBox();
+            Öde_KalanÖdemeTarihi = new System.Windows.Forms.DateTimePicker();
+            Öde_KısmiÖdeme_Miktar = new System.Windows.Forms.NumericUpDown();
+            Öde_AvansÖdemesi_Miktar = new System.Windows.Forms.NumericUpDown();
             Tablo = new System.Windows.Forms.DataGridView();
             Tablo_MuhatapGrubu = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Muhatap = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_ÖdemeTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Tip = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Durum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Miktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Notlar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Taksit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_Üyelik = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            Tablo_ÖdemeTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_SonİşlemTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tablo_KayıtTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Tablo_İlkİşlemTarihi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Tablo_KullanıcıAdı = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TabloİçeriğiArama = new System.Windows.Forms.TextBox();
             Öde = new System.Windows.Forms.Button();
@@ -112,17 +118,23 @@
             KontrolNoktasıEkle = new System.Windows.Forms.Button();
             Yazdır = new System.Windows.Forms.Button();
             Ödeme_Ekranı = new System.Windows.Forms.Panel();
+            Ödeme_Ekranı_AvansÖdemesi = new System.Windows.Forms.Panel();
+            Öde_AvansÖdemesi_Tablo = new System.Windows.Forms.DataGridView();
+            Öde_AvansÖdemesi_Tablo_Açıklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Öde_AvansÖdemesi_Tablo_Mikar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Öde_AvansÖdemesi_Tablo_Ödenecek = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Öde_AvansÖdemesi_Onay = new System.Windows.Forms.CheckBox();
             Ödeme_Ekranı_2 = new System.Windows.Forms.Panel();
             panel2 = new System.Windows.Forms.Panel();
             Öde_Kaydet = new System.Windows.Forms.Button();
             Öde_Geri = new System.Windows.Forms.Button();
-            Öde_KalanÖdemeTarihi = new System.Windows.Forms.DateTimePicker();
-            label3 = new System.Windows.Forms.Label();
+            Öde_KısmiÖdeme_Ekran = new System.Windows.Forms.Panel();
             panel1 = new System.Windows.Forms.Panel();
-            Öde_KısmiÖdeme_Miktar = new System.Windows.Forms.NumericUpDown();
             Öde_KısmiÖdeme = new System.Windows.Forms.RadioButton();
             Öde_TamÖdeme = new System.Windows.Forms.RadioButton();
             Öde_MuhatapVeGrupAdı = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)Öde_KısmiÖdeme_Miktar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Öde_AvansÖdemesi_Miktar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Tablo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ayraç_Filtre_TabloSonuç).BeginInit();
             Ayraç_Filtre_TabloSonuç.Panel1.SuspendLayout();
@@ -159,10 +171,12 @@
             Sonuçlar_Ekranı.SuspendLayout();
             panel6.SuspendLayout();
             Ödeme_Ekranı.SuspendLayout();
+            Ödeme_Ekranı_AvansÖdemesi.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Öde_AvansÖdemesi_Tablo).BeginInit();
             Ödeme_Ekranı_2.SuspendLayout();
             panel2.SuspendLayout();
+            Öde_KısmiÖdeme_Ekran.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Öde_KısmiÖdeme_Miktar).BeginInit();
             SuspendLayout();
             // 
             // İpucu
@@ -172,33 +186,18 @@
             İpucu.InitialDelay = 100;
             İpucu.IsBalloon = true;
             İpucu.ReshowDelay = 20;
-            İpucu.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             İpucu.UseAnimation = false;
             İpucu.UseFading = false;
-            // 
-            // Öde_KısmiÖdeme_ParaBirimi
-            // 
-            Öde_KısmiÖdeme_ParaBirimi.Dock = System.Windows.Forms.DockStyle.Right;
-            Öde_KısmiÖdeme_ParaBirimi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Öde_KısmiÖdeme_ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            Öde_KısmiÖdeme_ParaBirimi.FormattingEnabled = true;
-            Öde_KısmiÖdeme_ParaBirimi.Items.AddRange(new object[] { "₺", "Avro", "Dolar" });
-            Öde_KısmiÖdeme_ParaBirimi.Location = new System.Drawing.Point(300, 0);
-            Öde_KısmiÖdeme_ParaBirimi.Name = "Öde_KısmiÖdeme_ParaBirimi";
-            Öde_KısmiÖdeme_ParaBirimi.Size = new System.Drawing.Size(88, 36);
-            Öde_KısmiÖdeme_ParaBirimi.TabIndex = 24;
-            İpucu.SetToolTip(Öde_KısmiÖdeme_ParaBirimi, "Para birimi");
-            Öde_KısmiÖdeme_ParaBirimi.SelectedIndexChanged += Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti;
             // 
             // Öde_Notlar
             // 
             Öde_Notlar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Öde_Notlar.Location = new System.Drawing.Point(5, 169);
+            Öde_Notlar.Location = new System.Drawing.Point(5, 151);
             Öde_Notlar.Multiline = true;
             Öde_Notlar.Name = "Öde_Notlar";
             Öde_Notlar.PlaceholderText = "Notlar";
             Öde_Notlar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            Öde_Notlar.Size = new System.Drawing.Size(388, 72);
+            Öde_Notlar.Size = new System.Drawing.Size(388, 90);
             Öde_Notlar.TabIndex = 33;
             Öde_Notlar.Text = "1\r\n2\r\n3";
             İpucu.SetToolTip(Öde_Notlar, "Notlar");
@@ -259,6 +258,64 @@
             İpucu.SetToolTip(KontrolNoktası_Notları, "Notlar");
             KontrolNoktası_Notları.WordWrap = false;
             // 
+            // Öde_KısmiÖdeme_ParaBirimi
+            // 
+            Öde_KısmiÖdeme_ParaBirimi.Dock = System.Windows.Forms.DockStyle.Right;
+            Öde_KısmiÖdeme_ParaBirimi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            Öde_KısmiÖdeme_ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_KısmiÖdeme_ParaBirimi.FormattingEnabled = true;
+            Öde_KısmiÖdeme_ParaBirimi.Items.AddRange(new object[] { "₺", "Avro", "Dolar" });
+            Öde_KısmiÖdeme_ParaBirimi.Location = new System.Drawing.Point(290, 0);
+            Öde_KısmiÖdeme_ParaBirimi.Name = "Öde_KısmiÖdeme_ParaBirimi";
+            Öde_KısmiÖdeme_ParaBirimi.Size = new System.Drawing.Size(88, 36);
+            Öde_KısmiÖdeme_ParaBirimi.TabIndex = 24;
+            İpucu.SetToolTip(Öde_KısmiÖdeme_ParaBirimi, "Kısmi ödeme para birimi");
+            Öde_KısmiÖdeme_ParaBirimi.SelectedIndexChanged += Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti;
+            // 
+            // Öde_KalanÖdemeTarihi
+            // 
+            Öde_KalanÖdemeTarihi.Dock = System.Windows.Forms.DockStyle.Top;
+            Öde_KalanÖdemeTarihi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_KalanÖdemeTarihi.Location = new System.Drawing.Point(10, 41);
+            Öde_KalanÖdemeTarihi.Name = "Öde_KalanÖdemeTarihi";
+            Öde_KalanÖdemeTarihi.Size = new System.Drawing.Size(378, 32);
+            Öde_KalanÖdemeTarihi.TabIndex = 26;
+            İpucu.SetToolTip(Öde_KalanÖdemeTarihi, "Kısmi ödemenin kalan kısmının ödemesinin yapılacağı tarih");
+            // 
+            // Öde_KısmiÖdeme_Miktar
+            // 
+            Öde_KısmiÖdeme_Miktar.BackColor = System.Drawing.SystemColors.Window;
+            Öde_KısmiÖdeme_Miktar.DecimalPlaces = 1;
+            Öde_KısmiÖdeme_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
+            Öde_KısmiÖdeme_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_KısmiÖdeme_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
+            Öde_KısmiÖdeme_Miktar.Location = new System.Drawing.Point(0, 0);
+            Öde_KısmiÖdeme_Miktar.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
+            Öde_KısmiÖdeme_Miktar.Name = "Öde_KısmiÖdeme_Miktar";
+            Öde_KısmiÖdeme_Miktar.Size = new System.Drawing.Size(290, 36);
+            Öde_KısmiÖdeme_Miktar.TabIndex = 23;
+            Öde_KısmiÖdeme_Miktar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Öde_KısmiÖdeme_Miktar.ThousandsSeparator = true;
+            İpucu.SetToolTip(Öde_KısmiÖdeme_Miktar, "Kısmi ödeme miktarı");
+            Öde_KısmiÖdeme_Miktar.ValueChanged += Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti;
+            // 
+            // Öde_AvansÖdemesi_Miktar
+            // 
+            Öde_AvansÖdemesi_Miktar.BackColor = System.Drawing.SystemColors.Window;
+            Öde_AvansÖdemesi_Miktar.DecimalPlaces = 1;
+            Öde_AvansÖdemesi_Miktar.Dock = System.Windows.Forms.DockStyle.Top;
+            Öde_AvansÖdemesi_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_AvansÖdemesi_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
+            Öde_AvansÖdemesi_Miktar.Location = new System.Drawing.Point(5, 29);
+            Öde_AvansÖdemesi_Miktar.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
+            Öde_AvansÖdemesi_Miktar.Name = "Öde_AvansÖdemesi_Miktar";
+            Öde_AvansÖdemesi_Miktar.Size = new System.Drawing.Size(548, 36);
+            Öde_AvansÖdemesi_Miktar.TabIndex = 25;
+            Öde_AvansÖdemesi_Miktar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Öde_AvansÖdemesi_Miktar.ThousandsSeparator = true;
+            İpucu.SetToolTip(Öde_AvansÖdemesi_Miktar, "Kesinti miktarı");
+            Öde_AvansÖdemesi_Miktar.ValueChanged += Öde_AvansÖdemesi_Miktar_ValueChanged;
+            // 
             // Tablo
             // 
             Tablo.AllowUserToAddRows = false;
@@ -275,15 +332,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             Tablo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Tablo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Tablo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Tablo_MuhatapGrubu, Tablo_Muhatap, Tablo_ÖdemeTarihi, Tablo_Tip, Tablo_Durum, Tablo_Miktar, Tablo_Notlar, Tablo_Taksit, Tablo_Üyelik, Tablo_SonİşlemTarihi, Tablo_KayıtTarihi, Tablo_KullanıcıAdı });
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            Tablo.DefaultCellStyle = dataGridViewCellStyle8;
+            Tablo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Tablo_MuhatapGrubu, Tablo_Muhatap, Tablo_Tip, Tablo_Durum, Tablo_Miktar, Tablo_Notlar, Tablo_Taksit, Tablo_Üyelik, Tablo_ÖdemeTarihi, Tablo_SonİşlemTarihi, Tablo_İlkİşlemTarihi, Tablo_KullanıcıAdı });
             Tablo.Dock = System.Windows.Forms.DockStyle.Fill;
             Tablo.Location = new System.Drawing.Point(0, 34);
             Tablo.Name = "Tablo";
@@ -315,18 +364,6 @@
             Tablo_Muhatap.ReadOnly = true;
             Tablo_Muhatap.Width = 97;
             // 
-            // Tablo_ÖdemeTarihi
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "D";
-            dataGridViewCellStyle2.NullValue = null;
-            Tablo_ÖdemeTarihi.DefaultCellStyle = dataGridViewCellStyle2;
-            Tablo_ÖdemeTarihi.HeaderText = "Ödeme Günü";
-            Tablo_ÖdemeTarihi.MinimumWidth = 6;
-            Tablo_ÖdemeTarihi.Name = "Tablo_ÖdemeTarihi";
-            Tablo_ÖdemeTarihi.ReadOnly = true;
-            Tablo_ÖdemeTarihi.Width = 125;
-            // 
             // Tablo_Tip
             // 
             Tablo_Tip.HeaderText = "Tip";
@@ -346,8 +383,8 @@
             // 
             // Tablo_Miktar
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            Tablo_Miktar.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Tablo_Miktar.DefaultCellStyle = dataGridViewCellStyle2;
             Tablo_Miktar.HeaderText = "Miktar";
             Tablo_Miktar.MinimumWidth = 6;
             Tablo_Miktar.Name = "Tablo_Miktar";
@@ -356,8 +393,8 @@
             // 
             // Tablo_Notlar
             // 
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            Tablo_Notlar.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Tablo_Notlar.DefaultCellStyle = dataGridViewCellStyle3;
             Tablo_Notlar.HeaderText = "Notlar";
             Tablo_Notlar.MinimumWidth = 6;
             Tablo_Notlar.Name = "Tablo_Notlar";
@@ -366,8 +403,8 @@
             // 
             // Tablo_Taksit
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            Tablo_Taksit.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Tablo_Taksit.DefaultCellStyle = dataGridViewCellStyle4;
             Tablo_Taksit.HeaderText = "Taksit";
             Tablo_Taksit.MinimumWidth = 6;
             Tablo_Taksit.Name = "Tablo_Taksit";
@@ -382,6 +419,18 @@
             Tablo_Üyelik.ReadOnly = true;
             Tablo_Üyelik.Width = 55;
             // 
+            // Tablo_ÖdemeTarihi
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Format = "D";
+            dataGridViewCellStyle5.NullValue = null;
+            Tablo_ÖdemeTarihi.DefaultCellStyle = dataGridViewCellStyle5;
+            Tablo_ÖdemeTarihi.HeaderText = "Ödeme Günü";
+            Tablo_ÖdemeTarihi.MinimumWidth = 6;
+            Tablo_ÖdemeTarihi.Name = "Tablo_ÖdemeTarihi";
+            Tablo_ÖdemeTarihi.ReadOnly = true;
+            Tablo_ÖdemeTarihi.Width = 125;
+            // 
             // Tablo_SonİşlemTarihi
             // 
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -394,16 +443,16 @@
             Tablo_SonİşlemTarihi.ReadOnly = true;
             Tablo_SonİşlemTarihi.Width = 141;
             // 
-            // Tablo_KayıtTarihi
+            // Tablo_İlkİşlemTarihi
             // 
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.Format = "F";
-            Tablo_KayıtTarihi.DefaultCellStyle = dataGridViewCellStyle7;
-            Tablo_KayıtTarihi.HeaderText = "Kayıt Tarihi";
-            Tablo_KayıtTarihi.MinimumWidth = 6;
-            Tablo_KayıtTarihi.Name = "Tablo_KayıtTarihi";
-            Tablo_KayıtTarihi.ReadOnly = true;
-            Tablo_KayıtTarihi.Width = 110;
+            Tablo_İlkİşlemTarihi.DefaultCellStyle = dataGridViewCellStyle7;
+            Tablo_İlkİşlemTarihi.HeaderText = "İlk İşlem Tarihi";
+            Tablo_İlkİşlemTarihi.MinimumWidth = 6;
+            Tablo_İlkİşlemTarihi.Name = "Tablo_İlkİşlemTarihi";
+            Tablo_İlkİşlemTarihi.ReadOnly = true;
+            Tablo_İlkİşlemTarihi.Width = 131;
             // 
             // Tablo_KullanıcıAdı
             // 
@@ -473,8 +522,8 @@
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Düzenleme_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Sonuçlar_Ekranı);
             Ayraç_Filtre_TabloSonuç.Panel2.Controls.Add(Ödeme_Ekranı);
-            Ayraç_Filtre_TabloSonuç.Size = new System.Drawing.Size(1037, 554);
-            Ayraç_Filtre_TabloSonuç.SplitterDistance = 160;
+            Ayraç_Filtre_TabloSonuç.Size = new System.Drawing.Size(1256, 971);
+            Ayraç_Filtre_TabloSonuç.SplitterDistance = 336;
             Ayraç_Filtre_TabloSonuç.TabIndex = 30;
             // 
             // splitContainer1
@@ -492,8 +541,8 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Size = new System.Drawing.Size(1037, 160);
-            splitContainer1.SplitterDistance = 326;
+            splitContainer1.Size = new System.Drawing.Size(1256, 336);
+            splitContainer1.SplitterDistance = 314;
             splitContainer1.TabIndex = 0;
             // 
             // Ayraç_MuhatapGrubu_Muhatap
@@ -502,8 +551,8 @@
             Ayraç_MuhatapGrubu_Muhatap.Dock = System.Windows.Forms.DockStyle.Fill;
             Ayraç_MuhatapGrubu_Muhatap.Location = new System.Drawing.Point(0, 0);
             Ayraç_MuhatapGrubu_Muhatap.Name = "Ayraç_MuhatapGrubu_Muhatap";
-            Ayraç_MuhatapGrubu_Muhatap.Size = new System.Drawing.Size(326, 130);
-            Ayraç_MuhatapGrubu_Muhatap.SplitterDistance = 161;
+            Ayraç_MuhatapGrubu_Muhatap.Size = new System.Drawing.Size(314, 306);
+            Ayraç_MuhatapGrubu_Muhatap.SplitterDistance = 154;
             Ayraç_MuhatapGrubu_Muhatap.TabIndex = 2;
             // 
             // Sorgula
@@ -512,9 +561,9 @@
             Sorgula.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Sorgula.Dock = System.Windows.Forms.DockStyle.Bottom;
             Sorgula.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            Sorgula.Location = new System.Drawing.Point(0, 130);
+            Sorgula.Location = new System.Drawing.Point(0, 306);
             Sorgula.Name = "Sorgula";
-            Sorgula.Size = new System.Drawing.Size(326, 30);
+            Sorgula.Size = new System.Drawing.Size(314, 30);
             Sorgula.TabIndex = 9;
             Sorgula.Text = "Sorgula";
             Sorgula.UseVisualStyleBackColor = true;
@@ -534,8 +583,8 @@
             // splitContainer2.Panel2
             // 
             splitContainer2.Panel2.Controls.Add(Açıklamalar);
-            splitContainer2.Size = new System.Drawing.Size(707, 160);
-            splitContainer2.SplitterDistance = 499;
+            splitContainer2.Size = new System.Drawing.Size(938, 336);
+            splitContainer2.SplitterDistance = 483;
             splitContainer2.TabIndex = 0;
             // 
             // Ayraç_Şablonlar_SorgulamaSeçenekleri
@@ -548,8 +597,8 @@
             // Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2
             // 
             Ayraç_Şablonlar_SorgulamaSeçenekleri.Panel2.Controls.Add(SorgulamaDetayları);
-            Ayraç_Şablonlar_SorgulamaSeçenekleri.Size = new System.Drawing.Size(499, 160);
-            Ayraç_Şablonlar_SorgulamaSeçenekleri.SplitterDistance = 157;
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.Size = new System.Drawing.Size(483, 336);
+            Ayraç_Şablonlar_SorgulamaSeçenekleri.SplitterDistance = 151;
             Ayraç_Şablonlar_SorgulamaSeçenekleri.TabIndex = 0;
             // 
             // SorgulamaDetayları
@@ -559,7 +608,7 @@
             SorgulamaDetayları.Location = new System.Drawing.Point(0, 0);
             SorgulamaDetayları.Name = "SorgulamaDetayları";
             SorgulamaDetayları.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            SorgulamaDetayları.Size = new System.Drawing.Size(334, 156);
+            SorgulamaDetayları.Size = new System.Drawing.Size(324, 332);
             SorgulamaDetayları.TabIndex = 0;
             SorgulamaDetayları.ToolbarVisible = false;
             SorgulamaDetayları.PropertyValueChanged += SorgulamaDetayları_PropertyValueChanged;
@@ -567,13 +616,13 @@
             // Açıklamalar
             // 
             Açıklamalar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Açıklamalar.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Açıklamalar.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             Açıklamalar.Location = new System.Drawing.Point(0, 0);
             Açıklamalar.Multiline = true;
             Açıklamalar.Name = "Açıklamalar";
             Açıklamalar.ReadOnly = true;
             Açıklamalar.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            Açıklamalar.Size = new System.Drawing.Size(200, 156);
+            Açıklamalar.Size = new System.Drawing.Size(447, 332);
             Açıklamalar.TabIndex = 0;
             Açıklamalar.WordWrap = false;
             // 
@@ -854,7 +903,7 @@
             // 
             Düzenleme_Ekranı.AutoScroll = true;
             Düzenleme_Ekranı.Controls.Add(Düzenleme_Ekranı_2);
-            Düzenleme_Ekranı.Location = new System.Drawing.Point(459, 147);
+            Düzenleme_Ekranı.Location = new System.Drawing.Point(901, 478);
             Düzenleme_Ekranı.Name = "Düzenleme_Ekranı";
             Düzenleme_Ekranı.Size = new System.Drawing.Size(421, 317);
             Düzenleme_Ekranı.TabIndex = 35;
@@ -1105,12 +1154,99 @@
             // Ödeme_Ekranı
             // 
             Ödeme_Ekranı.AutoScroll = true;
+            Ödeme_Ekranı.Controls.Add(Ödeme_Ekranı_AvansÖdemesi);
             Ödeme_Ekranı.Controls.Add(Ödeme_Ekranı_2);
             Ödeme_Ekranı.Location = new System.Drawing.Point(21, 147);
             Ödeme_Ekranı.Name = "Ödeme_Ekranı";
-            Ödeme_Ekranı.Size = new System.Drawing.Size(421, 317);
+            Ödeme_Ekranı.Size = new System.Drawing.Size(1000, 317);
             Ödeme_Ekranı.TabIndex = 32;
             Ödeme_Ekranı.Visible = false;
+            // 
+            // Ödeme_Ekranı_AvansÖdemesi
+            // 
+            Ödeme_Ekranı_AvansÖdemesi.Anchor = System.Windows.Forms.AnchorStyles.None;
+            Ödeme_Ekranı_AvansÖdemesi.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            Ödeme_Ekranı_AvansÖdemesi.Controls.Add(Öde_AvansÖdemesi_Tablo);
+            Ödeme_Ekranı_AvansÖdemesi.Controls.Add(Öde_AvansÖdemesi_Miktar);
+            Ödeme_Ekranı_AvansÖdemesi.Controls.Add(Öde_AvansÖdemesi_Onay);
+            Ödeme_Ekranı_AvansÖdemesi.Location = new System.Drawing.Point(425, 13);
+            Ödeme_Ekranı_AvansÖdemesi.Name = "Ödeme_Ekranı_AvansÖdemesi";
+            Ödeme_Ekranı_AvansÖdemesi.Padding = new System.Windows.Forms.Padding(5);
+            Ödeme_Ekranı_AvansÖdemesi.Size = new System.Drawing.Size(560, 289);
+            Ödeme_Ekranı_AvansÖdemesi.TabIndex = 32;
+            // 
+            // Öde_AvansÖdemesi_Tablo
+            // 
+            Öde_AvansÖdemesi_Tablo.AllowUserToAddRows = false;
+            Öde_AvansÖdemesi_Tablo.AllowUserToDeleteRows = false;
+            Öde_AvansÖdemesi_Tablo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            Öde_AvansÖdemesi_Tablo.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Öde_AvansÖdemesi_Tablo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            Öde_AvansÖdemesi_Tablo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Öde_AvansÖdemesi_Tablo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Öde_AvansÖdemesi_Tablo_Açıklama, Öde_AvansÖdemesi_Tablo_Mikar, Öde_AvansÖdemesi_Tablo_Ödenecek });
+            Öde_AvansÖdemesi_Tablo.Dock = System.Windows.Forms.DockStyle.Fill;
+            Öde_AvansÖdemesi_Tablo.Location = new System.Drawing.Point(5, 65);
+            Öde_AvansÖdemesi_Tablo.MultiSelect = false;
+            Öde_AvansÖdemesi_Tablo.Name = "Öde_AvansÖdemesi_Tablo";
+            Öde_AvansÖdemesi_Tablo.ReadOnly = true;
+            Öde_AvansÖdemesi_Tablo.RowHeadersVisible = false;
+            Öde_AvansÖdemesi_Tablo.RowHeadersWidth = 51;
+            Öde_AvansÖdemesi_Tablo.RowTemplate.Height = 29;
+            Öde_AvansÖdemesi_Tablo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            Öde_AvansÖdemesi_Tablo.Size = new System.Drawing.Size(548, 217);
+            Öde_AvansÖdemesi_Tablo.TabIndex = 26;
+            // 
+            // Öde_AvansÖdemesi_Tablo_Açıklama
+            // 
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            Öde_AvansÖdemesi_Tablo_Açıklama.DefaultCellStyle = dataGridViewCellStyle9;
+            Öde_AvansÖdemesi_Tablo_Açıklama.HeaderText = "Açıklama";
+            Öde_AvansÖdemesi_Tablo_Açıklama.MinimumWidth = 6;
+            Öde_AvansÖdemesi_Tablo_Açıklama.Name = "Öde_AvansÖdemesi_Tablo_Açıklama";
+            Öde_AvansÖdemesi_Tablo_Açıklama.ReadOnly = true;
+            Öde_AvansÖdemesi_Tablo_Açıklama.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            Öde_AvansÖdemesi_Tablo_Açıklama.Width = 76;
+            // 
+            // Öde_AvansÖdemesi_Tablo_Mikar
+            // 
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Öde_AvansÖdemesi_Tablo_Mikar.DefaultCellStyle = dataGridViewCellStyle10;
+            Öde_AvansÖdemesi_Tablo_Mikar.HeaderText = "Miktar";
+            Öde_AvansÖdemesi_Tablo_Mikar.MinimumWidth = 6;
+            Öde_AvansÖdemesi_Tablo_Mikar.Name = "Öde_AvansÖdemesi_Tablo_Mikar";
+            Öde_AvansÖdemesi_Tablo_Mikar.ReadOnly = true;
+            Öde_AvansÖdemesi_Tablo_Mikar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            Öde_AvansÖdemesi_Tablo_Mikar.Width = 57;
+            // 
+            // Öde_AvansÖdemesi_Tablo_Ödenecek
+            // 
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            Öde_AvansÖdemesi_Tablo_Ödenecek.DefaultCellStyle = dataGridViewCellStyle11;
+            Öde_AvansÖdemesi_Tablo_Ödenecek.HeaderText = "Ödenecek";
+            Öde_AvansÖdemesi_Tablo_Ödenecek.MinimumWidth = 6;
+            Öde_AvansÖdemesi_Tablo_Ödenecek.Name = "Öde_AvansÖdemesi_Tablo_Ödenecek";
+            Öde_AvansÖdemesi_Tablo_Ödenecek.ReadOnly = true;
+            Öde_AvansÖdemesi_Tablo_Ödenecek.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            Öde_AvansÖdemesi_Tablo_Ödenecek.Width = 81;
+            // 
+            // Öde_AvansÖdemesi_Onay
+            // 
+            Öde_AvansÖdemesi_Onay.AutoSize = true;
+            Öde_AvansÖdemesi_Onay.Dock = System.Windows.Forms.DockStyle.Top;
+            Öde_AvansÖdemesi_Onay.Location = new System.Drawing.Point(5, 5);
+            Öde_AvansÖdemesi_Onay.Name = "Öde_AvansÖdemesi_Onay";
+            Öde_AvansÖdemesi_Onay.Size = new System.Drawing.Size(548, 24);
+            Öde_AvansÖdemesi_Onay.TabIndex = 1;
+            Öde_AvansÖdemesi_Onay.Text = "Avans ödemesi al (Toplam XXX TL)";
+            Öde_AvansÖdemesi_Onay.UseVisualStyleBackColor = true;
+            Öde_AvansÖdemesi_Onay.CheckedChanged += Öde_AvansÖdemesi_Onay_CheckedChanged;
             // 
             // Ödeme_Ekranı_2
             // 
@@ -1118,13 +1254,11 @@
             Ödeme_Ekranı_2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             Ödeme_Ekranı_2.Controls.Add(Öde_Notlar);
             Ödeme_Ekranı_2.Controls.Add(panel2);
-            Ödeme_Ekranı_2.Controls.Add(Öde_KalanÖdemeTarihi);
-            Ödeme_Ekranı_2.Controls.Add(label3);
-            Ödeme_Ekranı_2.Controls.Add(panel1);
+            Ödeme_Ekranı_2.Controls.Add(Öde_KısmiÖdeme_Ekran);
             Ödeme_Ekranı_2.Controls.Add(Öde_KısmiÖdeme);
             Ödeme_Ekranı_2.Controls.Add(Öde_TamÖdeme);
             Ödeme_Ekranı_2.Controls.Add(Öde_MuhatapVeGrupAdı);
-            Ödeme_Ekranı_2.Location = new System.Drawing.Point(10, 14);
+            Ödeme_Ekranı_2.Location = new System.Drawing.Point(15, 13);
             Ödeme_Ekranı_2.Name = "Ödeme_Ekranı_2";
             Ödeme_Ekranı_2.Padding = new System.Windows.Forms.Padding(5);
             Ödeme_Ekranı_2.Size = new System.Drawing.Size(400, 289);
@@ -1164,50 +1298,27 @@
             Öde_Geri.UseVisualStyleBackColor = true;
             Öde_Geri.Click += Öde_Geri_Click;
             // 
-            // Öde_KalanÖdemeTarihi
+            // Öde_KısmiÖdeme_Ekran
             // 
-            Öde_KalanÖdemeTarihi.Dock = System.Windows.Forms.DockStyle.Top;
-            Öde_KalanÖdemeTarihi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            Öde_KalanÖdemeTarihi.Location = new System.Drawing.Point(5, 137);
-            Öde_KalanÖdemeTarihi.Name = "Öde_KalanÖdemeTarihi";
-            Öde_KalanÖdemeTarihi.Size = new System.Drawing.Size(388, 32);
-            Öde_KalanÖdemeTarihi.TabIndex = 23;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Dock = System.Windows.Forms.DockStyle.Top;
-            label3.Location = new System.Drawing.Point(5, 117);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(223, 20);
-            label3.TabIndex = 24;
-            label3.Text = "Kalan ödemenin yapılacağı tarih";
+            Öde_KısmiÖdeme_Ekran.Controls.Add(Öde_KalanÖdemeTarihi);
+            Öde_KısmiÖdeme_Ekran.Controls.Add(panel1);
+            Öde_KısmiÖdeme_Ekran.Dock = System.Windows.Forms.DockStyle.Top;
+            Öde_KısmiÖdeme_Ekran.Enabled = false;
+            Öde_KısmiÖdeme_Ekran.Location = new System.Drawing.Point(5, 73);
+            Öde_KısmiÖdeme_Ekran.Name = "Öde_KısmiÖdeme_Ekran";
+            Öde_KısmiÖdeme_Ekran.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            Öde_KısmiÖdeme_Ekran.Size = new System.Drawing.Size(388, 78);
+            Öde_KısmiÖdeme_Ekran.TabIndex = 39;
             // 
             // panel1
             // 
             panel1.Controls.Add(Öde_KısmiÖdeme_Miktar);
             panel1.Controls.Add(Öde_KısmiÖdeme_ParaBirimi);
             panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            panel1.Location = new System.Drawing.Point(5, 73);
+            panel1.Location = new System.Drawing.Point(10, 0);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(388, 44);
-            panel1.TabIndex = 23;
-            // 
-            // Öde_KısmiÖdeme_Miktar
-            // 
-            Öde_KısmiÖdeme_Miktar.BackColor = System.Drawing.SystemColors.Window;
-            Öde_KısmiÖdeme_Miktar.DecimalPlaces = 1;
-            Öde_KısmiÖdeme_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Öde_KısmiÖdeme_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            Öde_KısmiÖdeme_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
-            Öde_KısmiÖdeme_Miktar.Location = new System.Drawing.Point(0, 0);
-            Öde_KısmiÖdeme_Miktar.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
-            Öde_KısmiÖdeme_Miktar.Name = "Öde_KısmiÖdeme_Miktar";
-            Öde_KısmiÖdeme_Miktar.Size = new System.Drawing.Size(300, 36);
-            Öde_KısmiÖdeme_Miktar.TabIndex = 23;
-            Öde_KısmiÖdeme_Miktar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            Öde_KısmiÖdeme_Miktar.ThousandsSeparator = true;
-            Öde_KısmiÖdeme_Miktar.ValueChanged += Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti;
+            panel1.Size = new System.Drawing.Size(378, 41);
+            panel1.TabIndex = 24;
             // 
             // Öde_KısmiÖdeme
             // 
@@ -1217,20 +1328,18 @@
             Öde_KısmiÖdeme.Name = "Öde_KısmiÖdeme";
             Öde_KısmiÖdeme.Size = new System.Drawing.Size(388, 24);
             Öde_KısmiÖdeme.TabIndex = 23;
-            Öde_KısmiÖdeme.TabStop = true;
             Öde_KısmiÖdeme.Text = "Kısmi ödeme";
             Öde_KısmiÖdeme.UseVisualStyleBackColor = true;
+            Öde_KısmiÖdeme.CheckedChanged += Öde_TamÖdeme_CheckedChanged;
             // 
             // Öde_TamÖdeme
             // 
             Öde_TamÖdeme.AutoSize = true;
-            Öde_TamÖdeme.Checked = true;
             Öde_TamÖdeme.Dock = System.Windows.Forms.DockStyle.Top;
             Öde_TamÖdeme.Location = new System.Drawing.Point(5, 25);
             Öde_TamÖdeme.Name = "Öde_TamÖdeme";
             Öde_TamÖdeme.Size = new System.Drawing.Size(388, 24);
             Öde_TamÖdeme.TabIndex = 22;
-            Öde_TamÖdeme.TabStop = true;
             Öde_TamÖdeme.Text = "Tam ödeme";
             Öde_TamÖdeme.UseVisualStyleBackColor = true;
             Öde_TamÖdeme.CheckedChanged += Öde_TamÖdeme_CheckedChanged;
@@ -1249,7 +1358,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1043, 560);
+            ClientSize = new System.Drawing.Size(1262, 977);
             Controls.Add(Ayraç_Filtre_TabloSonuç);
             DoubleBuffered = true;
             KeyPreview = true;
@@ -1258,6 +1367,8 @@
             Text = "Cari Döküm";
             Shown += Cari_Döküm_Shown;
             KeyPress += Cari_Döküm_KeyPress;
+            ((System.ComponentModel.ISupportInitialize)Öde_KısmiÖdeme_Miktar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Öde_AvansÖdemesi_Miktar).EndInit();
             ((System.ComponentModel.ISupportInitialize)Tablo).EndInit();
             Ayraç_Filtre_TabloSonuç.Panel1.ResumeLayout(false);
             Ayraç_Filtre_TabloSonuç.Panel2.ResumeLayout(false);
@@ -1305,12 +1416,15 @@
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             Ödeme_Ekranı.ResumeLayout(false);
+            Ödeme_Ekranı_AvansÖdemesi.ResumeLayout(false);
+            Ödeme_Ekranı_AvansÖdemesi.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Öde_AvansÖdemesi_Tablo).EndInit();
             Ödeme_Ekranı_2.ResumeLayout(false);
             Ödeme_Ekranı_2.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            Öde_KısmiÖdeme_Ekran.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Öde_KısmiÖdeme_Miktar).EndInit();
             ResumeLayout(false);
         }
 
@@ -1333,11 +1447,6 @@
         private System.Windows.Forms.Button Öde_Geri;
         private System.Windows.Forms.Button Öde_Kaydet;
         private System.Windows.Forms.Label Öde_MuhatapVeGrupAdı;
-        private System.Windows.Forms.DateTimePicker Öde_KalanÖdemeTarihi;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.NumericUpDown Öde_KısmiÖdeme_Miktar;
-        private System.Windows.Forms.ComboBox Öde_KısmiÖdeme_ParaBirimi;
         private System.Windows.Forms.Panel Ödeme_Ekranı;
         private System.Windows.Forms.TextBox Öde_Notlar;
         private System.Windows.Forms.Panel Sonuçlar_Ekranı;
@@ -1373,18 +1482,6 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer Ayraç_Şablonlar_SorgulamaSeçenekleri;
         private System.Windows.Forms.PropertyGrid SorgulamaDetayları;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_MuhatapGrubu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Muhatap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_ÖdemeTarihi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Tip;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Durum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Miktar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Notlar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Taksit;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Tablo_Üyelik;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_SonİşlemTarihi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_KayıtTarihi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_KullanıcıAdı;
         private System.Windows.Forms.Panel ÇokluSeçim_Ekranı;
         private System.Windows.Forms.Panel ÇokluSeçim_Ekranı_2;
         private System.Windows.Forms.Panel panel5;
@@ -1404,5 +1501,29 @@
         private System.Windows.Forms.RadioButton ÇokluSeçim_TamÖde;
         private System.Windows.Forms.RadioButton ÇokluSeçim_Ertele_SüreKadar_Onay;
         private System.Windows.Forms.Button Ekle;
+        private System.Windows.Forms.DateTimePicker Öde_KalanÖdemeTarihi;
+        private System.Windows.Forms.Panel Öde_KısmiÖdeme_Ekran;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.NumericUpDown Öde_KısmiÖdeme_Miktar;
+        private System.Windows.Forms.ComboBox Öde_KısmiÖdeme_ParaBirimi;
+        private System.Windows.Forms.Panel Ödeme_Ekranı_AvansÖdemesi;
+        private System.Windows.Forms.NumericUpDown Öde_AvansÖdemesi_Miktar;
+        private System.Windows.Forms.CheckBox Öde_AvansÖdemesi_Onay;
+        private System.Windows.Forms.DataGridView Öde_AvansÖdemesi_Tablo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Öde_AvansÖdemesi_Tablo_Açıklama;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Öde_AvansÖdemesi_Tablo_Mikar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Öde_AvansÖdemesi_Tablo_Ödenecek;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_MuhatapGrubu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Muhatap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Tip;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Durum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Miktar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Notlar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_Taksit;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Tablo_Üyelik;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_ÖdemeTarihi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_SonİşlemTarihi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_İlkİşlemTarihi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_KullanıcıAdı;
     }
 }
