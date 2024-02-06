@@ -660,6 +660,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             TabloİçeriğiArama_Tik = Environment.TickCount + 500;
             TabloİçeriğiArama.BackColor = Ortak.Renk_Kırmızı;
 
+            Font Kalın = new Font(Tablo.Font, FontStyle.Bold);
             string[] arananlar = TabloİçeriğiArama.Text.ToLower().Split(' ');
             for (int satır = 0; satır < Tablo.RowCount && !TabloİçeriğiArama_KapatmaTalebi; satır++)
             {
@@ -672,8 +673,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     else if (Tablo[sutun, satır].Value is DateTime) içerik = ((DateTime)Tablo[sutun, satır].Value).Yazıya();
                     else içerik = (string)Tablo[sutun, satır].Value;
 
-                    if (string.IsNullOrEmpty(içerik)) Tablo[sutun, satır].Style.BackColor = Color.White;
-                    else
+                    if (!string.IsNullOrEmpty(içerik))
                     {
                         içerik = içerik.ToLower();
                         int bulundu_adet = 0;
@@ -686,10 +686,10 @@ namespace Gelir_Gider_Takip.Ekranlar
 
                         if (bulundu_adet == arananlar.Length)
                         {
-                            Tablo[sutun, satır].Style.BackColor = Ortak.Renk_Yeşil;
+                            Tablo[sutun, satır].Style.Font = Kalın;
                             bulundu = true;
                         }
-                        else Tablo[sutun, satır].Style.BackColor = Color.White;
+                        else Tablo[sutun, satır].Style.Font = null;
                     }
                 }
 
@@ -704,7 +704,6 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             TabloİçeriğiArama.BackColor = Color.White;
             TabloİçeriğiArama_Çalışıyor = false;
-            Tablo.ClearSelection();
 
             if (TabloİçeriğiArama_KapatmaTalebi) TabloİçeriğiArama_TextChanged(null, null);
             TabloİçeriğiArama_KapatmaTalebi = false;
