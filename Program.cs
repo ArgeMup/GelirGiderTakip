@@ -60,16 +60,21 @@ namespace Gelir_Gider_Takip
                         {
                             foreach (var Talep in Önyüz.İlkAçılışAyarları.Ekle_GelirGider_Talepler)
                             {
-                                var muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, true);
-                                if (muhatap == null) throw new Exception("Muhatap bulunamadı " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı);
+                                Banka1.İşyeri_Ödeme_ ödeme = Ortak.Banka.Seçilenİşyeri.Ödemeler_Bul(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, Talep.Ekle_KayıtTarihi.Value);
+                                if (ödeme != null) ödeme.YeniİşlemEkle(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_Notlar, DateOnly.FromDateTime(Talep.Ekle_İlkÖdemeTarihi), Talep.Ekle_KayıtTarihi);
+                                else
+                                {
+                                    var muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, true);
+                                    if (muhatap == null) throw new Exception("Muhatap bulunamadı " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı);
 
-                                if (Talep.Ekle_Miktar < 0) throw new Exception("Miktar 0 dan küçük olamaz " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı + " " + Talep.Ekle_Miktar);
+                                    if (Talep.Ekle_Miktar < 0) throw new Exception("Miktar 0 dan küçük olamaz " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı + " " + Talep.Ekle_Miktar);
 
-                                var gelir_gider = muhatap.GelirGider_Oluştur(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_ParaBirimi,
-                                    Talep.Ekle_İlkÖdemeTarihi, Talep.Ekle_Notlar,
-                                    Talep.Ekle_Taksit_Sayısı, Talep.Ekle_Taksit_Dönem, Talep.Ekle_Taksit_Dönem_Adet,
-                                    null, null, Talep.Ekle_KayıtTarihi);
-                                muhatap.GelirGider_Ekle(gelir_gider);
+                                    var gelir_gider = muhatap.GelirGider_Oluştur(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_ParaBirimi,
+                                        Talep.Ekle_İlkÖdemeTarihi, Talep.Ekle_Notlar,
+                                        Talep.Ekle_Taksit_Sayısı, Talep.Ekle_Taksit_Dönem, Talep.Ekle_Taksit_Dönem_Adet,
+                                        null, null, Talep.Ekle_KayıtTarihi);
+                                    muhatap.GelirGider_Ekle(gelir_gider);
+                                }
                             }
 
                             Banka_Ortak.DeğişiklikleriKaydet();

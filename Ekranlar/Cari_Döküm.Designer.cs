@@ -284,7 +284,7 @@
             // 
             // Öde_KısmiÖdeme_Miktar
             // 
-            Öde_KısmiÖdeme_Miktar.BackColor = System.Drawing.SystemColors.Window;
+            Öde_KısmiÖdeme_Miktar.BackColor = System.Drawing.Color.White;
             Öde_KısmiÖdeme_Miktar.DecimalPlaces = 1;
             Öde_KısmiÖdeme_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
             Öde_KısmiÖdeme_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);

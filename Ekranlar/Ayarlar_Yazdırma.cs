@@ -306,6 +306,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             public string Adı, EnUzunYazı = "";
             public float Sol, Genişlik;
             public bool YataydaOrtalanmış;
+            public Ortalama_ Ortalama;
         }
         public void Yazdır(DataGridView Tablo, string DosyaAdı = null, short KopyaSayısı = 1)
         {
@@ -509,6 +510,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                     y.Çerçeve = false;
 
                     if (y.Yazı == null) y.Yazı = new Bir_Yazı_();
+                    y.Yazı.ArkaPlanRengi = null;
+                    y.YataydaOrtalanmış = false;
                     y.Yazı.Yazı = Sayfa.SonrakiSayfaYazısı.Yazı.Replace("_ArGeMuP_", (Sayfa.ŞimdikiSayfaSayısı++).ToString());
 
                     y.Sol = Sayfa.Sol;
@@ -544,8 +547,9 @@ namespace Gelir_Gider_Takip.Ekranlar
             Sayfa.Sutunlar = new İşlemler_Bir_Sayfa_Sutun_[SutunSayısı];
             for (int x = 0; x < Tablo.Columns.Count; x++)
             {
+                bool BuSutun_Notlar = false;
                 DataGridViewColumn sutun = Tablo.Columns[x];
-                if (sutun.HeaderText == "Notlar") SutunNo_Notlar = x;
+                if (sutun.HeaderText == "Notlar") { SutunNo_Notlar = x; BuSutun_Notlar = true; }
                 if (sutun.HeaderText == "Tip") SutunNo_Tip = x;
                 if (sutun.HeaderText == "Ödeme Günü") SutunNo_ÖdemeGünü = x;
                 if (!sutun.Visible) continue;
@@ -554,6 +558,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Sayfa.Sutunlar[x] = BirSutun;
                 BirSutun.Adı = sutun.HeaderText;
                 if (sutun.DefaultCellStyle != null && sutun.DefaultCellStyle.Alignment == DataGridViewContentAlignment.MiddleCenter) BirSutun.YataydaOrtalanmış = true;
+                if (BuSutun_Notlar) BirSutun.Ortalama = new Ortalama_();
 
                 float EnBüyükGenişlik = Grafik.MeasureString(BirSutun.Adı, Sayfa.Kakü_Kalın).Width;
                 BirSutun.EnUzunYazı = BirSutun.Adı;
@@ -576,9 +581,17 @@ namespace Gelir_Gider_Takip.Ekranlar
                         EnBüyükGenişlik = genişlik;
                         BirSutun.EnUzunYazı = Yazı;
                     }
+
+                    if (BuSutun_Notlar) BirSutun.Ortalama.Güncelle(genişlik);
                 }
 
                 BirSutun.Genişlik = EnBüyükGenişlik;
+            }
+
+            //notların fazla geniş olması durumu düzeltmesi
+            if (SutunNo_Notlar >= 0 && Sayfa.Sutunlar[SutunNo_Notlar].Ortalama.Ortalaması < Sayfa.Sutunlar[SutunNo_Notlar].Genişlik * 0.75f)
+            {
+                Sayfa.Sutunlar[SutunNo_Notlar].Genişlik = ((float)Sayfa.Sutunlar[SutunNo_Notlar].Ortalama.Ortalaması + Sayfa.Sutunlar[SutunNo_Notlar].Genişlik) / 2.0f;
             }
 
             //büyük veya küçük ise orantılı olarak genişletme veya daraltma

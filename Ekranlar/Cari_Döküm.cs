@@ -844,7 +844,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Öde_TamÖdeme_CheckedChanged(object sender, EventArgs e)
         {
-            Öde_Kaydet.Enabled = Öde_TamÖdeme.Checked || (Öde_KısmiÖdeme.Checked && Öde_KısmiÖdeme_Miktar.Value > 0);
+            Öde_Kaydet.Enabled = Öde_TamÖdeme.Checked || (Öde_KısmiÖdeme.Checked && Öde_KısmiÖdeme_Miktar.Value > 0 && Öde_KısmiÖdeme_Miktar.BackColor == Color.White);
             Öde_KısmiÖdeme_Ekran.Enabled = Öde_KısmiÖdeme.Checked;
         }
         private void Öde_KısmiÖdeme_Miktar_ParaBirimi_Değişti(object sender, EventArgs e)

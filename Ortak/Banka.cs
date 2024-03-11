@@ -441,6 +441,16 @@ namespace Gelir_Gider_Takip
 
                 return BirYıllıkDönem;
             }
+            public İşyeri_Ödeme_ Ödemeler_Bul(string GrupAdı, string MuhatapAdı, DateTime İlkİşlemTarihi)
+            {
+                if (GrupAdı.BoşMu(true) || MuhatapAdı.BoşMu(true) || İlkİşlemTarihi.Year < 2023) throw new ArgumentException("Girdiler hatalı " + GrupAdı + " " + MuhatapAdı + " " + İlkİşlemTarihi.Yazıya());
+
+                İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(İlkİşlemTarihi.Year.Yazıya());
+                IEnumerable<İşyeri_Ödeme_> bulunanlar = BirYıllıkDönem.Ödemeler.Where(x => x.MuhatapGrubuAdı == GrupAdı && x.MuhatapAdı == MuhatapAdı && x.İlkİşlemTarihi == İlkİşlemTarihi);
+                if (bulunanlar.Count() == 1) return bulunanlar.First();
+
+                return null; //taksitli ödemeye denk gelirse görmezden gel
+            }
             public bool Üyelik_ZamanıGelenleriKaydet()
             {
                 bool EnAz1ÜyelikÖdemesioluşturuldu = false;
