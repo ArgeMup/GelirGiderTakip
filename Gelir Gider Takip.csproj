@@ -67,5 +67,8 @@
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="IF EXIST &quot;$(SolutionDir)..\Detaylar\Parola.cs&quot; (copy &quot;$(SolutionDir)..\Detaylar\Parola.cs&quot; &quot;$(SolutionDir)Ortak\Parola.cs&quot;)" />
   </Target>
-
+  
+  <Target Name="Yayınlama sonrası işlemi" AfterTargets="Publish">
+    <Exec Command="echo ---&#xD;&#xA;&quot;D:\Mesleki\Proje\Kendim\Cdiyez\DogrulamaKoduUreteci\Yayinla\DogrulamaKoduUreteci.exe&quot; &quot;D:\Mesleki\Proje\Kendim\Cdiyez\Gelir_Gider_Takip\GelirGiderTakip\bin\Yayınla\Gelir Gider Takip.exe&quot;&#xD;&#xA;echo ---" />
+  </Target>
 </Project>
