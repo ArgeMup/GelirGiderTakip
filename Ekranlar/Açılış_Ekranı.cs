@@ -63,7 +63,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void ParolayıDeğiştir_Click(object sender, EventArgs e)
         {
-            Önyüz.Aç(new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.ParolaDeğiştirme));
+            Önyüz.Aç(new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.ParolaDeğiştirme));
         }
     }
 }

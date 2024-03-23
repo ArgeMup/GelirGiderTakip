@@ -86,7 +86,7 @@ namespace Gelir_Gider_Takip
             {
                 if (!Önyüz.Öndeki_ParolaGirişEkranıMı && (DateTime.Now - SonHarekenAnı).TotalSeconds > 15)
                 {
-                    Ayarlar_Kullanıcılar ekran = new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.Giriş);
+                    Ayarlar_Kullanıcılar ekran = new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Giriş);
                     ekran.FormClosed += _Ekran_FormClosed_;
                     Önyüz.Aç(ekran);
 

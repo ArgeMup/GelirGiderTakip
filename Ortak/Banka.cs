@@ -1196,7 +1196,7 @@ namespace Gelir_Gider_Takip
         public class Ayarlar_ : Banka_Ortak.IBanka_Tanımlayıcı_
         {
             [Değişken_.Niteliği.Adını_Değiştir("S")] public DateTime SonBankaKayıt;
-            [Değişken_.Niteliği.Adını_Değiştir("K")] public Kullanıcılar_Ayarlar_ Kullanıcılar = new Kullanıcılar_Ayarlar_();
+            [Değişken_.Niteliği.Adını_Değiştir("K")] public Kullanıcılar2_Ayarlar_ Kullanıcılar = new Kullanıcılar2_Ayarlar_();
             [Değişken_.Niteliği.Adını_Değiştir("Ş")] public Dictionary<string, Ekranlar.Cari_Döküm_Şablon_> CariDökümŞablonlar = new Dictionary<string, Ekranlar.Cari_Döküm_Şablon_>();
             [Değişken_.Niteliği.Adını_Değiştir("Y")] public Ayarlar_Yazdırma_ Yazdırma = new Ayarlar_Yazdırma_();
 
@@ -1780,7 +1780,7 @@ namespace Gelir_Gider_Takip
 
                 if (Ekranlar.Önyüz.İlkAçılışAyarları.SabitMuhataplar != null) Ortak.Banka.Seçilenİşyeri.MuhatapGrubuVeMuhatapİsimleri_Sabit = Ekranlar.Önyüz.İlkAçılışAyarları.SabitMuhataplar;
 
-                Ortak.Banka.Ayarlar.Kullanıcılar.GeçerliKullanıcı = new Ayarlar_Kullanıcı_();
+                Ortak.Banka.Ayarlar.Kullanıcılar.GeçerliKullanıcı = new Ayarlar_Kullanıcı2_();
                 Ortak.Banka.Ayarlar.Kullanıcılar.GeçerliKullanıcı.Adı = Ekranlar.Önyüz.İlkAçılışAyarları.Kullanıcı_Adı;
                 Ortak.Banka.Ayarlar.Kullanıcılar.GeçerliKullanıcı.Rol_İzinleri = Ekranlar.Önyüz.İlkAçılışAyarları.Kullanıcı_Rolİzinleri;
                 Ortak.Banka.Ayarlar.Kullanıcılar.ParolaKontrolüGerekiyorMu = true;

@@ -9,8 +9,8 @@ namespace Gelir_Gider_Takip.Ekranlar
 {
     public partial class Ayarlar_Kullanıcılar : Form
     {
-        public ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_ İşlemTürü;
-        public Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_ İşlemTürü)
+        public ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_ İşlemTürü;
+        public Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_ İşlemTürü)
         {
             InitializeComponent();
             this.İşlemTürü = İşlemTürü;
@@ -18,16 +18,16 @@ namespace Gelir_Gider_Takip.Ekranlar
             switch (İşlemTürü)
             {
                 default:
-                case ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.Giriş:
+                case ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Giriş:
                     Önyüz.Durdur();
                     Ekran.GeriBildirim_GirişBaşarılı += Ekran_GeriBildirim_GirişBaşarılı;
                     break;
 
-                case ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.ParolaDeğiştirme:
+                case ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.ParolaDeğiştirme:
                     Ekran.GeriBildirim_Değişiklikleri_Kaydet += Ekran_Değişiklikleri_Kaydet_ParolaDeğiştirme;
                     break;
 
-                case ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.Ayarlar:
+                case ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Ayarlar:
                     Ekran.GeriBildirim_Değişiklikleri_Kaydet += Ekran_Değişiklikleri_Kaydet_Ayarlar;
                     break;
             }
@@ -38,12 +38,12 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Ayarlar_Kullanıcılar_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Escape && İşlemTürü != Kullanıcılar.İşlemTürü_.Giriş) Close();
+            if (e.KeyChar == (char)Keys.Escape && İşlemTürü != Kullanıcılar2.İşlemTürü_.Giriş) Close();
         }
 
         private void Ekran_GeriBildirim_GirişBaşarılı()
         {
-            İşlemTürü = ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.Boşta;
+            İşlemTürü = ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Boşta;
             Close();
         }
         private void Ekran_Değişiklikleri_Kaydet_ParolaDeğiştirme()

@@ -28,7 +28,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (ekran is Ayarlar_Kullanıcılar)
                     {
                         Ayarlar_Kullanıcılar ekran_2 = ekran as Ayarlar_Kullanıcılar;
-                        return ekran_2.İşlemTürü == ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.Giriş;
+                        return ekran_2.İşlemTürü == ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Giriş;
                     }
                 }
 

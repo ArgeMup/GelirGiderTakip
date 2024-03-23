@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             panel2 = new System.Windows.Forms.Panel();
-            Ekran = new ArgeMup.HazirKod.Ekranlar.Kullanıcılar();
+            Ekran = new ArgeMup.HazirKod.Ekranlar.Kullanıcılar2();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -69,6 +69,6 @@
 
         #endregion
         private System.Windows.Forms.Panel panel2;
-        private global::ArgeMup.HazirKod.Ekranlar.Kullanıcılar Ekran;
+        private global::ArgeMup.HazirKod.Ekranlar.Kullanıcılar2 Ekran;
     }
 }

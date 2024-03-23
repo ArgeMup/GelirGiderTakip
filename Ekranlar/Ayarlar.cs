@@ -26,7 +26,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Kullanıcılar_Click(object sender, EventArgs e)
         {
-            Önyüz.Aç(new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar.İşlemTürü_.Ayarlar));
+            Önyüz.Aç(new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Ayarlar));
         }
         private void Yazdırma_Click(object sender, EventArgs e)
         {
