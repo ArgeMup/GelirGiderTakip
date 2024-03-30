@@ -1646,7 +1646,6 @@ namespace Gelir_Gider_Takip
             using (ZipArchive Arşiv = ZipFile.OpenRead(Gecici_zip_dosyası))
             {
                 byte[] dizi_içerik = null, dizi_doko = null;
-                int adt = 0;
 
                 ZipArchiveEntry Biri = Arşiv.GetEntry("doko");
                 if (Biri != null)
@@ -1654,11 +1653,11 @@ namespace Gelir_Gider_Takip
                     using (Stream Akış = Biri.Open())
                     {
                         dizi_doko = new byte[Biri.Length];
-                        adt = Akış.Read(dizi_doko, 0, (int)Biri.Length); //ReadExactly
+                        Akış.ReadExactly(dizi_doko, 0, (int)Biri.Length); //ReadExactly
                     }
                 }
 
-                if (dizi_doko != null && dizi_doko.Length > 0 && dizi_doko.Length == adt)
+                if (dizi_doko != null && dizi_doko.Length > 0)
                 {
                     string doko = dizi_doko.Yazıya();
                     string[] bölünmüş = doko.Split(';');
@@ -1674,11 +1673,11 @@ namespace Gelir_Gider_Takip
                                 using (Stream Akış = Biri.Open())
                                 {
                                     dizi_içerik = new byte[Biri.Length];
-                                    adt = Akış.Read(dizi_içerik, 0, (int)Biri.Length);
+                                    Akış.ReadExactly(dizi_içerik, 0, (int)Biri.Length);
                                 }
                             }
 
-                            if (dizi_içerik != null && dizi_içerik.Length == adt)
+                            if (dizi_içerik != null && dizi_içerik.Length > 0)
                             {
                                 if (doko == DoğrulamaKodu.Üret.BaytDizisinden(dizi_içerik).HexYazıya())
                                 {
