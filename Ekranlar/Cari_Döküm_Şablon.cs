@@ -18,7 +18,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Zamanlama_Aralık = Zamanlama_Aralık_.Bu_ay;
             Sütunlar_Sırala = Sütunlar_Sırala_.Büyükten_küçüğe;
-            Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Ödeme_Günü;
+            Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Son_İşlem_Tarihi;
         }
 
         #region ListeKutusu
@@ -308,7 +308,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Miktar_EnÇok = -1;
 
                     Diğer_AltToplam = Diğer_AltToplam_.Gerekli_değil;
-                    Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Ödeme_Günü;
+                    Sütunlar_Sırala_Sütun = Sütunlar_Sırala_Sütun_.Son_İşlem_Tarihi;
                     Sütunlar_Sırala = Sütunlar_Sırala_.Büyükten_küçüğe;
 
                     Sütunlar_Grup = Sütunlar_Durum_.Göster;
