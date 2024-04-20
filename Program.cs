@@ -64,14 +64,14 @@ namespace Gelir_Gider_Takip
                         {
                             foreach (var Talep in AnaKontrolcü.İlkAçılışAyarları.Ekle_GelirGider_Talepler)
                             {
+                                if (Talep.Ekle_Miktar < 0) throw new Exception("Miktar 0 dan küçük olamaz " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı + " " + Talep.Ekle_Miktar);
+
                                 Banka1.İşyeri_Ödeme_ ödeme = Ortak.Banka.Seçilenİşyeri.Ödemeler_Bul(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, Talep.Ekle_KayıtTarihi.Value);
-                                if (ödeme != null) ödeme.YeniİşlemEkle(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_Notlar, DateOnly.FromDateTime(Talep.Ekle_İlkÖdemeTarihi), Talep.Ekle_KayıtTarihi);
+                                if (ödeme != null) ödeme.YeniİşlemEkle(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_Notlar, DateOnly.FromDateTime(Talep.Ekle_İlkÖdemeTarihi));
                                 else
                                 {
                                     var muhatap = Ortak.Banka.Seçilenİşyeri.Muhatap_Aç(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, true);
                                     if (muhatap == null) throw new Exception("Muhatap bulunamadı " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı);
-
-                                    if (Talep.Ekle_Miktar < 0) throw new Exception("Miktar 0 dan küçük olamaz " + Talep.Ekle_MuhatapGrubuAdı + " " + Talep.Ekle_MuhatapAdı + " " + Talep.Ekle_Miktar);
 
                                     var gelir_gider = muhatap.GelirGider_Oluştur(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_ParaBirimi,
                                         Talep.Ekle_İlkÖdemeTarihi, Talep.Ekle_Notlar,
