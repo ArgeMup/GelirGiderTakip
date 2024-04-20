@@ -9,7 +9,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         {
             InitializeComponent();
 
-            Kullanıcılar.Visible = Önyüz.İlkAçılışAyarları == null;
+            Kullanıcılar.Visible = AnaKontrolcü.İlkAçılışAyarları == null;
         }
         private void Ayarlar_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -26,7 +26,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void Kullanıcılar_Click(object sender, EventArgs e)
         {
-            Önyüz.Aç(new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Ayarlar));
+            Önyüz.Aç(ArgeMup.HazirKod.Ekranlar.Kullanıcılar.Önyüz_Ayarlar(Font.Size));
         }
         private void Yazdırma_Click(object sender, EventArgs e)
         {

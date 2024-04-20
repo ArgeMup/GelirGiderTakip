@@ -11,10 +11,10 @@ namespace Gelir_Gider_Takip.Ekranlar
         {
             InitializeComponent();
 
-            bool Ayarları_değiştirebilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir);
+            bool Ayarları_değiştirebilir = AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Ayarları_değiştirebilir);
             İşyeriSeçimi.Visible = Ayarları_değiştirebilir;
-            Cari.Visible = Ortak.Banka.İzinliMi(new Banka1.Ayarlar_Kullanıcılar_İzin[] { Banka1.Ayarlar_Kullanıcılar_İzin.Cari_dökümü_görebilir, Banka1.Ayarlar_Kullanıcılar_İzin.Cari_döküm_içinde_işlem_yapabilir });
-            GelirGiderEkle.Visible = Ortak.Banka.İzinliMi(new Banka1.Ayarlar_Kullanıcılar_İzin[] { Banka1.Ayarlar_Kullanıcılar_İzin.Gelir_gider_ekleyebilir, Banka1.Ayarlar_Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir });
+            Cari.Visible = AnaKontrolcü.İzinliMi(new AnaKontrolcü.Kullanıcılar_İzin[] { AnaKontrolcü.Kullanıcılar_İzin.Cari_dökümü_görebilir, AnaKontrolcü.Kullanıcılar_İzin.Cari_döküm_içinde_işlem_yapabilir });
+            GelirGiderEkle.Visible = AnaKontrolcü.İzinliMi(new AnaKontrolcü.Kullanıcılar_İzin[] { AnaKontrolcü.Kullanıcılar_İzin.Gelir_gider_ekleyebilir, AnaKontrolcü.Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir });
             Ayarlar.Visible = Ayarları_değiştirebilir;
             ParolayıDeğiştir.Visible = !Ayarları_değiştirebilir;
         }
@@ -63,7 +63,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private void ParolayıDeğiştir_Click(object sender, EventArgs e)
         {
-            Önyüz.Aç(new Ayarlar_Kullanıcılar(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.ParolaDeğiştirme));
+            Önyüz.Aç(ArgeMup.HazirKod.Ekranlar.Kullanıcılar.Önyüz_ParolaDeğiştir(Font.Size));
         }
     }
 }

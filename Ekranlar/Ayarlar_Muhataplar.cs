@@ -193,7 +193,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             öh.Mevcut = MaaşDetayları.Miktarı;
             öh.GüncelVeyaKullanım = (double)Ücret.Value;
             öh.Notlar = Ücret_Notlar.Text;
-            öh.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
+            öh.GerçekleştirenKullanıcıAdı = AnaKontrolcü.KullanıcıAdı;
             DateTime dt = DateTime.Now;
             Muhatap.Çalışan.ÖzlükHakkı_Ekle(öh, dt);
 
@@ -232,7 +232,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             öh.Mevcut = Muhatap.Çalışan.MevcutİzinGünü;
             öh.GüncelVeyaKullanım = (double)İzin.Value;
             öh.Notlar = İzin_Notlar.Text;
-            öh.GerçekleştirenKullanıcıAdı = Ortak.Banka.KullancıAdı;
+            öh.GerçekleştirenKullanıcıAdı = AnaKontrolcü.KullanıcıAdı;
             DateTime dt = DateTime.Now;
             Muhatap.Çalışan.ÖzlükHakkı_Ekle(öh, dt);
 

@@ -41,24 +41,28 @@ namespace Gelir_Gider_Takip
             
             if (BaşlangıçParametreleri != null && BaşlangıçParametreleri.Length == 1 && File.Exists(BaşlangıçParametreleri[0]))
             {
-                string içerik = BaşlangıçParametreleri[0].DosyaYolu_Oku_BaytDizisi().Düzelt(Parola.Dizi).Yazıya();
+                string prl = 7578575578 + " 9985853 ArGeMuP " + 6 + " Gelir ŞemsiPaşa " + 587383678757 + " Gider " + 4 + "Pasajı " + 8689686868 + " Takip Uygulaması 55558368387 " + 29719542172;
+                string içerik = BaşlangıçParametreleri[0].DosyaYolu_Oku_BaytDizisi().Düzelt(prl.BaytDizisine()).Yazıya();
                 if (içerik.DoluMu(true))
                 {
                     Depo_ depo = new Depo_(içerik);
                     Değişken_ değişken = new Değişken_();
-                    Ekranlar.Önyüz.İlkAçılışAyarları = (Banka1.İlkAçılışAyarları_)değişken.Üret(typeof(Banka1.İlkAçılışAyarları_), depo["ArGeMuP"]);
+                    AnaKontrolcü.İlkAçılışAyarları = (AnaKontrolcü.İlkAçılışAyarları_)değişken.Üret(typeof(AnaKontrolcü.İlkAçılışAyarları_), depo["ArGeMuP"]);
                 }
             }
-            Ortak.Başlat();
 
-            if (Önyüz.İlkAçılışAyarları != null)
+            AnaKontrolcü.Açıl();
+
+            if (AnaKontrolcü.İlkAçılışAyarları != null)
             {
-                switch (Önyüz.İlkAçılışAyarları.Kullanıcı_Komut)
+                Banka_Ortak.Başlat();
+
+                switch (AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut)
                 {
-                    case Banka1.İlkAçılışAyarları_Komut_.Ekle_GelirGider:
-                        if (Önyüz.İlkAçılışAyarları.Ekle_GelirGider_Talepler != null && Önyüz.İlkAçılışAyarları.Ekle_GelirGider_Talepler.Count > 0)
+                    case AnaKontrolcü.İlkAçılışAyarları_Komut_.Ekle_GelirGider:
+                        if (AnaKontrolcü.İlkAçılışAyarları.Ekle_GelirGider_Talepler != null && AnaKontrolcü.İlkAçılışAyarları.Ekle_GelirGider_Talepler.Count > 0)
                         {
-                            foreach (var Talep in Önyüz.İlkAçılışAyarları.Ekle_GelirGider_Talepler)
+                            foreach (var Talep in AnaKontrolcü.İlkAçılışAyarları.Ekle_GelirGider_Talepler)
                             {
                                 Banka1.İşyeri_Ödeme_ ödeme = Ortak.Banka.Seçilenİşyeri.Ödemeler_Bul(Talep.Ekle_MuhatapGrubuAdı, Talep.Ekle_MuhatapAdı, Talep.Ekle_KayıtTarihi.Value);
                                 if (ödeme != null) ödeme.YeniİşlemEkle(Talep.Ekle_Tipi, Talep.Ekle_Durumu, Talep.Ekle_Miktar, Talep.Ekle_Notlar, DateOnly.FromDateTime(Talep.Ekle_İlkÖdemeTarihi), Talep.Ekle_KayıtTarihi);
@@ -82,11 +86,11 @@ namespace Gelir_Gider_Takip
                         Açıkla(null);
                         return;
 
-                    case Banka1.İlkAçılışAyarları_Komut_.Yazdır:
+                    case AnaKontrolcü.İlkAçılışAyarları_Komut_.Yazdır:
                         var cd = new Cari_Döküm(Cari_Döküm.AçılışTürü_.Gizli);
 
-                        if (Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım == null || Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length < 1) throw new Exception("if (AçılışDetayları == null || AçılışDetayları.Length < 1)");
-                        string şablon = Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length >= 2 ? Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[1] : null;
+                        if (AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım == null || AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length < 1) throw new Exception("if (AçılışDetayları == null || AçılışDetayları.Length < 1)");
+                        string şablon = AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length >= 2 ? AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[1] : null;
                         string sonuç = cd.Şablon_Seç_TabloyuOluştur(şablon);
 
                         if (sonuç.DoluMu()) Açıkla(sonuç);
@@ -94,7 +98,7 @@ namespace Gelir_Gider_Takip
                         else
                         {
                             Ayarlar_Yazdırma yzdrm = new Ayarlar_Yazdırma();
-                            yzdrm.Yazdır(cd.Tablo, Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[0]);
+                            yzdrm.Yazdır(cd.Tablo, AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[0]);
 
                             Açıkla(null);
                         }
@@ -103,7 +107,10 @@ namespace Gelir_Gider_Takip
             }
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new AnaEkran());
+            AnaKontrolcü.GirişYap(false);
+            Application.Run(new Form() { Opacity = 0, ShowInTaskbar = false, Visible = false });
+
+            AnaKontrolcü.Kapan("Normal");
             if (!İstisnaOluştu) Açıkla(null);
         }
 
@@ -132,7 +139,7 @@ namespace Gelir_Gider_Takip
                         ex.Message;
 
                 Açıkla(hata);
-                Ortak.Kapan("BeklenmeyenDurum");
+                AnaKontrolcü.Kapan("BeklenmeyenDurum");
             }
             catch (Exception exxx)
             {
@@ -154,7 +161,7 @@ namespace Gelir_Gider_Takip
         }
         static void Açıkla(string HatanınAçıklaması)
         {
-            if (Önyüz.İlkAçılışAyarları == null)
+            if (AnaKontrolcü.İlkAçılışAyarları == null)
             {
                 //tıklanarak açıldı
                 if (HatanınAçıklaması != null) MessageBox.Show(HatanınAçıklaması, "Gelir Gider Takip");
@@ -162,7 +169,7 @@ namespace Gelir_Gider_Takip
             else
             {
                 //komut satırından açıldı
-                if (HatanınAçıklaması == null) HatanınAçıklaması = "Tamam " + Önyüz.İlkAçılışAyarları?.Benzersiz_Tanımlayıcı; //hata yok
+                if (HatanınAçıklaması == null) HatanınAçıklaması = "Tamam " + AnaKontrolcü.İlkAçılışAyarları?.Benzersiz_Tanımlayıcı; //hata yok
 
                 HatanınAçıklaması.Dosyaİçeriği_Yaz(Kendi.Klasörü + "\\Sonuç.mup");
             }

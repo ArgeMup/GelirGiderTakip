@@ -30,48 +30,8 @@ namespace Gelir_Gider_Takip
         public static Color Renk_Gider = Renk_Kırmızı;
         public static Color Renk_KontrolNoktası = Renk_Mavi;
 
-        public static void Başlat()
-        {
-            string AnaKlasör = null;
-            if (Önyüz.İlkAçılışAyarları != null)
-            {
-                if (Önyüz.İlkAçılışAyarları.İşyeri_Adı.BoşMu(true)) throw new Exception("if (Önyüz.İlkAçılışAyarları.İşyeri_Adı.BoşMu(true))");
 
-                if (Önyüz.İlkAçılışAyarları.KayıtKlasörü.BoşMu()) throw new System.Exception("if (Önyüz.İlkAçılışAyarları.KayıtKlasörü.BoşMu())");
-                AnaKlasör = Önyüz.İlkAçılışAyarları.KayıtKlasörü.TrimEnd('\\');
-
-                if (Önyüz.İlkAçılışAyarları.İşyeri_LogoDosyaYolu.DoluMu() && File.Exists(Önyüz.İlkAçılışAyarları.İşyeri_LogoDosyaYolu)) Firma_Logo = new Bitmap(Önyüz.İlkAçılışAyarları.İşyeri_LogoDosyaYolu);
-
-                //Üst uygulamanın parolasını kullan
-                if (Önyüz.İlkAçılışAyarları.İşyeri_Parolası.DoluMu())
-                {
-                    Parola.Yazı += Önyüz.İlkAçılışAyarları.İşyeri_Parolası;
-                    Parola.Dizi = Parola.Yazı.BaytDizisine();
-                }
-            }
-
-            if (AnaKlasör == null) AnaKlasör = Kendi.Klasörü;
-            if (Firma_Logo == null) Firma_Logo = Properties.Resources.logo_512_seffaf;
-
-            Klasör_Banka = AnaKlasör + "\\Banka\\";
-            Klasör_Banka2 = AnaKlasör + "\\Banka2\\";
-            Klasör_İçYedek = AnaKlasör + "\\Yedek\\";
-            Klasör_KullanıcıDosyaları = AnaKlasör + "\\Kullanıcı Dosyaları\\";
-
-            Banka_Ortak.Başlat();
-        }
-        public static void Kapan(string Bilgi)
-        {
-            Günlük.Ekle("Kapatıldı " + Bilgi, Hemen: true);
-            Banka_Ortak.Yedekle_Tümü();
-
-            YeniYazılımKontrolü.Durdur();
-            Ekranlar.Önyüz.Durdur();
-            Çalıştır.Dispose();
-            Klasör.Sil(Klasör_Gecici);
-
-            ArgeMup.HazirKod.ArkaPlan.Ortak.Çalışsın = false;
-        }
+       
 
         //İşyeri Adı        | null
         //Muhatap Grup Adı  | Muhatap Adı
@@ -81,14 +41,18 @@ namespace Gelir_Gider_Takip
             Önyüz.Aç(Seçtirme);
         }
 
-        public static bool Klasör_TamKopya(string Kaynak, string Hedef, bool DoğrulamaKodunuKontrolEt_Yavaşlatır = true)
+        public static bool Klasör_TamKopya(string Kaynak, string Hedef, bool DoğrulamaKodunuKontrolEt_Yavaşlatır = true, bool AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel = false)
         {
             int ZamanAşımı_msn = Environment.TickCount + 15000;
             while (ZamanAşımı_msn > Environment.TickCount)
             {
                 try
                 {
-                    if (Klasör.Kopyala(Kaynak, Hedef, true, DoğrulamaKodunuKontrolEt_Yavaşlatır)) return true;
+                    if (Directory.Exists(Kaynak))
+                    {
+                        if (Klasör.Kopyala(Kaynak, Hedef, true, DoğrulamaKodunuKontrolEt_Yavaşlatır, AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel: AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel)) return true;
+                    }
+                    else if (Klasör.Sil(Hedef)) return true;
                 }
                 catch (Exception ex) { ex.Günlük(); }
 

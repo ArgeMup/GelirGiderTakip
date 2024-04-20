@@ -4,7 +4,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 {
     public partial class Ayarlar_İşyeri : Form
     {
-        public Ayarlar_İşyeri(ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_ İşlemTürü)
+        public Ayarlar_İşyeri()
         {
             InitializeComponent();
         }

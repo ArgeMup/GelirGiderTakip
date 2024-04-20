@@ -31,6 +31,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="HazirKod_Cdiyez\Ekranlar\Kullanıcılar2.cs" />
+    <Compile Remove="HazirKod_Cdiyez\Ekranlar\Kullanıcılar2.designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="HazirKod_Cdiyez\Ekranlar\Kullanıcılar2.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\ico.ico" />
   </ItemGroup>
 
@@ -47,9 +56,6 @@
     <Compile Update="Ekranlar\Cari_Döküm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Ekranlar\Ayarlar_Kullanıcılar.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -63,10 +69,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="IF EXIST &quot;$(SolutionDir)..\Detaylar\Parola.cs&quot; (copy &quot;$(SolutionDir)..\Detaylar\Parola.cs&quot; &quot;$(SolutionDir)Ortak\Parola.cs&quot;)" />
-  </Target>
   
   <Target Name="Yayınlama sonrası işlemi" AfterTargets="Publish">
     <Exec Command="echo ---&#xD;&#xA;&quot;D:\Mesleki\Proje\Kendim\Cdiyez\DogrulamaKoduUreteci\Yayinla\DogrulamaKoduUreteci.exe&quot; &quot;D:\Mesleki\Proje\Kendim\Cdiyez\Gelir_Gider_Takip\GelirGiderTakip\bin\Yayınla\Gelir Gider Takip.exe&quot;&#xD;&#xA;echo ---" />

@@ -25,7 +25,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         const char Sorgula_AltToplamlar_Ayraç = 'é';
         readonly Font Sorgula_Kakü_kontrolNoktası;
         Cari_Döküm_Şablon_ Şablon;
-        bool Cari_döküm_içinde_işlem_yapabilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Cari_döküm_içinde_işlem_yapabilir);
+        bool Cari_döküm_içinde_işlem_yapabilir = AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Cari_döküm_içinde_işlem_yapabilir);
 
         public Cari_Döküm(AçılışTürü_ AçılışTürü = AçılışTürü_.Normal, Banka1.İşyeri_Ödeme_ Ödeme = null)
         {
@@ -69,16 +69,16 @@ namespace Gelir_Gider_Takip.Ekranlar
                 Yazdır.Visible = false;
                 ÇokluSeçim.Visible = false;
             }
-            Ekle.Visible = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Gelir_gider_ekleyebilir);
+            Ekle.Visible = AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Gelir_gider_ekleyebilir);
 
             Ayraç_Filtre_TabloSonuç.SplitterDistance = Height * 30 / 100;
 
             Sorgula_MuhatapGrubu.Başlat(Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Listele(true), Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Listele(), "Muhatap Grupları", ListeKutusu_Ayarlar);
 
             ListeKutusu.Ayarlar_ ListeKutusu_Ayarlar_Şablon = new ListeKutusu.Ayarlar_(
-                Eklenebilir: Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir),
-                Silinebilir: Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir),
-                ElemanKonumu: Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir) ? ListeKutusu.Ayarlar_.ElemanKonumu_.Değiştirilebilir : ListeKutusu.Ayarlar_.ElemanKonumu_.OlduğuGibi,
+                Eklenebilir: AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Ayarları_değiştirebilir),
+                Silinebilir: AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Ayarları_değiştirebilir),
+                ElemanKonumu: AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Ayarları_değiştirebilir) ? ListeKutusu.Ayarlar_.ElemanKonumu_.Değiştirilebilir : ListeKutusu.Ayarlar_.ElemanKonumu_.OlduğuGibi,
                 AdıDeğiştirilebilir: false, Gizlenebilir: false);
             Sorgula_Şablonlar.Başlat(null, Ortak.Banka.Ayarlar.CariDökümŞablonlar.Keys.ToList(), "Şablonlar", ListeKutusu_Ayarlar_Şablon);
 

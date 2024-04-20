@@ -13,28 +13,10 @@ namespace Gelir_Gider_Takip.Ekranlar
 
     public static class Önyüz
     {
-        public static Banka1.İlkAçılışAyarları_ İlkAçılışAyarları = null;
         public static Form AnaEkran;
         public static string SürümKontrolMesajı = "Yeni sürüm kontrol ediliyor";
         static List<Form> Önyüzler = new List<Form>();
 
-        public static bool Öndeki_ParolaGirişEkranıMı
-        {
-            get
-            {
-                if (Önyüzler.Count > 0)
-                {
-                    Form ekran = Önyüzler.Last();
-                    if (ekran is Ayarlar_Kullanıcılar)
-                    {
-                        Ayarlar_Kullanıcılar ekran_2 = ekran as Ayarlar_Kullanıcılar;
-                        return ekran_2.İşlemTürü == ArgeMup.HazirKod.Ekranlar.Kullanıcılar2.İşlemTürü_.Giriş;
-                    }
-                }
-
-                return false;
-            }
-        }
         public static void Aç(Form Önyüz)
         {
             Önyüz.MdiParent = AnaEkran;
@@ -50,7 +32,9 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Önyüzler.Add(Önyüz);
 
-            AnaEkran.Text = "ArGeMuP " + Kendi.Adı + " Kullanıcı : " + (Ortak.Banka.KullancıAdı ?? "Giriş yapılmadı") + " " + SürümKontrolMesajı;
+            AnaEkran.Text = "ArGeMuP " + Kendi.Adı + " Kullanıcı : " + (AnaKontrolcü.KullanıcıAdı ?? "Giriş yapılmadı") + " " + SürümKontrolMesajı;
+
+            Günlük.Ekle("Yan uygulama açıldı " + Önyüz.Text);
         }
         public static void Dürt()
         {
@@ -60,23 +44,33 @@ namespace Gelir_Gider_Takip.Ekranlar
                 if (dürtü != null) dürtü.Güncelle();
             }
         }
-        public static void Durdur()
+        public static void PencereleriKapat()
         {
             foreach (Form Önyüz in Önyüzler)
             {
                 try
                 {
+                    Önyüz.FormClosing -= Önyüz_FormClosing;
+                    Önyüz.FormClosed -= Önyüz_FormClosed;
+
                     Önyüz.Dispose();
                 }
                 catch (Exception) { }
             }
+
             Önyüzler.Clear();
+
+            try
+            {
+                AnaEkran?.Dispose();
+                AnaEkran = null;
+            }
+            catch (Exception) { }
         }
 
         private static void Önyüz_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            if (Öndeki_ParolaGirişEkranıMı) Application.Exit();
-            else if (Önyüzler.Count > 1 && e.CloseReason == CloseReason.MdiFormClosing)
+            if (Önyüzler.Count > 1 && e.CloseReason == CloseReason.MdiFormClosing)
             {
                 Önyüzler.Last().Close();
                 e.Cancel = true;
@@ -109,9 +103,12 @@ namespace Gelir_Gider_Takip.Ekranlar
         }
         private static void Önyüz_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            Önyüzler.Remove(sender as Form);
+            Form ekran = sender as Form;
+            Önyüzler.Remove(ekran);
 
-            if (Önyüzler.Count == 0) Application.Exit();
+            if (Önyüzler.Count <= 0) Application.Exit();
+
+            Günlük.Ekle("Yan uygulama kapatıldı " + ekran.Text);
         }
     }
 }

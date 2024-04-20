@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Gelir_Gider_Takip
+namespace Gelir_Gider_Takip.Ekranlar
 {
     partial class AnaEkran
     {
@@ -43,7 +43,6 @@ namespace Gelir_Gider_Takip
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
-            FormClosed += AnaEkran_FormClosed;
             Load += AnaEkran_Load;
             Resize += AnaEkran_Resize;
             ResumeLayout(false);

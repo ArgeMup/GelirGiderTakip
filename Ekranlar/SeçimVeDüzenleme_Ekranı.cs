@@ -21,7 +21,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             this.Türü = Türü;
             this.GeriBildirimİşlemi = GeriBildirimİşlemi;
 
-            bool Ayarları_değiştirebilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Ayarları_değiştirebilir);
+            bool Ayarları_değiştirebilir = AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Ayarları_değiştirebilir);
             ListeKutusu_Ayarlar_İşyeri = new ListeKutusu.Ayarlar_(
                             Eklenebilir: Ayarları_değiştirebilir,
                             Silinebilir: Ayarları_değiştirebilir,
@@ -51,7 +51,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Açıklama.Text = Ortak.Banka.Seçilenİşyeri.İşyeriAdı + " için" + Environment.NewLine + "Muhatap grubunu seçiniz";
                     List<string> l_sabit = Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Listele(true);
                     List<string> l_normal = Ortak.Banka.Seçilenİşyeri.MuhatapGrubu_Listele();
-                    if (!Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir))
+                    if (!AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir))
                     {
                         l_sabit.Remove(Banka1.Çalışan_Yazısı);
                         l_normal.Remove(Banka1.Çalışan_Yazısı);

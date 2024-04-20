@@ -25,7 +25,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 return Avans_peşinat_taksit_ve_üyelik_ekleyebilir && Avans.Enabled && Avans.Checked;
             }
         }
-        bool Avans_peşinat_taksit_ve_üyelik_ekleyebilir = Ortak.Banka.İzinliMi(Banka1.Ayarlar_Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir);
+        bool Avans_peşinat_taksit_ve_üyelik_ekleyebilir = AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir);
 
         public GelirGider_Ekle(Banka1.Muhatap_ Muhatap = null, DateTime? ÜyelikKayıtTarihi = null)
         {
@@ -65,9 +65,9 @@ namespace Gelir_Gider_Takip.Ekranlar
                 ParaBirimi.BackColor = Ortak.Renk_Kırmızı;
                 Notlar.BackColor = Ortak.Renk_Kırmızı;
 
-                if (Önyüz.İlkAçılışAyarları != null && Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım != null && Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length == 1)
+                if (AnaKontrolcü.İlkAçılışAyarları != null && AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım != null && AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım.Length == 1)
                 {
-                    if (Önyüz.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[0] == "Gelir") Gelir.Checked = true;
+                    if (AnaKontrolcü.İlkAçılışAyarları.Kullanıcı_Komut_EkTanım[0] == "Gelir") Gelir.Checked = true;
                 }
             }
             else
