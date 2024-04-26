@@ -106,9 +106,13 @@ namespace Gelir_Gider_Takip.Ekranlar
             Form ekran = sender as Form;
             Önyüzler.Remove(ekran);
 
-            if (Önyüzler.Count <= 0) Application.Exit();
+            Günlük.Ekle("Yan uygulama kapatıldı " + ekran.GetType());
 
-            Günlük.Ekle("Yan uygulama kapatıldı " + ekran.Text);
+            if (Önyüzler.Count <= 0)
+            {
+                if (AnaKontrolcü.YanUygulamaOlarakÇalışıyor) PencereleriKapat();
+                else Application.Exit();
+            }        
         }
     }
 }

@@ -151,6 +151,7 @@
             Name = "SeçimVeDüzenleme_Ekranı";
             Text = "Seçiminiz";
             TopMost = true;
+            FormClosed += SeçimVeDüzenleme_Ekranı_FormClosed;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             Ayraç.Panel1.ResumeLayout(false);

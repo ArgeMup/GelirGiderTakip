@@ -16,7 +16,7 @@ namespace Gelir_Gider_Takip
         public static string Klasör_Gecici = Klasör.Depolama(Klasör.Kapsamı.Geçici, Uygulama:Kendi.Adı + "_Geçici", Sürüm: "") + "\\";
         public static Bitmap Firma_Logo;
         public static Banka1 Banka;
-        public static YeniYazılımKontrolü_ YeniYazılımKontrolü = new YeniYazılımKontrolü_();
+        public static YeniYazılımKontrolü_ YeniYazılımKontrolü;
         public static Çalıştır_ Çalıştır = new Çalıştır_();
         public static string Sistem_KullanıcıAdı = "V" + Kendi.Sürümü_Dosya;
         public static string GizliElemanBaşlangıcı = ".:Gizli:. ";
@@ -29,9 +29,6 @@ namespace Gelir_Gider_Takip
         public static Color Renk_Gelir = Renk_Yeşil;
         public static Color Renk_Gider = Renk_Kırmızı;
         public static Color Renk_KontrolNoktası = Renk_Mavi;
-
-
-       
 
         //İşyeri Adı        | null
         //Muhatap Grup Adı  | Muhatap Adı

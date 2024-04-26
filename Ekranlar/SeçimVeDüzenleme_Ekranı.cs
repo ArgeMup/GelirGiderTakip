@@ -65,6 +65,20 @@ namespace Gelir_Gider_Takip.Ekranlar
                     throw new System.Exception(Text + " Büyük Hata");
             }
         }
+        private void SeçimVeDüzenleme_Ekranı_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Kapat(null, null);
+        }
+        void Kapat(string A, string B)
+        {
+            if (GeriBildirimİşlemi == null) return;
+
+            Action<string, string> GeriBildirimİşlemi_Kopya = GeriBildirimİşlemi;
+            GeriBildirimİşlemi = null;
+
+            Close();
+            GeriBildirimİşlemi_Kopya(A, B);
+        }
 
         private bool İşyerleriVeMuhatapGrupları_GeriBildirim_İşlemi(string Adı, ArgeMup.HazirKod.Ekranlar.ListeKutusu.İşlemTürü İşlemTürü, string YeniAdı)
         {
@@ -192,8 +206,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
         private void Geri_Click(object sender, EventArgs e)
         {
-            GeriBildirimİşlemi(null, null);
-            Close();
+            Kapat(null, null);
         }
         private void Seç_Click(object sender, System.EventArgs e)
         {
@@ -202,15 +215,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                 case Türü_.İşyeri:
                     if (İşyerleriVeMuhatapGrupları.SeçilenEleman_Adı.BoşMu(true)) return;
 
-                    GeriBildirimİşlemi(İşyerleriVeMuhatapGrupları.SeçilenEleman_Adı, null);
-                    Close();
+                    Kapat(İşyerleriVeMuhatapGrupları.SeçilenEleman_Adı, null);
                     break;
 
                 case Türü_.MuhatapGrubu:
                     if (Muhataplar.SeçilenEleman_Adı.BoşMu(true)) return;
 
-                    GeriBildirimİşlemi(MuhatapGrubuAdı, Muhataplar.SeçilenEleman_Adı);
-                    Close();
+                    Kapat(MuhatapGrubuAdı, Muhataplar.SeçilenEleman_Adı);
                     break;
             }
         }

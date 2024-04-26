@@ -6,7 +6,6 @@ using ArgeMup.HazirKod;
 using ArgeMup.HazirKod.Dönüştürme;
 using ArgeMup.HazirKod.Ekİşlemler;
 using System.Linq;
-using ArgeMup.HazirKod.Ekranlar;
 
 namespace Gelir_Gider_Takip
 {
@@ -1424,7 +1423,7 @@ namespace Gelir_Gider_Takip
 
         //epo + Sıkıştırma + Şifreleme
         static DahaCokKarmasiklastirma_ DaÇoKa = new DahaCokKarmasiklastirma_();
-        static Değişken_ De = new Değişken_() { Filtre_BoşVeyaVarsayılanDeğerdeİse_HariçTut = true };
+        public static Değişken_ Değişken = new Değişken_() { Filtre_BoşVeyaVarsayılanDeğerdeİse_HariçTut = true };
         public interface IBanka_Tanımlayıcı_ { string SınıfAdı { get; set; } }
 
         public static string YeniKlasörAdıOluştur(string KökKlasör)
@@ -1444,7 +1443,7 @@ namespace Gelir_Gider_Takip
         {
             bool BoşDepo = Depo == null;
             if (BoşDepo) Depo = new Depo_();
-            object sınıf = De.Üret(Tipi, Depo["ArGeMuP"]);
+            object sınıf = Değişken.Üret(Tipi, Depo["ArGeMuP"]);
 
             IBanka_Tanımlayıcı_ tnmlyc = sınıf as IBanka_Tanımlayıcı_;
             if (tnmlyc == null) throw new Exception("tnmlyc == null " + Tipi);
@@ -1471,8 +1470,8 @@ namespace Gelir_Gider_Takip
         public static object Sınıf_Kopyala(object Girdi)
         {
             IDepo_Eleman Depo = new Depo_()["ArGeMuP"];
-            De.Depola(Girdi, Depo);
-            return De.Üret(Girdi.GetType(), Depo);
+            Değişken.Depola(Girdi, Depo);
+            return Değişken.Üret(Girdi.GetType(), Depo);
         }
         public static void Sınıf_Kaydet(object Sınıf, string DosyaYolu)
         {
@@ -1483,7 +1482,7 @@ namespace Gelir_Gider_Takip
             if (tnmlyc.SınıfAdı.BoşMu(true)) tnmlyc.SınıfAdı = Sınıf.GetType().FullName;
 
             Depo_ depo = new Depo_();
-            De.Depola(Sınıf, depo["ArGeMuP"]);
+            Değişken.Depola(Sınıf, depo["ArGeMuP"]);
             Depo_Kaydet(DosyaYolu, depo);
         }
         static void Depo_Kaydet(string DosyaYolu, Depo_ Depo)
@@ -1588,10 +1587,8 @@ namespace Gelir_Gider_Takip
                     goto Devam;
 
                 case DoğrulamaKodu.KontrolEt.Durum_.DoğrulamaDosyasıYok:
-#if !DEBUG
-                Klasör_ kls = new Klasör_(Ortak.Klasör_Banka, DoğrulamaKodunuÜret:false);
-                if (kls.Dosyalar.Count > 0) throw new Exception("Büyük Hata A");
-#endif
+                    Klasör_ kls = new Klasör_(Ortak.Klasör_Banka, DoğrulamaKodunuÜret:false);
+                    if (kls.Dosyalar.Count > 0) throw new Exception("Büyük Hata A");
                     goto Devam;
 
                 default:
@@ -1622,21 +1619,21 @@ namespace Gelir_Gider_Takip
             Ortak.Banka = new Banka1();
             Ortak.Banka.Başlat();
 
-            if (AnaKontrolcü.İlkAçılışAyarları != null)
+            if (AnaKontrolcü.YanUygulamaOlarakÇalışıyor)
             {
                 if (Ortak.Banka.İşyerleri.Count == 0)
                 {
-                    Ortak.Banka.İşyeri_Ekle(AnaKontrolcü.İlkAçılışAyarları.İşyeri_Adı);
+                    Ortak.Banka.İşyeri_Ekle(AnaKontrolcü.Şube_Talep.İşyeri_Adı);
                     Banka_Ortak.DeğişiklikleriKaydet();
                 }
                 else
                 {
                     var içerik = Ortak.Banka.İşyerleri.First();
-                    if (içerik.Key != AnaKontrolcü.İlkAçılışAyarları.İşyeri_Adı)
+                    if (içerik.Key != AnaKontrolcü.Şube_Talep.İşyeri_Adı)
                     {
                         Ortak.Banka.İşyerleri.Remove(içerik.Key);
-                        Ortak.Banka.İşyerleri.Add(AnaKontrolcü.İlkAçılışAyarları.İşyeri_Adı, içerik.Value);
-                        içerik.Value.İşyeriAdı = AnaKontrolcü.İlkAçılışAyarları.İşyeri_Adı;
+                        Ortak.Banka.İşyerleri.Add(AnaKontrolcü.Şube_Talep.İşyeri_Adı, içerik.Value);
+                        içerik.Value.İşyeriAdı = AnaKontrolcü.Şube_Talep.İşyeri_Adı;
                         içerik.Value.DeğişiklikYapıldı = true;
                         Banka_Ortak.DeğişiklikleriKaydet();
                     }
@@ -1644,7 +1641,7 @@ namespace Gelir_Gider_Takip
 
                 Ortak.Banka.Seçilenİşyeri = Ortak.Banka.İşyerleri.First().Value;
 
-                if (AnaKontrolcü.İlkAçılışAyarları.SabitMuhataplar != null) Ortak.Banka.Seçilenİşyeri.MuhatapGrubuVeMuhatapİsimleri_Sabit = AnaKontrolcü.İlkAçılışAyarları.SabitMuhataplar;
+                if (AnaKontrolcü.Şube_Talep.SabitMuhataplar != null) Ortak.Banka.Seçilenİşyeri.MuhatapGrubuVeMuhatapİsimleri_Sabit = AnaKontrolcü.Şube_Talep.SabitMuhataplar;
             }
         }
         public static void DeğişiklikleriKaydet()
@@ -1677,14 +1674,18 @@ namespace Gelir_Gider_Takip
         public static bool Yedekleme_Tümü_Çalışıyor = false;
         public static bool Yedekleme_EnAz1Kez_Değişiklikler_Kaydedildi = false;
         public static string Yedekleme_Hatalar = null;
-        public static string[] Kullanıcı_Klasör_Yedek = new string[0];
-        public static void Yedekle_Tümü()
+        //public static string[] Kullanıcı_Klasör_Yedek = new string[0];
+        public static bool Yedekle_Tümü()
         {
-            if (Yedekleme_Tümü_Çalışıyor || !Yedekleme_EnAz1Kez_Değişiklikler_Kaydedildi) return;
+            Günlük.Ekle("Yedekle_Tümü " + Yedekleme_Tümü_Çalışıyor + " " + Yedekleme_EnAz1Kez_Değişiklikler_Kaydedildi);
+
+            if (Yedekleme_Tümü_Çalışıyor || !Yedekleme_EnAz1Kez_Değişiklikler_Kaydedildi) return false;
             Yedekleme_Tümü_Çalışıyor = true;
             Yedekleme_Hatalar = null;
+            bool yedekle = false;
 
             _Yedekle_();
+            return yedekle;
 
             //System.Threading.Tasks.Task.Run(() =>
             //{
@@ -1699,7 +1700,6 @@ namespace Gelir_Gider_Takip
                     ydk_ler.Dosya_Sil_SayısınaGöre(15);
                     ydk_ler.Güncelle();
 
-                    bool yedekle = false;
                     if (ydk_ler.Dosyalar.Count == 0) yedekle = true;
                     else
                     {
@@ -1731,21 +1731,21 @@ namespace Gelir_Gider_Takip
                         SıkıştırılmışDosya.Klasörden(k, h);
                     }
 
-                    if (Kullanıcı_Klasör_Yedek.Length > 0)
-                    {
-                        for (int i = 0; i < Kullanıcı_Klasör_Yedek.Length; i++)
-                        {
-                            if (string.IsNullOrEmpty(Kullanıcı_Klasör_Yedek[i])) continue;
+                    //if (Kullanıcı_Klasör_Yedek.Length > 0)
+                    //{
+                    //    for (int i = 0; i < Kullanıcı_Klasör_Yedek.Length; i++)
+                    //    {
+                    //        if (string.IsNullOrEmpty(Kullanıcı_Klasör_Yedek[i])) continue;
 
-                            bool sonuç = true;
-                            sonuç &= Ortak.Klasör_TamKopya(Ortak.Klasör_Banka, Kullanıcı_Klasör_Yedek[i] + "Banka");
-                            sonuç &= Ortak.Klasör_TamKopya(Ortak.Klasör_KullanıcıDosyaları, Kullanıcı_Klasör_Yedek[i] + "Kullanıcı Dosyaları");
-                            sonuç &= Ortak.Klasör_TamKopya(Ortak.Klasör_İçYedek, Kullanıcı_Klasör_Yedek[i] + "Yedek", false);
-                            sonuç &= Dosya.Kopyala(Kendi.DosyaYolu, Kullanıcı_Klasör_Yedek[i] + Kendi.DosyaAdı);
+                    //        bool sonuç = true;
+                    //        sonuç &= Ortak.Klasör_TamKopya(Ortak.Klasör_Banka, Kullanıcı_Klasör_Yedek[i] + "Banka");
+                    //        sonuç &= Ortak.Klasör_TamKopya(Ortak.Klasör_KullanıcıDosyaları, Kullanıcı_Klasör_Yedek[i] + "Kullanıcı Dosyaları");
+                    //        sonuç &= Ortak.Klasör_TamKopya(Ortak.Klasör_İçYedek, Kullanıcı_Klasör_Yedek[i] + "Yedek", false);
+                    //        sonuç &= Dosya.Kopyala(Kendi.DosyaYolu, Kullanıcı_Klasör_Yedek[i] + Kendi.DosyaAdı);
 
-                            if (!sonuç) Yedekleme_Hatalar += ("Yedek no : " + (i + 1) + " yedekleme başarısız").Günlük() + Environment.NewLine;
-                        }
-                    }
+                    //        if (!sonuç) Yedekleme_Hatalar += ("Yedek no : " + (i + 1) + " yedekleme başarısız").Günlük() + Environment.NewLine;
+                    //    }
+                    //}
 
                     Yedekleme_EnAz1Kez_Değişiklikler_Kaydedildi = false;
                 }

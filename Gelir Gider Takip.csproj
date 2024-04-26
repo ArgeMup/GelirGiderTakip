@@ -31,16 +31,46 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="HazirKod_Cdiyez\Ekranlar\Kullanıcılar2.cs" />
-    <Compile Remove="HazirKod_Cdiyez\Ekranlar\Kullanıcılar2.designer.cs" />
+    <Compile Remove="HazirKod_Cdiyez\Ekranlar\**" />
+    <EmbeddedResource Remove="HazirKod_Cdiyez\Ekranlar\**" />
+    <None Remove="HazirKod_Cdiyez\Ekranlar\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="HazirKod_Cdiyez\Ekranlar\Kullanıcılar2.resx" />
+    <Compile Remove="HazirKod_Cdiyez\Ayarlar.cs" />
+    <Compile Remove="HazirKod_Cdiyez\Deneysel.cs" />
+    <Compile Remove="HazirKod_Cdiyez\DonanımHaberleşmesi_SeriPort.cs" />
+    <Compile Remove="HazirKod_Cdiyez\DurumBildirimi.cs" />
+    <Compile Remove="HazirKod_Cdiyez\KayitDefteri.cs" />
+    <Compile Remove="HazirKod_Cdiyez\KelimeTamamlayici.cs" />
+    <Compile Remove="HazirKod_Cdiyez\KlavyeFareGozlemcisi.cs" />
+    <Compile Remove="HazirKod_Cdiyez\KodKümesi.cs" />
+    <Compile Remove="HazirKod_Cdiyez\PencereVeTepsiIkonuKontrolu.cs" />
+    <Compile Remove="HazirKod_Cdiyez\UygulamaBostaBekliyor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".gitignore" />
+    <None Remove=".gitmodules" />
+    <None Remove="HazirKod_Cdiyez\.git" />
+    <None Remove="LICENSE" />
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="HazirKod_Cdiyez\Ekranlar\Kullanıcılar.cs" />
+    <Compile Include="HazirKod_Cdiyez\Ekranlar\Kullanıcılar.Designer.cs" />
+    <Compile Include="HazirKod_Cdiyez\Ekranlar\ListeKutusu.cs" />
+    <Compile Include="HazirKod_Cdiyez\Ekranlar\ListeKutusu.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\ico.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="HazirKod_Cdiyez\Ekranlar\Kullanıcılar.resx" />
+    <EmbeddedResource Include="HazirKod_Cdiyez\Ekranlar\ListeKutusu.resx" />
   </ItemGroup>
 
   <ItemGroup>

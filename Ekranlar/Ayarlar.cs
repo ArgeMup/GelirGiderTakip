@@ -9,7 +9,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         {
             InitializeComponent();
 
-            Kullanıcılar.Visible = AnaKontrolcü.İlkAçılışAyarları == null;
+            Kullanıcılar.Visible = !AnaKontrolcü.YanUygulamaOlarakÇalışıyor;
         }
         private void Ayarlar_KeyPress(object sender, KeyPressEventArgs e)
         {
