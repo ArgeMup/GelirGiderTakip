@@ -111,7 +111,7 @@ namespace Gelir_Gider_Takip
                 Günlük.Ekle("Banka yeni sürüme geçirme aşama 4 tamam");
             }
 
-            AyarlarDosyaYolu.DosyaYolu_Yaz(AyarlarDosyaYolu_İçeriği);
+            Dosya.Yaz(AyarlarDosyaYolu, AyarlarDosyaYolu_İçeriği);
             DoğrulamaKodu.Üret.Klasörden(Ortak.Klasör_Banka, true, SearchOption.AllDirectories, Mevcut_KökParola);
             Günlük.Ekle("Banka yeni sürüme geçirme aşama 5 tamam");
         }
@@ -306,105 +306,6 @@ namespace Gelir_Gider_Takip
             Klasör.Oluştur(Ortak.Klasör_Gecici);
 
             Banka_Ortak.Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar();
-
-            //sürüm geçişi sonrası silinecek
-            if (!File.Exists(Ortak.Klasör_Banka + @"ArgeMup.HazirKod_Cdiyez.Ekranlar.Kullanıcılar.Ayarlar") && Klasör.Listele_Dosya(Ortak.Klasör_Banka).Length > 0)
-            {
-                DoğrulamaKodu.KontrolEt.Durum_ snç = DoğrulamaKodu.KontrolEt.Klasör(Ortak.Klasör_Banka, SearchOption.AllDirectories, KökParola);
-                ("Bütünlük Kontrolü Sürüm Geçişi " + snç).Günlük();
-                if (snç != DoğrulamaKodu.KontrolEt.Durum_.Aynı) throw new Exception("Bütünlük Kontrolü Sürüm Geçişi " + snç);
-
-                //yeni sürüme geçirme
-                Banka_Ortak.Yedekle_SürümYükseltmeÖncesiYedeği();
-                Günlük.Ekle("Banka yeni sürüme geçirme aşama 1 tamam");
-
-                DahaCokKarmasiklastirma_ DaÇoKa = new DahaCokKarmasiklastirma_();
-                foreach (string DosyaYolu in Directory.GetFiles(Ortak.Klasör_Banka, "*.mup", SearchOption.AllDirectories))
-                {
-                    _Düzelt_Aç_(DosyaYolu);
-                }
-                Günlük.Ekle("Banka yeni sürüme geçirme aşama 2 tamam");
-                void _Düzelt_Aç_(string _DosyaYolu_)
-                {
-                    byte[] _İçerik_ = _DosyaYolu_.DosyaYolu_Oku_BaytDizisi();
-                    if (_İçerik_ == null || _İçerik_.Length == 0) throw new Exception("_İçerik_ == null || _İçerik_.Length == 0");
-
-                    //Şifre çözme
-                    byte[] _çıktı_ = DaÇoKa.Düzelt(_İçerik_, KökParola_Dizi);
-
-                    //Ara dosya
-                    string Gecici_zip_dosyası = Path.GetRandomFileName();
-                    while (File.Exists(Ortak.Klasör_Gecici + Gecici_zip_dosyası)) Gecici_zip_dosyası = Path.GetRandomFileName();
-                    Gecici_zip_dosyası = Ortak.Klasör_Gecici + Gecici_zip_dosyası;
-                    File.WriteAllBytes(Gecici_zip_dosyası, _çıktı_);
-                    _çıktı_ = null;
-
-                    //Açma
-                    using (System.IO.Compression.ZipArchive Arşiv = System.IO.Compression.ZipFile.OpenRead(Gecici_zip_dosyası))
-                    {
-                        byte[] dizi_içerik = null, dizi_doko = null;
-
-                        System.IO.Compression.ZipArchiveEntry Biri = Arşiv.GetEntry("doko");
-                        if (Biri != null)
-                        {
-                            using (Stream Akış = Biri.Open())
-                            {
-                                dizi_doko = new byte[Biri.Length];
-                                Akış.ReadExactly(dizi_doko, 0, (int)Biri.Length); //ReadExactly
-                            }
-                        }
-
-                        if (dizi_doko != null && dizi_doko.Length > 0)
-                        {
-                            string doko = dizi_doko.Yazıya();
-                            string[] bölünmüş = doko.Split(';');
-                            if (bölünmüş.Length == 2)
-                            {
-                                string tarih_saat = bölünmüş[0];
-                                doko = bölünmüş[1];
-                                if (!string.IsNullOrEmpty(doko))
-                                {
-                                    Biri = Arşiv.GetEntry(tarih_saat);
-                                    if (Biri != null)
-                                    {
-                                        using (Stream Akış = Biri.Open())
-                                        {
-                                            dizi_içerik = new byte[Biri.Length];
-                                            Akış.ReadExactly(dizi_içerik, 0, (int)Biri.Length);
-                                        }
-                                    }
-
-                                    if (dizi_içerik != null && dizi_içerik.Length > 0)
-                                    {
-                                        if (doko == DoğrulamaKodu.Üret.BaytDizisinden(dizi_içerik).HexYazıya())
-                                        {
-                                            _çıktı_ = dizi_içerik;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Dosya.Sil(Gecici_zip_dosyası);
-
-                    if (_çıktı_ == null || _çıktı_.Length == 0) throw new Exception(_DosyaYolu_ + " dosyası arızalı");
-
-                    //depo sürüm yükseltme
-                    _çıktı_ = new Depo_(_çıktı_.Yazıya()).YazıyaDönüştür().BaytDizisine();
-
-                    if (Şube_Talep != null) _çıktı_ = Banka_Ortak.Dosya_SıkıştırKarıştır(_çıktı_, Şube_Talep.İşyeri_Parolası.BaytDizisine());
-                    File.WriteAllBytes(_DosyaYolu_, _çıktı_);
-                }
-
-                //Yeni kul dosyasının oluşturulması
-                (Ortak.Klasör_Banka + @"ArgeMup.HazirKod_Cdiyez.Ekranlar.Kullanıcılar.Ayarlar").DosyaYolu_Yaz(" ");
-                //Doko üretilmesi
-                DoğrulamaKodu.Üret.Klasörden(Ortak.Klasör_Banka, true, SearchOption.AllDirectories, Şube_Talep == null ? null : Şube_Talep.İşyeri_Parolası);
-                Günlük.Ekle("Banka yeni sürüme geçirme aşama 7 tamam");
-
-                Banka_Ortak.Yedekle_SürümYükseltmeÖncesiYedeği_Sil();
-                Günlük.Ekle("Banka yeni sürüme geçirme aşama 8 tamam");
-            }
 
             List<Enum> İzinler = new List<Enum>();
             for (int i = 0; i < (int)Kullanıcılar_İzin.DiziElemanSayısı_; i++) İzinler.Add(((Kullanıcılar_İzin)i));

@@ -318,7 +318,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             if (DosyaAdı != null)
             {
-                Klasör.Oluştur(Path.GetDirectoryName(DosyaAdı));
+                Klasör.Oluştur(Dosya.Klasörü(DosyaAdı));
                 pd.PrinterSettings.PrintFileName = DosyaAdı;
             }
             else

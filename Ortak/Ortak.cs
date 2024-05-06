@@ -49,7 +49,11 @@ namespace Gelir_Gider_Takip
                     {
                         if (Klasör.Kopyala(Kaynak, Hedef, true, DoğrulamaKodunuKontrolEt_Yavaşlatır, AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel: AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel)) return true;
                     }
-                    else if (Klasör.Sil(Hedef)) return true;
+                    else
+                    {
+                        Klasör.Sil(Hedef);
+                        return true;
+                    }
                 }
                 catch (Exception ex) { ex.Günlük(); }
 
@@ -146,7 +150,7 @@ namespace Gelir_Gider_Takip
                         try
                         {
                             System.Xml.XmlDocument xmlVerisi = new System.Xml.XmlDocument();
-                            xmlVerisi.LoadXml(Dosya_TCMB.DosyaYolu_Oku_Yazı());
+                            xmlVerisi.LoadXml(Dosya.Oku_Yazı(Dosya_TCMB));
 
                             string Tarih = xmlVerisi.SelectSingleNode("Tarih_Date").Attributes["Tarih"].InnerText;
                             string dolar = xmlVerisi.SelectSingleNode(string.Format("Tarih_Date/Currency[@Kod='{0}']/BanknoteSelling", "USD")).InnerText;
@@ -167,7 +171,7 @@ namespace Gelir_Gider_Takip
                     {
                         try
                         {
-                            string içerik = Dosya_GenelPara.DosyaYolu_Oku_Yazı();
+                            string içerik = Dosya.Oku_Yazı(Dosya_GenelPara);
                             string dolar = _Al_(içerik, @"""USD"":{""satis"":""", @"""");
                             string avro = _Al_(içerik, @"""EUR"":{""satis"":""", @"""");
 

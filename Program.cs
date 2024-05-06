@@ -34,6 +34,7 @@ namespace Gelir_Gider_Takip
             ApplicationConfiguration.Initialize();
 
 #if DEBUG
+            Günlük.GenelSeviye = Günlük.Seviye.HazirKod;
             //BaşlangıçParametreleri = new string[] { "5555" };
 #endif
             if (BaşlangıçParametreleri == null || BaşlangıçParametreleri.Length != 1 || !int.TryParse(BaşlangıçParametreleri[0], out int ŞubeErişimNoktası)) ŞubeErişimNoktası = 0;

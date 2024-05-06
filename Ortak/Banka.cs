@@ -129,7 +129,7 @@ namespace Gelir_Gider_Takip
         public void İşyeri_Sil(string Adı)
         {
             string kls = Ortak.Klasör_Banka + İşyerleri[Adı].GöbekAdı;
-            if (!Klasör.Sil(kls)) throw new System.Exception("Klasör silinemedi " + kls);
+            Klasör.Sil(kls);
 
             İşyerleri.Remove(Adı);
         }
@@ -207,7 +207,7 @@ namespace Gelir_Gider_Takip
                 foreach (string GöbekAdı in MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[Adı].Values)
                 {
                     string kls = İşyeri_Klasörü + "Mu\\" + GöbekAdı;
-                    if (!Klasör.Sil(kls)) throw new System.Exception("Klasör silinemedi " + kls);
+                    Klasör.Sil(kls);
                 }
 
                 MuhatapGrubuAdı_MuhatapAdı_GöbekAdı.Remove(Adı);
@@ -239,7 +239,7 @@ namespace Gelir_Gider_Takip
             {
                 string GöbekAdı = Banka_Ortak.YeniKlasörAdıOluştur(İşyeri_Klasörü + "Mu");
                 string kls = İşyeri_Klasörü + "Mu\\" + GöbekAdı;
-                if (!Klasör.Oluştur(kls)) throw new System.Exception("Klasör oluşturulamadı " + kls);
+                Klasör.Oluştur(kls);
 
                 MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı].Add(MuhatapAdı, GöbekAdı);
                 
@@ -301,7 +301,7 @@ namespace Gelir_Gider_Takip
                 if (muhatap != null)
                 {
                     string kls = İşyeri_Klasörü + "Mu\\" + muhatap.MuhatapGöbekAdı;
-                    if (!Klasör.Sil(kls)) throw new System.Exception("Klasör silinemedi " + kls);
+                    Klasör.Sil(kls);
 
                     MuhatapGrubuAdı_MuhatapAdı_GöbekAdı[GrupAdı].Remove(MuhatapAdı);
                 }
@@ -1422,7 +1422,6 @@ namespace Gelir_Gider_Takip
         }
 
         //epo + Sıkıştırma + Şifreleme
-        static DahaCokKarmasiklastirma_ DaÇoKa = new DahaCokKarmasiklastirma_();
         public static Değişken_ Değişken = new Değişken_() { Filtre_BoşVeyaVarsayılanDeğerdeİse_HariçTut = true };
         public interface IBanka_Tanımlayıcı_ { string SınıfAdı { get; set; } }
 
@@ -1494,7 +1493,7 @@ namespace Gelir_Gider_Takip
             byte[] çıktı = Dosya_SıkıştırKarıştır(içerik.BaytDizisine());
             DosyaYolu = Ortak.Klasör_Banka + DosyaYolu + ".mup";
             string yedek_dosya_yolu = DosyaYolu + ".yedek";
-            Klasör.Oluştur(Path.GetDirectoryName(DosyaYolu));
+            Klasör.Oluştur(Dosya.Klasörü(DosyaYolu));
 
             if (!File.Exists(yedek_dosya_yolu) && File.Exists(DosyaYolu)) File.Move(DosyaYolu, yedek_dosya_yolu);
 
@@ -1536,7 +1535,7 @@ namespace Gelir_Gider_Takip
             }
 
             //Şifreleme
-            byte[] çıktı = DaÇoKa.Karıştır(File.ReadAllBytes(Gecici_zip_dosyası), Parola);
+            byte[] çıktı = DahaCokKarmasiklastirma.Karıştır(File.ReadAllBytes(Gecici_zip_dosyası), Parola);
             Dosya.Sil(Gecici_zip_dosyası);
 
             return çıktı;
@@ -1547,7 +1546,7 @@ namespace Gelir_Gider_Takip
             if (İçerik == null || İçerik.Length == 0 || Parola == null) return İçerik;
 
             //Şifre çözme
-            byte[] çıktı = DaÇoKa.Düzelt(İçerik, Parola);
+            byte[] çıktı = DahaCokKarmasiklastirma.Düzelt(İçerik, Parola);
 
             //Ara dosya
             string Gecici_zip_dosyası = Path.GetRandomFileName();
@@ -1803,7 +1802,7 @@ namespace Gelir_Gider_Takip
             string dsy_ydk_gecici = Ortak.Klasör_Gecici + Rastgele.Yazı() + "\\SürümYükseltmeÖncesiYedeği.zip";
             SıkıştırılmışDosya.Klasörden(birarada, dsy_ydk_gecici);
 
-            Dosya.Kopyala(dsy_ydk_gecici, dsy_ydk); 
+            Dosya.Kopyala(dsy_ydk_gecici, dsy_ydk);
             Dosya.Sil(Ortak.Klasör_Banka + DoğrulamaKodu.DoğrulamaKodu_DosyaAdı);
 
             Günlük.Ekle("Yedekle_SürümYükseltmeÖncesiYedeği");
@@ -1811,7 +1810,7 @@ namespace Gelir_Gider_Takip
         public static void Yedekle_SürümYükseltmeÖncesiYedeği_Sil()
         {
             string dsy_ydk = Klasör.ÜstKlasör(Ortak.Klasör_Banka) + "\\SürümYükseltmeÖncesiYedeği.zip";
-            if (!Dosya.Sil(dsy_ydk)) throw new Exception("!Dosya.Sil(dsy_ydk)");
+            Dosya.Sil(dsy_ydk);
             Günlük.Ekle("Yedekle_SürümYükseltmeÖncesiYedeği_Sil");
         }
         public static bool Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar()
@@ -1825,7 +1824,7 @@ namespace Gelir_Gider_Takip
             if (!Ortak.Klasör_TamKopya(kls_ydk_gecici + "\\Banka", Ortak.Klasör_Banka, AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel: true)) throw new Exception("Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar Banka");
             if (!Ortak.Klasör_TamKopya(kls_ydk_gecici + "\\Banka2", Ortak.Klasör_Banka2, true, AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel: true)) throw new Exception("Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar Banka2");
             if (!Ortak.Klasör_TamKopya(kls_ydk_gecici + "\\Kullanıcı Dosyaları", Ortak.Klasör_KullanıcıDosyaları, true, AynıDoğrulamaKodunaSahipİse_DiğerFarklılıklarıGörmezdenGel: true)) throw new Exception("Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar Kullanıcı Dosyaları");
-            if (!Dosya.Sil(dsy_ydk)) throw new Exception("Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar dsy_ydk");
+            Dosya.Sil(dsy_ydk);
 
             Günlük.Ekle("Yedekle_SürümYükseltmeÖncesiYedeği_Kurtar");
             return true;
