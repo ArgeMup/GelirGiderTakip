@@ -1231,7 +1231,7 @@ namespace Gelir_Gider_Takip
             else return ((gün_olarak > 0 ? gün_olarak + " gün " : null) + (saat_olarak > 0 ? saat_olarak + " saat" : null)).TrimEnd();
         }
         static int[] Yazdır_Ücret_EnGenişÜcretKarakterSayısı = null;
-        static string Yazdır_Ücret_Şablon = "{0:#,#.0;-#,#.0;0}";
+        static string Yazdır_Ücret_Şablon = "{0:#,0.0;-#,0.0;0}";
         public static string Yazdır_Ücret(double Ücret, Banka1.İşyeri_Ödeme_.ParaBirimi_ ParaBirimi, bool SondakiSıfırlarıSil = true, bool EşitGenişlikte = false)
         {
             string çıktı = string.Format(Yazdır_Ücret_Şablon, Ücret);

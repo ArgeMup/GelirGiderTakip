@@ -20,11 +20,6 @@ namespace Gelir_Gider_Takip
             {
                 return ArgeMup.HazirKod.Ekranlar.Kullanıcılar.KökParola;
             }
-            set
-            {
-                ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.KökParola = value;
-                ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.KökParola_Dizi = value.BaytDizisine();
-            }
         }
         public static byte[] KökParola_Dizi
         {
@@ -38,10 +33,6 @@ namespace Gelir_Gider_Takip
             get
             {
                 return ArgeMup.HazirKod.Ekranlar.Kullanıcılar.ParolaKontrolüGerekiyorMu;
-            }
-            set
-            {
-                ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.ParolaKontrolüGerekiyorMu = value;
             }
         }
         public static string KullanıcıAdı
@@ -76,6 +67,28 @@ namespace Gelir_Gider_Takip
             {
                 Şube = new YanUygulama.Şube_(ŞubeErişimNoktası, GeriBildirim_İşlemi_Uygulama);
                 Kilit = new System.Threading.Mutex();
+
+#if DEBUG
+                ArgeMup.HazirKod.ArkaPlan.Hatırlatıcı_ h = new ArgeMup.HazirKod.ArkaPlan.Hatırlatıcı_();
+                h.Ekle("a", DateTime.Now.AddSeconds(1), null, _h_işlem_);
+                int _h_işlem_(string Adı, object Hatırlatıcı)
+                {
+                    try
+                    {
+                        BoştaBekleyenAnaUygulama.Invoke(new Action(() =>
+                        {
+                            GeriBildirim_İşlemi_Uygulama(true, new Depo_(Dosya.Oku_Yazı("Komut.mup"), null, false).YazıyaDönüştür().BaytDizisine(), null);
+                        }));
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.Günlük(null, Günlük.Seviye.HazirKod);
+                    }
+                    
+                    Application.Exit();
+                    return -1;
+                }
+#endif
             }
             else
             {
@@ -97,7 +110,7 @@ namespace Gelir_Gider_Takip
                 bool _Mevcut_KökParola_VarMı_ = Mevcut_KökParola.DoluMu(true);
                 byte[] _Mevcut_KökParola_ = _Mevcut_KökParola_VarMı_ ? Mevcut_KökParola.BaytDizisine_HexYazıdan() : null;
                 bool _Eski_KökParola_VarMı_ = Eski_KökParola.DoluMu(true);
-                byte[] _Eski_KökParola_ = _Eski_KökParola_VarMı_ ? Eski_KökParola.BaytDizisine_HexYazıdan() : null;
+                byte[] _Eski_KökParola_ = _Eski_KökParola_VarMı_ ? Eski_KökParola.Length == 64 ? /*yeni*/ArgeMup.HazirKod.Dönüştürme.D_HexYazı.BaytDizisine(Eski_KökParola) : /*eski*/ArgeMup.HazirKod.Dönüştürme.D_Yazı.BaytDizisine(Eski_KökParola) : null;
                 foreach (string dsy in dsy_lar)
                 {
                     byte[] içerik = File.ReadAllBytes(dsy);
@@ -111,9 +124,9 @@ namespace Gelir_Gider_Takip
                 Günlük.Ekle("Banka yeni sürüme geçirme aşama 4 tamam");
             }
 
-            Dosya.Yaz(AyarlarDosyaYolu, AyarlarDosyaYolu_İçeriği);
+            if (!YanUygulamaOlarakÇalışıyor) Dosya.Yaz(AyarlarDosyaYolu, AyarlarDosyaYolu_İçeriği);
             DoğrulamaKodu.Üret.Klasörden(Ortak.Klasör_Banka, true, SearchOption.AllDirectories, Mevcut_KökParola);
-            Günlük.Ekle("Banka yeni sürüme geçirme aşama 5 tamam");
+            Günlük.Ekle("Banka yeni sürüme geçirme aşama son tamam");
         }
         static void GeriBildirim_İşlemi_Uygulama(bool BağlantıKuruldu, byte[] Bilgi, string Açıklama)
         {
@@ -142,7 +155,13 @@ namespace Gelir_Gider_Takip
 
                 Cevap.Benzersiz_Tanımlayıcı = Şube_Talep.Benzersiz_Tanımlayıcı;
 
-                if (!İlkAçılışKontrolleriYapıldı) İlkAçılışKontrolleriniYap();
+                if (!İlkAçılışKontrolleriYapıldı) 
+                { 
+                    İlkAçılışKontrolleriniYap(); 
+                    Banka_Ortak.Başlat();
+
+                    İlkAçılışKontrolleriYapıldı = true;
+                }
 
                 ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.GeçerliKullanıcı.Adı = Şube_Talep.Kullanıcı_Adı;
                 ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.GeçerliKullanıcı.Rol_İzinleri = Şube_Talep.Kullanıcı_Rolİzinleri;
@@ -236,6 +255,28 @@ namespace Gelir_Gider_Takip
                         else Cevap.Detaylar = new string[] { "if (Şube_Talep.Kullanıcı_Komut_EkTanım != null && Şube_Talep.Kullanıcı_Komut_EkTanım.Length == 3)" };
                         break;
 
+                    case Şube_Talep_Komut_.İşyeriParolasınıDeğiştir:
+                        string yok = "_YOK_";
+                        if (Şube_Talep.Kullanıcı_Komut_EkTanım == null || Şube_Talep.Kullanıcı_Komut_EkTanım.Length != 4 ||
+                            Şube_Talep.Kullanıcı_Komut_EkTanım[0].BoşMu(true) || Şube_Talep.Kullanıcı_Komut_EkTanım[1].BoşMu(true) ||
+                            Şube_Talep.Kullanıcı_Komut_EkTanım[0] != Şube_Talep.Kullanıcı_Komut_EkTanım[2] ||
+                            Şube_Talep.Kullanıcı_Komut_EkTanım[1] != Şube_Talep.Kullanıcı_Komut_EkTanım[3] ||
+                            (KökParola.DoluMu(true) ? KökParola != Şube_Talep.Kullanıcı_Komut_EkTanım[0] : Şube_Talep.Kullanıcı_Komut_EkTanım[0] != yok))
+                        {
+                            Cevap.Detaylar = new string[] { "Girdileri kontrol ediniz" };
+                        }
+                        else
+                        {
+                            string mevcut_parola = Şube_Talep.Kullanıcı_Komut_EkTanım[0] == yok ? null : Şube_Talep.Kullanıcı_Komut_EkTanım[0];
+                            string yeni_parola = Şube_Talep.Kullanıcı_Komut_EkTanım[1] == yok ? null : Şube_Talep.Kullanıcı_Komut_EkTanım[1];
+                            GeriBildirimİşlemi_Önyüz_Ayarlar_Değişti(null, null, yeni_parola, mevcut_parola);
+                            Cevap.Başarılı = true;
+
+                            //Bu noktadan sonra yeni işlem yapmadan önce yeniden başlatılmalı
+                            ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_ = null;
+                        }
+                        break;
+
                     default: throw new Exception("Şube_Talep.Kullanıcı_Komut (" + Şube_Talep.Kullanıcı_Komut + ")");
                 }
 
@@ -273,8 +314,6 @@ namespace Gelir_Gider_Takip
         static void İlkAçılışKontrolleriniYap()
         {
             string AnaKlasör = null;
-            ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_ = new ArgeMup.HazirKod.Ekranlar.Kullanıcılar.Ayarlar_Üst_();
-            KökParola = 7578575578 + " 9985853 ArGeMuP " + 6 + " Gelir ŞemsiPaşa " + 587383678757 + " Gider " + 4 + "Pasajı " + 8689686868 + " Takip Uygulaması 55558368387 " + 29719542172;
 
             if (YanUygulamaOlarakÇalışıyor)
             {
@@ -284,9 +323,6 @@ namespace Gelir_Gider_Takip
                 AnaKlasör = Şube_Talep.KayıtKlasörü.TrimEnd('\\');
 
                 if (Şube_Talep.İşyeri_LogoDosyaYolu.DoluMu() && File.Exists(Şube_Talep.İşyeri_LogoDosyaYolu)) Ortak.Firma_Logo = new Bitmap(Şube_Talep.İşyeri_LogoDosyaYolu);
-
-                //Üst uygulamanın parolasını kullan
-                KökParola += Şube_Talep.İşyeri_Parolası;
             }
             else
             {
@@ -314,33 +350,33 @@ namespace Gelir_Gider_Takip
             if (YanUygulamaOlarakÇalışıyor)
             {
                 ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.GeçerliKullanıcı = new ArgeMup.HazirKod.Ekranlar.Kullanıcılar.Ayarlar_Üst_.Ayarlar_Kullanıcı_();
-                KökParola = Şube_Talep.İşyeri_Parolası;
-                ParolaKontrolüGerekiyorMu = true;
+                ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.KökParola = Şube_Talep.İşyeri_Parolası == "_YOK_" ? null : Şube_Talep.İşyeri_Parolası;
+                ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.KökParola_Dizi = Şube_Talep.İşyeri_Parolası == "_YOK_" ? null : Şube_Talep.İşyeri_Parolası.Length == 64 ? /*yeni*/ArgeMup.HazirKod.Dönüştürme.D_HexYazı.BaytDizisine(Şube_Talep.İşyeri_Parolası) : /*eski*/ArgeMup.HazirKod.Dönüştürme.D_Yazı.BaytDizisine(Şube_Talep.İşyeri_Parolası);
+                ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.ParolaKontrolüGerekiyorMu = true;
+                Ekranlar.Önyüz.SürümKontrolMesajı = null;
             }
-
-            Banka_Ortak.Başlat();
-
-#if !DEBUG
-            if (!File.Exists(Ortak.Klasör_KullanıcıDosyaları + "YeniSurumuKontrolEtme.txt"))
+            else
             {
-                Ortak.YeniYazılımKontrolü = new YeniYazılımKontrolü_();
-                Ortak.YeniYazılımKontrolü.Başlat(new Uri("https://github.com/ArgeMup/GelirGiderTakip/blob/main/bin/Yay%C4%B1nla/Gelir%20Gider%20Takip.exe?raw=true"), _YeniYazılımKontrolü_GeriBildirim_);
-
-                void _YeniYazılımKontrolü_GeriBildirim_(bool Sonuç, string Açıklama)
-                {
-                    if (Açıklama.Contains("github")) Ekranlar.Önyüz.SürümKontrolMesajı = "Bağlantı kurulamadı";
-                    else if (Açıklama == "Durduruldu") return;
-                    else Ekranlar.Önyüz.SürümKontrolMesajı = Açıklama;
-
-                    Ekranlar.Önyüz.AnaEkran?.Invoke(new Action(() =>
+                #if !DEBUG
+                    if (!File.Exists(Ortak.Klasör_KullanıcıDosyaları + "YeniSurumuKontrolEtme.txt"))
                     {
-                        Ekranlar.Önyüz.AnaEkran.Text = Ekranlar.Önyüz.AnaEkran.Text.Replace("Yeni sürüm kontrol ediliyor", Ekranlar.Önyüz.SürümKontrolMesajı);
-                    }));
-                }
-            }
-#endif
+                        Ortak.YeniYazılımKontrolü = new YeniYazılımKontrolü_();
+                        Ortak.YeniYazılımKontrolü.Başlat(new Uri("https://github.com/ArgeMup/GelirGiderTakip/blob/main/bin/Yay%C4%B1nla/Gelir%20Gider%20Takip.exe?raw=true"), _YeniYazılımKontrolü_GeriBildirim_);
 
-            İlkAçılışKontrolleriYapıldı = true;
+                        void _YeniYazılımKontrolü_GeriBildirim_(bool Sonuç, string Açıklama)
+                        {
+                            if (Açıklama.Contains("github")) Ekranlar.Önyüz.SürümKontrolMesajı = "Bağlantı kurulamadı";
+                            else if (Açıklama == "Durduruldu") return;
+                            else Ekranlar.Önyüz.SürümKontrolMesajı = Açıklama;
+
+                            Ekranlar.Önyüz.AnaEkran?.Invoke(new Action(() =>
+                            {
+                                Ekranlar.Önyüz.AnaEkran.Text = Ekranlar.Önyüz.AnaEkran.Text.Replace("Yeni sürüm kontrol ediliyor", Ekranlar.Önyüz.SürümKontrolMesajı);
+                            }));
+                        }
+                    }
+                #endif
+            }
         }
 
         public static void GirişYap(bool Küçültülmüş)
@@ -353,6 +389,13 @@ namespace Gelir_Gider_Takip
                 switch (GirişİşlemiSonucu)
                 {
                     case ArgeMup.HazirKod.Ekranlar.Kullanıcılar.GirişİşlemiSonucu_.Başarılı:
+                        if (!İlkAçılışKontrolleriYapıldı)
+                        {
+                            Banka_Ortak.Başlat();
+
+                            İlkAçılışKontrolleriYapıldı = true;
+                        }
+
                         new Ekranlar.AnaEkran().Show();
                         break;
 
@@ -406,12 +449,15 @@ namespace Gelir_Gider_Takip
             [Değişken_.Niteliği.Adını_Değiştir("KuR")] public bool[] Kullanıcı_Rolİzinleri = new bool[(int)Kullanıcılar_İzin.DiziElemanSayısı_];
             [Değişken_.Niteliği.Adını_Değiştir("Ku", 0)] public string Kullanıcı_Adı;
             [Değişken_.Niteliği.Adını_Değiştir("Ku", 1)] public Şube_Talep_Komut_ Kullanıcı_Komut;
-            [Değişken_.Niteliği.Adını_Değiştir("KuEt")] public string[] Kullanıcı_Komut_EkTanım;    //Yazdır                : pdf dosya yolu + Şablon Adı
-                                                                                                    //Sayfa_GelirGiderEkle  : Gelir veya Gider veya Boş
+            [Değişken_.Niteliği.Adını_Değiştir("KuEt")] public string[] Kullanıcı_Komut_EkTanım;    //Yazdır                    : pdf dosya yolu + Şablon Adı
+                                                                                                    //Sayfa_GelirGiderEkle      : Gelir veya Gider veya Boş
+                                                                                                    //İşyeriParolasınıDeğiştir  : Mevcut_Parola + Yeni_Parola + Mevcut_Parola + Yeni_Parola
+                                                                                                    //                              Parola kullanılmayacak ise içeriği _YOK_ olmalı,
+                                                                                                    //                              yada ArgeMup.HazirKod.Dönüştürme.D_HexYazı.BaytDizisinden( Rastgele.BaytDizisi(en az 32) ) ile üretilmeli
 
             [Değişken_.Niteliği.Adını_Değiştir("E GeGi")] public List<Şube_Talep_Ekle_GelirGider_> Ekle_GelirGider_Talepler;
         }
-        public enum Şube_Talep_Komut_ { Boşta, Sayfa_GelirGiderEkle, Sayfa_CariDöküm, Sayfa_Ayarlar, Ekle_GelirGider, Yazdır, Kontrol };
+        public enum Şube_Talep_Komut_ { Boşta, Sayfa_GelirGiderEkle, Sayfa_CariDöküm, Sayfa_Ayarlar, Ekle_GelirGider, Yazdır, Kontrol, İşyeriParolasınıDeğiştir };
         public class Şube_Talep_Ekle_GelirGider_
         {
             [Değişken_.Niteliği.Adını_Değiştir("T", 0)] public string Ekle_MuhatapGrubuAdı;

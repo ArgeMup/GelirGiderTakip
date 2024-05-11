@@ -14,7 +14,7 @@ namespace Gelir_Gider_Takip.Ekranlar
     public static class Önyüz
     {
         public static Form AnaEkran;
-        public static string SürümKontrolMesajı = "Yeni sürüm kontrol ediliyor";
+        public static string SürümKontrolMesajı = " Yeni sürüm kontrol ediliyor";
         static List<Form> Önyüzler = new List<Form>();
 
         public static void Aç(Form Önyüz)
@@ -32,7 +32,7 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Önyüzler.Add(Önyüz);
 
-            AnaEkran.Text = "ArGeMuP " + Kendi.Adı + " Kullanıcı : " + (AnaKontrolcü.KullanıcıAdı ?? "Giriş yapılmadı") + " " + SürümKontrolMesajı;
+            AnaEkran.Text = "ArGeMuP " + Kendi.Adı + " Kullanıcı : " + (AnaKontrolcü.KullanıcıAdı ?? "Giriş yapılmadı") + SürümKontrolMesajı;
 
             Günlük.Ekle("Yan uygulama açıldı " + Önyüz.Text);
         }

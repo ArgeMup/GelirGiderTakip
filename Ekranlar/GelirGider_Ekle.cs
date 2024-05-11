@@ -25,6 +25,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                 return Avans_peşinat_taksit_ve_üyelik_ekleyebilir && Avans.Enabled && Avans.Checked;
             }
         }
+        bool PeşinatMı
+        {
+            get
+            {
+                return Avans_peşinat_taksit_ve_üyelik_ekleyebilir && Peşinat.Enabled && PeşinatMiktarı.Value > 0;
+            }
+        }
         bool Avans_peşinat_taksit_ve_üyelik_ekleyebilir = AnaKontrolcü.İzinliMi(AnaKontrolcü.Kullanıcılar_İzin.Avans_peşinat_taksit_ve_üyelik_ekleyebilir);
 
         public GelirGider_Ekle(Banka1.Muhatap_ Muhatap = null, DateTime? ÜyelikKayıtTarihi = null)
@@ -202,7 +209,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 double Miktarı = (double)Miktar.Value;
                 DateTime tt = _başlangıç_;
 
-                if (Peşinat.Enabled && PeşinatMiktarı.Value > 0)
+                if (PeşinatMı)
                 {
                     Tablo.Rows.Add(new object[] { "Peşinat", Banka_Ortak.Yazdır_Tarih(tt.Yazıya()), Banka_Ortak.Yazdır_Ücret((double)PeşinatMiktarı.Value, parabirimi) });
                     tt = Banka_Ortak.SonrakiTarihiHesapla(tt, dönem_taksit, (int)Taksit_Dönem_Adet.Value);
@@ -230,7 +237,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                 return;
             }
 
-            if (Peşinat.Enabled)
+            if (PeşinatMı)
             {
                 if (PeşinatMiktarı.Value >= Miktar.Value)
                 {
