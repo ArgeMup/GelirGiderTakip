@@ -353,7 +353,7 @@ namespace Gelir_Gider_Takip
                 ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.KökParola = Şube_Talep.İşyeri_Parolası == "_YOK_" ? null : Şube_Talep.İşyeri_Parolası;
                 ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.KökParola_Dizi = Şube_Talep.İşyeri_Parolası == "_YOK_" ? null : Şube_Talep.İşyeri_Parolası.Length == 64 ? /*yeni*/ArgeMup.HazirKod.Dönüştürme.D_HexYazı.BaytDizisine(Şube_Talep.İşyeri_Parolası) : /*eski*/ArgeMup.HazirKod.Dönüştürme.D_Yazı.BaytDizisine(Şube_Talep.İşyeri_Parolası);
                 ArgeMup.HazirKod.Ekranlar.Kullanıcılar._Ayarlar_Üst_.ParolaKontrolüGerekiyorMu = true;
-                Ekranlar.Önyüz.SürümKontrolMesajı = null;
+                Ekranlar.Önyüz.SürümKontrolMesajı = " V" + Kendi.Sürümü_Dosya;
             }
             else
             {
@@ -365,9 +365,9 @@ namespace Gelir_Gider_Takip
 
                         void _YeniYazılımKontrolü_GeriBildirim_(bool Sonuç, string Açıklama)
                         {
-                            if (Açıklama.Contains("github")) Ekranlar.Önyüz.SürümKontrolMesajı = "Bağlantı kurulamadı";
+                            if (Açıklama.Contains("github")) Ekranlar.Önyüz.SürümKontrolMesajı = " Bağlantı kurulamadı";
                             else if (Açıklama == "Durduruldu") return;
-                            else Ekranlar.Önyüz.SürümKontrolMesajı = Açıklama;
+                            else Ekranlar.Önyüz.SürümKontrolMesajı = " " + Açıklama;
 
                             Ekranlar.Önyüz.AnaEkran?.Invoke(new Action(() =>
                             {
