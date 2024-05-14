@@ -308,7 +308,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             public bool YataydaOrtalanmış;
             public Ortalama_ Ortalama;
         }
-        public void Yazdır(DataGridView Tablo, string DosyaAdı = null, short KopyaSayısı = 1)
+        public void Yazdır(DataGridView Tablo, string DosyaAdı = null, string EkAçıklama = null, short KopyaSayısı = 1)
         {
             İşlemler_Bir_Sayfa_ Sayfa = null;
             PrintDocument pd = new PrintDocument();
@@ -366,7 +366,7 @@ namespace Gelir_Gider_Takip.Ekranlar
                     Sayfa.Yükseklik_YazılarİçinKullanılabilir = Sayfa.Yükseklik - (float)FirmaLogo_Yükseklik.Value - ev.Graphics.MeasureString("ŞÇÖĞ", Sayfa.Kakü_Kalın).Height /*Başlık*/;
                     if (Sayfa.Yükseklik_YazılarİçinKullanılabilir <= 0) throw new Exception("Yazıcının kullanılabilir sayfa yüksekliği uygun değil, farklı bir yazıcı seçiniz veya ayarları kontrol ediniz").Günlük();
 
-                    İşler_Yazdır_Hesaplat(Sayfa, Tablo, ev.Graphics);
+                    İşler_Yazdır_Hesaplat(Sayfa, Tablo, ev.Graphics, EkAçıklama);
                 }
 
                 float YazdırmaKonumu_Üst = Sayfa.Üst, YazdırmaKonumu_Yükseklik = Sayfa.Yükseklik;
@@ -536,7 +536,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             float YeniBoyut = KarakterKümesi.Size * Ölçek;
             return new Font(KarakterKümesi.FontFamily, YeniBoyut);
         }
-        void İşler_Yazdır_Hesaplat(İşlemler_Bir_Sayfa_ Sayfa, DataGridView Tablo, Graphics Grafik)
+        void İşler_Yazdır_Hesaplat(İşlemler_Bir_Sayfa_ Sayfa, DataGridView Tablo, Graphics Grafik, string EkAçıklama)
         {
             Sayfa.Başlık_Yüksekliği = Grafik.MeasureString("ÖÇŞĞ", Sayfa.Kakü_Kalın).Height;
             string KontrolNoktasıYazısı = Banka1.İşyeri_Ödeme_İşlem_.Tipi_.KontrolNoktası.Yazdır();
@@ -718,7 +718,7 @@ namespace Gelir_Gider_Takip.Ekranlar
             do
             {
                 Sayfa.Özet = new Bir_Yazı_();
-                Sayfa.Özet.Yazı = Banka_Ortak.Yazdır_Özet(null, null, false, true);
+                Sayfa.Özet.Yazı = Banka_Ortak.Yazdır_Özet(null, null, false, true) + (EkAçıklama != null ? Environment.NewLine + EkAçıklama : null);
 
                 s.Width = Sayfa.Genişlik;
                 Sayfa.Özet.Yükseklik = Grafik.MeasureString(Sayfa.Özet.Yazı, Sayfa.Kakü_KontrolNoktası, s).Height;

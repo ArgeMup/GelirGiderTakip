@@ -19,7 +19,7 @@ namespace Gelir_Gider_Takip
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
 
-            Günlük.Başlat(Kendi.Klasörü + "\\Günlük");
+            Günlük.Başlat(Kendi.Klasörü + "\\Günlük", TümDosyaların_KapladığıAlan_bayt: 5 * 1024 * 1024/*5Mib*/);
 
             UyÖnÇa = new UygulamaOncedenCalistirildiMi_();
             if (UyÖnÇa.KontrolEt())
