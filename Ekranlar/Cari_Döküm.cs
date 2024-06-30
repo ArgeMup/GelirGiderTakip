@@ -905,7 +905,6 @@ namespace Gelir_Gider_Takip.Ekranlar
                 foreach (DataGridViewRow satır in Öde_AvansÖdemesi_Tablo.Rows)
                 {
                     double satır_miktar = (double)satır.Cells[Öde_AvansÖdemesi_Tablo_Mikar.Index].Tag;
-                    if (satır_miktar == 0) continue;
                     Banka1.İşyeri_Ödeme_ satır_ödeme = satır.Tag as Banka1.İşyeri_Ödeme_;
 
                     switch (satır_ödeme.Tipi)
@@ -916,6 +915,8 @@ namespace Gelir_Gider_Takip.Ekranlar
                             break;
 
                         case Banka1.İşyeri_Ödeme_İşlem_.Tipi_.AvansÖdemesi:
+                            if (satır_miktar == 0) continue;
+
                             satır_ödeme.Öde(satır_miktar, satır_ödeme.ParaBirimi, satır_ödeme.Notlar, null, KayıtTarihi);
                             en_az_1_kayıt_yapıldı = true;
                             break;
