@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Gelir_Gider_Takip</RootNamespace>
     <Nullable>annotations</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -12,30 +11,25 @@
     <Configurations>Debug;Release;Yayınla</Configurations>
     <ApplicationIcon>Resources\ico.ico</ApplicationIcon>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>embedded</DebugType>
     <DefineConstants>$(DefineConstants);HazirKod_Cdiyez_Görsel;HazirKod_Cdiyez_Sıkıştırma</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>embedded</DebugType>
     <Optimize>False</Optimize>
     <DefineConstants>$(DefineConstants);HazirKod_Cdiyez_Görsel;HazirKod_Cdiyez_Sıkıştırma</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Yayınla|AnyCPU'">
     <DebugType>embedded</DebugType>
     <Optimize>True</Optimize>
     <DefineConstants>$(DefineConstants);HazirKod_Cdiyez_Görsel;HazirKod_Cdiyez_Sıkıştırma</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="HazirKod_Cdiyez\Ekranlar\**" />
     <EmbeddedResource Remove="HazirKod_Cdiyez\Ekranlar\**" />
     <None Remove="HazirKod_Cdiyez\Ekranlar\**" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Remove="HazirKod_Cdiyez\Ayarlar.cs" />
     <Compile Remove="HazirKod_Cdiyez\Deneysel.cs" />
@@ -48,7 +42,6 @@
     <Compile Remove="HazirKod_Cdiyez\PencereVeTepsiIkonuKontrolu.cs" />
     <Compile Remove="HazirKod_Cdiyez\UygulamaBostaBekliyor.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove=".gitmodules" />
@@ -56,23 +49,19 @@
     <None Remove="LICENSE" />
     <None Remove="README.md" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="HazirKod_Cdiyez\Ekranlar\Kullanıcılar.cs" />
     <Compile Include="HazirKod_Cdiyez\Ekranlar\Kullanıcılar.Designer.cs" />
     <Compile Include="HazirKod_Cdiyez\Ekranlar\ListeKutusu.cs" />
     <Compile Include="HazirKod_Cdiyez\Ekranlar\ListeKutusu.Designer.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Resources\ico.ico" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="HazirKod_Cdiyez\Ekranlar\Kullanıcılar.resx" />
     <EmbeddedResource Include="HazirKod_Cdiyez\Ekranlar\ListeKutusu.resx" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Ekranlar\Ayarlar.cs">
       <SubType>Form</SubType>
@@ -92,14 +81,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  
   <Target Name="Yayınlama sonrası işlemi" AfterTargets="Publish">
     <Exec Command="echo ---&#xD;&#xA;&quot;D:\Mesleki\Proje\Kendim\Cdiyez\DogrulamaKoduUreteci\Yayinla\DogrulamaKoduUreteci.exe&quot; &quot;D:\Mesleki\Proje\Kendim\Cdiyez\Gelir_Gider_Takip\GelirGiderTakip\bin\Yayınla\Gelir Gider Takip.exe&quot;&#xD;&#xA;echo ---" />
   </Target>
