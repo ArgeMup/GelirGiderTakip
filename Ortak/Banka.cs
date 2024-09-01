@@ -774,6 +774,38 @@ namespace Gelir_Gider_Takip
                     muhatap.GelirGider_Ekle(muhatap.GelirGider_Oluştur_KısmiÖdeme(Tipi, KayıtTarihi.Value, KısmiÖdemeMiktarı_ÖdemeParaBiriminde, ParaBirimi, KalanÖdemeninYapılacağıTarih.Value, açıklama, Taksit, Üyelik_KayıtTarihi));
                 }
             }
+            /// <summary>
+            /// Kendisi hariç olarak cıktı üretir
+            /// </summary>
+            /// <returns>Doğrudan ilişkili, Dolaylı ilişkili</returns>
+            public (List<İşyeri_Ödeme_>, List<İşyeri_Ödeme_>) İlişkiliOlanlarıBul()
+            {
+                List<DateTime> Dolaylı_İşlemTarihleri = new List<DateTime>(İşlemler.Keys);
+                List<İşyeri_Ödeme_> Dogrudan_liste = new List<İşyeri_Ödeme_>(), Dolaylı_liste = new List<İşyeri_Ödeme_>();
+
+                İşyeri_BirYıllıkDönem_ BirYıllıkDönem = Ortak.Banka.Seçilenİşyeri.Ödemeler_Listele_BirYıllıkDönem(İlkİşlemTarihi.Year.Yazıya());
+                foreach (İşyeri_Ödeme_ Ödeme in BirYıllıkDönem.Ödemeler)
+                {
+                    if (Ödeme.İlkİşlemTarihi == İlkİşlemTarihi) Dogrudan_liste.Add(Ödeme);
+
+                    foreach (DateTime ödemenin_işlem_tarihi in Ödeme.İşlemler.Keys)
+                    {
+                        if (Dolaylı_İşlemTarihleri.Contains(ödemenin_işlem_tarihi))
+                        {
+                            Dolaylı_liste.Add(Ödeme);
+                            break;
+                        }
+                    }
+                }
+
+                Dogrudan_liste = Dogrudan_liste.Distinct().ToList();
+                Dogrudan_liste.Remove(this);
+
+                Dolaylı_liste = Dolaylı_liste.Distinct().ToList();
+                Dolaylı_liste.RemoveAll( x => (x == this || Dogrudan_liste.Contains(x)) );
+
+                return (Dogrudan_liste, Dolaylı_liste);
+            }
             #endregion
         }
         public class İşyeri_Ödeme_İşlem_

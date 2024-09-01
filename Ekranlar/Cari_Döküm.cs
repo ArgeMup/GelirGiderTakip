@@ -15,7 +15,7 @@ namespace Gelir_Gider_Takip.Ekranlar
         {
             Sorgula_Click(null, null);
         }
-        public enum AçılışTürü_ { Normal, İlişkiliOlanlarıListele, SürümleriListele, Gizli };
+        public enum AçılışTürü_ { Normal, İlişkiliOlanlarıListele, DolaylıYoldanİlişkiliOlanlarıListele, SürümleriListele, Gizli };
 
         List<string> Kapsam_Grup = null, Kapsam_Muhatap = null;
         Banka1.İşyeri_Ödeme_ Ortak_Kullanım_Ödeme = null;
@@ -98,6 +98,18 @@ namespace Gelir_Gider_Takip.Ekranlar
                     break;
 
                 case AçılışTürü_.İlişkiliOlanlarıListele:
+                    Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.İlk_işlem_tarihi;
+                    Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık;
+                    Şablon.Zamanlama_Başlangıç = Ortak_Kullanım_Ödeme.İlkİşlemTarihi;
+                    Şablon.Zamanlama_Bitiş = Ortak_Kullanım_Ödeme.İlkİşlemTarihi;
+                    Şablon.Zamanlama_GecikenleriKesinlikleGöster = Cari_Döküm_Şablon_.Zamanlama_GecikenleriKesinlikleGöster_.Hayır;
+
+                    Sorgula_MuhatapGrubu.SeçilenEleman_Adı = Ortak_Kullanım_Ödeme.MuhatapGrubuAdı;
+                    Sorgula_Muhatap.SeçilenEleman_Adı = Ortak_Kullanım_Ödeme.MuhatapAdı;
+                    Sorgula_Click(null, null);
+                    break;
+
+                case AçılışTürü_.DolaylıYoldanİlişkiliOlanlarıListele:
                     Şablon.Zamanlama_Türü = Cari_Döküm_Şablon_.Zamanlama_Türü_.İşlem_tarihi;
                     Şablon.Zamanlama_Aralık = Cari_Döküm_Şablon_.Zamanlama_Aralık_.Sabit_aralık;
                     Şablon.Zamanlama_Başlangıç = Ortak_Kullanım_Ödeme.İlkİşlemTarihi;
@@ -716,7 +728,8 @@ namespace Gelir_Gider_Takip.Ekranlar
             {
                 Öde.Enabled = false;
                 Düzenle.Enabled = false;
-                İlişkiliÖdemeleriListele.Enabled = false;
+                DoğrudanİlişkiliÖdemeleriListele.Enabled = false;
+                DolaylıİlişkiliÖdemeleriListele.Enabled = false;
                 SürümleriListele.Enabled = false;
                 ÇokluSeçim.Enabled = false;
             }
@@ -755,10 +768,13 @@ namespace Gelir_Gider_Takip.Ekranlar
                     if (Cari_döküm_içinde_işlem_yapabilir)
                     {
                         Öde.Enabled = !ödeme.Durumu.ÖdendiMi();
-                        Düzenle.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil;
+                        Düzenle.Enabled = true;
                     }
 
-                    İlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && Ortak_Kullanım_Ödeme != ödeme;
+                    List<Banka1.İşyeri_Ödeme_> doğrudan, dolaylı;
+                    (doğrudan, dolaylı) = ödeme.İlişkiliOlanlarıBul();
+                    DoğrudanİlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && Ortak_Kullanım_Ödeme != ödeme && doğrudan.Count > 0;
+                    DolaylıİlişkiliÖdemeleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && Ortak_Kullanım_Ödeme != ödeme && dolaylı.Count > 0;
                     SürümleriListele.Enabled = Üyelik_HenüzKaydedilmemişBirÖdeme_Değil && ödeme.İşlemler.Count > 1;
                 }
             }
@@ -768,12 +784,20 @@ namespace Gelir_Gider_Takip.Ekranlar
         {
             Önyüz.Aç(new GelirGider_Ekle());
         }
-        private void İlişkiliÖdemeleriListele_Click(object sender, EventArgs e)
+        private void DoğrudanİlişkiliÖdemeler_Click(object sender, EventArgs e)
         {
             int SatırNo = Tablo.SelectedCells[0].RowIndex;
             Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
 
             Cari_Döküm cd = new Cari_Döküm(AçılışTürü_.İlişkiliOlanlarıListele, ödeme);
+            Önyüz.Aç(cd);
+        }
+        private void DolaylıİlişkiliÖdemeleriListele_Click(object sender, EventArgs e)
+        {
+            int SatırNo = Tablo.SelectedCells[0].RowIndex;
+            Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
+
+            Cari_Döküm cd = new Cari_Döküm(AçılışTürü_.DolaylıYoldanİlişkiliOlanlarıListele, ödeme);
             Önyüz.Aç(cd);
         }
         private void SürümleriListele_Click(object sender, EventArgs e)
@@ -1019,6 +1043,18 @@ namespace Gelir_Gider_Takip.Ekranlar
             int SatırNo = Tablo.SelectedCells[0].RowIndex;
             Banka1.İşyeri_Ödeme_ ödeme = Tablo.Rows[SatırNo].Tag as Banka1.İşyeri_Ödeme_;
 
+            List<Banka1.İşyeri_Ödeme_> doğrudan, dolaylı;
+            (doğrudan, dolaylı) = ödeme.İlişkiliOlanlarıBul();
+            if (doğrudan.Count + dolaylı.Count > 0)
+            {
+                DialogResult Dr2 = MessageBox.Show(ödeme.MuhatapGrubuAdı + " -> " + ödeme.MuhatapAdı + " -> " + ödeme.Tipi.Yazdır() + " için " + (doğrudan.Count + dolaylı.Count) + " adet daha ilişkili ödeme bulundu." + Environment.NewLine + Environment.NewLine +
+                    "Seçili ödemenin haricindeki ödemelerde bir değişiklik YAPILMAYACAK." + Environment.NewLine + Environment.NewLine +
+                    "Bu durum ileride bir TUTARSIZLIĞA sebep olabilir." + Environment.NewLine + Environment.NewLine +
+                    "İlgili ödemeyi seçip, \"Dolaylı olarak ilişkili ödemeler\" tuşuna basıp durumu değerlendirmeniz tavsiye edilir" + Environment.NewLine + Environment.NewLine +
+                    "İşleme devam etmek istiyor musunuz?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (Dr2 == DialogResult.No) return;
+            }
+
             Düzenle_MuhatapVeGrupAdı.Text = ödeme.MuhatapGrubuAdı + "          " + ödeme.MuhatapAdı;
             Düzenle_Miktar.Value = (decimal)ödeme.Miktarı;
             Düzenle_ParaBirimi.SelectedIndex = ((int)ödeme.ParaBirimi) - 1;
@@ -1052,7 +1088,16 @@ namespace Gelir_Gider_Takip.Ekranlar
             if (Dr == DialogResult.No) return;
 
             Banka1.İşyeri_Ödeme_ ödeme = Düzenle_Kaydet.Tag as Banka1.İşyeri_Ödeme_;
-            ödeme.YeniİşlemEkle((Banka1.İşyeri_Ödeme_İşlem_.Tipi_)Düzenle_Tip.SelectedIndex + 1, (Banka1.İşyeri_Ödeme_İşlem_.Durum_)Düzenle_Durum.SelectedIndex + 1, (double)Düzenle_Miktar.Value, Düzenle_Notlar.Text, DateOnly.FromDateTime(Düzenle_ÖdemeninYapılacağıTarih.Value));
+            Banka1.İşyeri_Ödeme_İşlem_.Tipi_ tipi = (Banka1.İşyeri_Ödeme_İşlem_.Tipi_)Düzenle_Tip.SelectedIndex + 1;
+            Banka1.İşyeri_Ödeme_İşlem_.Durum_ durumu = (Banka1.İşyeri_Ödeme_İşlem_.Durum_)Düzenle_Durum.SelectedIndex + 1;
+
+            if (ödeme.Üyelik_HenüzKaydedilmemişBirÖdeme)
+            {
+                ödeme.Öde(ödeme.Miktarı, ödeme.ParaBirimi, Düzenle_Notlar.Text, Düzenle_ÖdemeninYapılacağıTarih.Value);
+
+                if (ödeme.Tipi != tipi || ödeme.Durumu != durumu || ödeme.Miktarı != (double)Düzenle_Miktar.Value) ödeme.YeniİşlemEkle(tipi, durumu, (double)Düzenle_Miktar.Value);
+            }
+            else ödeme.YeniİşlemEkle(tipi, durumu, (double)Düzenle_Miktar.Value, Düzenle_Notlar.Text, DateOnly.FromDateTime(Düzenle_ÖdemeninYapılacağıTarih.Value));
 
             Banka_Ortak.DeğişiklikleriKaydet();
             Sorgula_Click(null, null);
@@ -1130,6 +1175,18 @@ namespace Gelir_Gider_Takip.Ekranlar
             foreach (DataGridViewRow satır in Tablo.SelectedRows)
             {
                 Banka1.İşyeri_Ödeme_ ödeme = satır.Tag as Banka1.İşyeri_Ödeme_;
+
+                List<Banka1.İşyeri_Ödeme_> doğrudan, dolaylı;
+                (doğrudan, dolaylı) = ödeme.İlişkiliOlanlarıBul();
+                if (doğrudan.Count + dolaylı.Count > 0)
+                {
+                    DialogResult Dr2 = MessageBox.Show(ödeme.MuhatapGrubuAdı + " -> " + ödeme.MuhatapAdı + " -> " + ödeme.Tipi.Yazdır() + " için " + (doğrudan.Count + dolaylı.Count) + " adet daha ilişkili ödeme bulundu." + Environment.NewLine + Environment.NewLine +
+                    "Seçili ödemenin haricindeki ödemelerde bir değişiklik YAPILMAYACAK." + Environment.NewLine + Environment.NewLine +
+                    "Bu durum ileride bir TUTARSIZLIĞA sebep olabilir." + Environment.NewLine + Environment.NewLine +
+                    "İlgili ödemeyi seçip, \"Dolaylı olarak ilişkili ödemeler\" tuşuna basıp durumu değerlendirmeniz tavsiye edilir" + Environment.NewLine + Environment.NewLine +
+                    "İşleme devam etmek istiyor musunuz?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    if (Dr2 == DialogResult.No) continue;
+                }
 
                 if (ÇokluSeçim_TamÖde.Checked)
                 {

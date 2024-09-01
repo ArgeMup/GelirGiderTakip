@@ -114,7 +114,8 @@
             Ekle = new System.Windows.Forms.Button();
             ÇokluSeçim = new System.Windows.Forms.Button();
             Düzenle = new System.Windows.Forms.Button();
-            İlişkiliÖdemeleriListele = new System.Windows.Forms.Button();
+            DoğrudanİlişkiliÖdemeleriListele = new System.Windows.Forms.Button();
+            DolaylıİlişkiliÖdemeleriListele = new System.Windows.Forms.Button();
             KontrolNoktasıEkle = new System.Windows.Forms.Button();
             Yazdır = new System.Windows.Forms.Button();
             Ödeme_Ekranı = new System.Windows.Forms.Panel();
@@ -222,7 +223,7 @@
             Düzenle_ParaBirimi.Dock = System.Windows.Forms.DockStyle.Right;
             Düzenle_ParaBirimi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             Düzenle_ParaBirimi.Enabled = false;
-            Düzenle_ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Düzenle_ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F);
             Düzenle_ParaBirimi.FormattingEnabled = true;
             Düzenle_ParaBirimi.Items.AddRange(new object[] { "₺", "Avro", "Dolar" });
             Düzenle_ParaBirimi.Location = new System.Drawing.Point(300, 0);
@@ -235,7 +236,7 @@
             // 
             Düzenle_Durum.Dock = System.Windows.Forms.DockStyle.Fill;
             Düzenle_Durum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Düzenle_Durum.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Düzenle_Durum.Font = new System.Drawing.Font("Segoe UI", 12F);
             Düzenle_Durum.FormattingEnabled = true;
             Düzenle_Durum.Items.AddRange(new object[] { "Ödenmedi", "Kısmen ödendi", "Ödendi", "İptal edildi", "Kısmi ödeme yapıldı", "Peşinat ödendi" });
             Düzenle_Durum.Location = new System.Drawing.Point(197, 4);
@@ -262,7 +263,7 @@
             // 
             Öde_KısmiÖdeme_ParaBirimi.Dock = System.Windows.Forms.DockStyle.Right;
             Öde_KısmiÖdeme_ParaBirimi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Öde_KısmiÖdeme_ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_KısmiÖdeme_ParaBirimi.Font = new System.Drawing.Font("Segoe UI", 12F);
             Öde_KısmiÖdeme_ParaBirimi.FormattingEnabled = true;
             Öde_KısmiÖdeme_ParaBirimi.Items.AddRange(new object[] { "₺", "Avro", "Dolar" });
             Öde_KısmiÖdeme_ParaBirimi.Location = new System.Drawing.Point(290, 0);
@@ -275,7 +276,7 @@
             // Öde_KalanÖdemeTarihi
             // 
             Öde_KalanÖdemeTarihi.Dock = System.Windows.Forms.DockStyle.Top;
-            Öde_KalanÖdemeTarihi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_KalanÖdemeTarihi.Font = new System.Drawing.Font("Segoe UI", 11F);
             Öde_KalanÖdemeTarihi.Location = new System.Drawing.Point(10, 41);
             Öde_KalanÖdemeTarihi.Name = "Öde_KalanÖdemeTarihi";
             Öde_KalanÖdemeTarihi.Size = new System.Drawing.Size(378, 32);
@@ -287,7 +288,7 @@
             Öde_KısmiÖdeme_Miktar.BackColor = System.Drawing.Color.White;
             Öde_KısmiÖdeme_Miktar.DecimalPlaces = 1;
             Öde_KısmiÖdeme_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Öde_KısmiÖdeme_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_KısmiÖdeme_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F);
             Öde_KısmiÖdeme_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
             Öde_KısmiÖdeme_Miktar.Location = new System.Drawing.Point(0, 0);
             Öde_KısmiÖdeme_Miktar.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
@@ -304,7 +305,7 @@
             Öde_AvansÖdemesi_Miktar.BackColor = System.Drawing.SystemColors.Window;
             Öde_AvansÖdemesi_Miktar.DecimalPlaces = 1;
             Öde_AvansÖdemesi_Miktar.Dock = System.Windows.Forms.DockStyle.Top;
-            Öde_AvansÖdemesi_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Öde_AvansÖdemesi_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F);
             Öde_AvansÖdemesi_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
             Öde_AvansÖdemesi_Miktar.Location = new System.Drawing.Point(5, 29);
             Öde_AvansÖdemesi_Miktar.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
@@ -339,12 +340,11 @@
             Tablo.ReadOnly = true;
             Tablo.RowHeadersVisible = false;
             Tablo.RowHeadersWidth = 51;
-            Tablo.RowTemplate.Height = 29;
             Tablo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             Tablo.ShowCellErrors = false;
             Tablo.ShowEditingIcon = false;
             Tablo.ShowRowErrors = false;
-            Tablo.Size = new System.Drawing.Size(980, 80);
+            Tablo.Size = new System.Drawing.Size(1138, 80);
             Tablo.TabIndex = 28;
             Tablo.SelectionChanged += Tablo_SelectionChanged;
             // 
@@ -468,7 +468,7 @@
             TabloİçeriğiArama.Location = new System.Drawing.Point(120, 0);
             TabloİçeriğiArama.Name = "TabloİçeriğiArama";
             TabloİçeriğiArama.PlaceholderText = "Aranacak metni buraya yazabilirsiniz";
-            TabloİçeriğiArama.Size = new System.Drawing.Size(135, 27);
+            TabloİçeriğiArama.Size = new System.Drawing.Size(96, 27);
             TabloİçeriğiArama.TabIndex = 7;
             TabloİçeriğiArama.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             TabloİçeriğiArama.TextChanged += TabloİçeriğiArama_TextChanged;
@@ -479,7 +479,7 @@
             Öde.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Öde.Dock = System.Windows.Forms.DockStyle.Right;
             Öde.Enabled = false;
-            Öde.Location = new System.Drawing.Point(255, 0);
+            Öde.Location = new System.Drawing.Point(216, 0);
             Öde.Name = "Öde";
             Öde.Size = new System.Drawing.Size(47, 34);
             Öde.TabIndex = 9;
@@ -493,11 +493,11 @@
             SürümleriListele.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             SürümleriListele.Dock = System.Windows.Forms.DockStyle.Right;
             SürümleriListele.Enabled = false;
-            SürümleriListele.Location = new System.Drawing.Point(646, 0);
+            SürümleriListele.Location = new System.Drawing.Point(851, 0);
             SürümleriListele.Name = "SürümleriListele";
-            SürümleriListele.Size = new System.Drawing.Size(125, 34);
+            SürümleriListele.Size = new System.Drawing.Size(78, 34);
             SürümleriListele.TabIndex = 8;
-            SürümleriListele.Text = "Sürümleri listele";
+            SürümleriListele.Text = "Sürümler";
             SürümleriListele.UseVisualStyleBackColor = true;
             SürümleriListele.Click += SürümleriListele_Click;
             // 
@@ -616,7 +616,7 @@
             // Açıklamalar
             // 
             Açıklamalar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Açıklamalar.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Açıklamalar.Font = new System.Drawing.Font("Consolas", 12F);
             Açıklamalar.Location = new System.Drawing.Point(0, 0);
             Açıklamalar.Multiline = true;
             Açıklamalar.Name = "Açıklamalar";
@@ -727,7 +727,7 @@
             // ÇokluSeçim_Ertele_TamTarih_Tarih
             // 
             ÇokluSeçim_Ertele_TamTarih_Tarih.Dock = System.Windows.Forms.DockStyle.Top;
-            ÇokluSeçim_Ertele_TamTarih_Tarih.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ÇokluSeçim_Ertele_TamTarih_Tarih.Font = new System.Drawing.Font("Segoe UI", 11F);
             ÇokluSeçim_Ertele_TamTarih_Tarih.Location = new System.Drawing.Point(111, 5);
             ÇokluSeçim_Ertele_TamTarih_Tarih.Name = "ÇokluSeçim_Ertele_TamTarih_Tarih";
             ÇokluSeçim_Ertele_TamTarih_Tarih.Size = new System.Drawing.Size(272, 32);
@@ -893,7 +893,7 @@
             // 
             KontrolNoktası_Tarihi.Dock = System.Windows.Forms.DockStyle.Top;
             KontrolNoktası_Tarihi.Enabled = false;
-            KontrolNoktası_Tarihi.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            KontrolNoktası_Tarihi.Font = new System.Drawing.Font("Segoe UI", 11F);
             KontrolNoktası_Tarihi.Location = new System.Drawing.Point(5, 5);
             KontrolNoktası_Tarihi.Name = "KontrolNoktası_Tarihi";
             KontrolNoktası_Tarihi.Size = new System.Drawing.Size(388, 32);
@@ -981,7 +981,7 @@
             // 
             Düzenle_Tip.Dock = System.Windows.Forms.DockStyle.Fill;
             Düzenle_Tip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            Düzenle_Tip.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Düzenle_Tip.Font = new System.Drawing.Font("Segoe UI", 12F);
             Düzenle_Tip.FormattingEnabled = true;
             Düzenle_Tip.Items.AddRange(new object[] { "Gider", "Maaş ödemesi", "Avans verilmesi", "Gelir", "Avans ödemesi" });
             Düzenle_Tip.Location = new System.Drawing.Point(4, 4);
@@ -992,7 +992,7 @@
             // Düzenle_ÖdemeninYapılacağıTarih
             // 
             Düzenle_ÖdemeninYapılacağıTarih.Dock = System.Windows.Forms.DockStyle.Top;
-            Düzenle_ÖdemeninYapılacağıTarih.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Düzenle_ÖdemeninYapılacağıTarih.Font = new System.Drawing.Font("Segoe UI", 11F);
             Düzenle_ÖdemeninYapılacağıTarih.Location = new System.Drawing.Point(5, 89);
             Düzenle_ÖdemeninYapılacağıTarih.Name = "Düzenle_ÖdemeninYapılacağıTarih";
             Düzenle_ÖdemeninYapılacağıTarih.Size = new System.Drawing.Size(388, 32);
@@ -1023,7 +1023,7 @@
             Düzenle_Miktar.BackColor = System.Drawing.SystemColors.Window;
             Düzenle_Miktar.DecimalPlaces = 1;
             Düzenle_Miktar.Dock = System.Windows.Forms.DockStyle.Fill;
-            Düzenle_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Düzenle_Miktar.Font = new System.Drawing.Font("Segoe UI", 13F);
             Düzenle_Miktar.Increment = new decimal(new int[] { 100, 0, 0, 0 });
             Düzenle_Miktar.Location = new System.Drawing.Point(0, 0);
             Düzenle_Miktar.Maximum = new decimal(new int[] { 1241513983, 370409800, 542101, 0 });
@@ -1050,7 +1050,7 @@
             Sonuçlar_Ekranı.Controls.Add(panel6);
             Sonuçlar_Ekranı.Location = new System.Drawing.Point(21, 12);
             Sonuçlar_Ekranı.Name = "Sonuçlar_Ekranı";
-            Sonuçlar_Ekranı.Size = new System.Drawing.Size(980, 114);
+            Sonuçlar_Ekranı.Size = new System.Drawing.Size(1138, 114);
             Sonuçlar_Ekranı.TabIndex = 33;
             // 
             // panel6
@@ -1060,14 +1060,15 @@
             panel6.Controls.Add(Öde);
             panel6.Controls.Add(ÇokluSeçim);
             panel6.Controls.Add(Düzenle);
-            panel6.Controls.Add(İlişkiliÖdemeleriListele);
+            panel6.Controls.Add(DoğrudanİlişkiliÖdemeleriListele);
+            panel6.Controls.Add(DolaylıİlişkiliÖdemeleriListele);
             panel6.Controls.Add(SürümleriListele);
             panel6.Controls.Add(KontrolNoktasıEkle);
             panel6.Controls.Add(Yazdır);
             panel6.Dock = System.Windows.Forms.DockStyle.Top;
             panel6.Location = new System.Drawing.Point(0, 0);
             panel6.Name = "panel6";
-            panel6.Size = new System.Drawing.Size(980, 34);
+            panel6.Size = new System.Drawing.Size(1138, 34);
             panel6.TabIndex = 30;
             // 
             // Ekle
@@ -1089,7 +1090,7 @@
             ÇokluSeçim.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             ÇokluSeçim.Dock = System.Windows.Forms.DockStyle.Right;
             ÇokluSeçim.Enabled = false;
-            ÇokluSeçim.Location = new System.Drawing.Point(302, 0);
+            ÇokluSeçim.Location = new System.Drawing.Point(263, 0);
             ÇokluSeçim.Name = "ÇokluSeçim";
             ÇokluSeçim.Size = new System.Drawing.Size(100, 34);
             ÇokluSeçim.TabIndex = 14;
@@ -1103,7 +1104,7 @@
             Düzenle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Düzenle.Dock = System.Windows.Forms.DockStyle.Right;
             Düzenle.Enabled = false;
-            Düzenle.Location = new System.Drawing.Point(402, 0);
+            Düzenle.Location = new System.Drawing.Point(363, 0);
             Düzenle.Name = "Düzenle";
             Düzenle.Size = new System.Drawing.Size(73, 34);
             Düzenle.TabIndex = 11;
@@ -1111,26 +1112,40 @@
             Düzenle.UseVisualStyleBackColor = true;
             Düzenle.Click += Düzenle_Click;
             // 
-            // İlişkiliÖdemeleriListele
+            // DoğrudanİlişkiliÖdemeleriListele
             // 
-            İlişkiliÖdemeleriListele.AutoSize = true;
-            İlişkiliÖdemeleriListele.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            İlişkiliÖdemeleriListele.Dock = System.Windows.Forms.DockStyle.Right;
-            İlişkiliÖdemeleriListele.Enabled = false;
-            İlişkiliÖdemeleriListele.Location = new System.Drawing.Point(475, 0);
-            İlişkiliÖdemeleriListele.Name = "İlişkiliÖdemeleriListele";
-            İlişkiliÖdemeleriListele.Size = new System.Drawing.Size(171, 34);
-            İlişkiliÖdemeleriListele.TabIndex = 10;
-            İlişkiliÖdemeleriListele.Text = "İlişkili ödemeleri listele";
-            İlişkiliÖdemeleriListele.UseVisualStyleBackColor = true;
-            İlişkiliÖdemeleriListele.Click += İlişkiliÖdemeleriListele_Click;
+            DoğrudanİlişkiliÖdemeleriListele.AutoSize = true;
+            DoğrudanİlişkiliÖdemeleriListele.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            DoğrudanİlişkiliÖdemeleriListele.Dock = System.Windows.Forms.DockStyle.Right;
+            DoğrudanİlişkiliÖdemeleriListele.Enabled = false;
+            DoğrudanİlişkiliÖdemeleriListele.Location = new System.Drawing.Point(436, 0);
+            DoğrudanİlişkiliÖdemeleriListele.Name = "DoğrudanİlişkiliÖdemeleriListele";
+            DoğrudanİlişkiliÖdemeleriListele.Size = new System.Drawing.Size(195, 34);
+            DoğrudanİlişkiliÖdemeleriListele.TabIndex = 10;
+            DoğrudanİlişkiliÖdemeleriListele.Text = "Doğrudan ilişkili ödemeler";
+            DoğrudanİlişkiliÖdemeleriListele.UseVisualStyleBackColor = true;
+            DoğrudanİlişkiliÖdemeleriListele.Click += DoğrudanİlişkiliÖdemeler_Click;
+            // 
+            // DolaylıİlişkiliÖdemeleriListele
+            // 
+            DolaylıİlişkiliÖdemeleriListele.AutoSize = true;
+            DolaylıİlişkiliÖdemeleriListele.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            DolaylıİlişkiliÖdemeleriListele.Dock = System.Windows.Forms.DockStyle.Right;
+            DolaylıİlişkiliÖdemeleriListele.Enabled = false;
+            DolaylıİlişkiliÖdemeleriListele.Location = new System.Drawing.Point(631, 0);
+            DolaylıİlişkiliÖdemeleriListele.Name = "DolaylıİlişkiliÖdemeleriListele";
+            DolaylıİlişkiliÖdemeleriListele.Size = new System.Drawing.Size(220, 34);
+            DolaylıİlişkiliÖdemeleriListele.TabIndex = 16;
+            DolaylıİlişkiliÖdemeleriListele.Text = "Dolaylı olarak ilişkili ödemeler";
+            DolaylıİlişkiliÖdemeleriListele.UseVisualStyleBackColor = true;
+            DolaylıİlişkiliÖdemeleriListele.Click += DolaylıİlişkiliÖdemeleriListele_Click;
             // 
             // KontrolNoktasıEkle
             // 
             KontrolNoktasıEkle.AutoSize = true;
             KontrolNoktasıEkle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             KontrolNoktasıEkle.Dock = System.Windows.Forms.DockStyle.Right;
-            KontrolNoktasıEkle.Location = new System.Drawing.Point(771, 0);
+            KontrolNoktasıEkle.Location = new System.Drawing.Point(929, 0);
             KontrolNoktasıEkle.Name = "KontrolNoktasıEkle";
             KontrolNoktasıEkle.Size = new System.Drawing.Size(150, 34);
             KontrolNoktasıEkle.TabIndex = 12;
@@ -1143,7 +1158,7 @@
             Yazdır.AutoSize = true;
             Yazdır.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Yazdır.Dock = System.Windows.Forms.DockStyle.Right;
-            Yazdır.Location = new System.Drawing.Point(921, 0);
+            Yazdır.Location = new System.Drawing.Point(1079, 0);
             Yazdır.Name = "Yazdır";
             Yazdır.Size = new System.Drawing.Size(59, 34);
             Yazdır.TabIndex = 13;
@@ -1183,7 +1198,7 @@
             Öde_AvansÖdemesi_Tablo.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F);
             dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1198,7 +1213,6 @@
             Öde_AvansÖdemesi_Tablo.ReadOnly = true;
             Öde_AvansÖdemesi_Tablo.RowHeadersVisible = false;
             Öde_AvansÖdemesi_Tablo.RowHeadersWidth = 51;
-            Öde_AvansÖdemesi_Tablo.RowTemplate.Height = 29;
             Öde_AvansÖdemesi_Tablo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             Öde_AvansÖdemesi_Tablo.Size = new System.Drawing.Size(548, 217);
             Öde_AvansÖdemesi_Tablo.TabIndex = 26;
@@ -1450,7 +1464,7 @@
         private System.Windows.Forms.Panel Ödeme_Ekranı;
         private System.Windows.Forms.TextBox Öde_Notlar;
         private System.Windows.Forms.Panel Sonuçlar_Ekranı;
-        private System.Windows.Forms.Button İlişkiliÖdemeleriListele;
+        private System.Windows.Forms.Button DoğrudanİlişkiliÖdemeleriListele;
         private System.Windows.Forms.Button Düzenle;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel Düzenleme_Ekranı;
@@ -1525,5 +1539,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_SonİşlemTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_İlkİşlemTarihi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tablo_KullanıcıAdı;
+        private System.Windows.Forms.Button DolaylıİlişkiliÖdemeleriListele;
     }
 }
