@@ -138,17 +138,15 @@ namespace Gelir_Gider_Takip.Ekranlar
             {
                 Avans.Visible = Avans_peşinat_taksit_ve_üyelik_ekleyebilir;
 
-                tt = Ortak.Banka.Seçilenİşyeri.EnYakınMaaşGünü().ToDateTime(new TimeOnly());
+                Gider.Checked = false;
             }
             else
             {
                 Avans.Visible = false;
-
-                tt = DateTime.Now;
-                tt = new DateTime(tt.Year, tt.Month, tt.Day);
             }
+            tt = DateTime.Now;
+            tt = new DateTime(tt.Year, tt.Month, tt.Day);
             ÖdemeTarihi_Değeri.Value = tt;
-            Avans.Checked = Avans.Visible;
 
             İşyeri_Grup_Muhatap.Enabled = true;
             ÖnYüzler_Kaydet.Enabled = false;
@@ -166,7 +164,8 @@ namespace Gelir_Gider_Takip.Ekranlar
 
             Üyelik.Enabled = ÜyelikKayıtTarihi == null && !AvansMı;
 
-            ÖdemeTarihi_Değeri.Value = new DateTime(ÖdemeTarihi_Değeri.Value.Year, ÖdemeTarihi_Değeri.Value.Month, ÖdemeTarihi_Değeri.Value.Day);
+            DateTime dtt = Avans.Checked ? Ortak.Banka.Seçilenİşyeri.EnYakınMaaşGünü().ToDateTime(new TimeOnly()) : DateTime.Now;
+            ÖdemeTarihi_Değeri.Value = new DateTime(dtt.Year, dtt.Month, dtt.Day);
             İşyeri_Grup_Muhatap.Enabled = false;
             ÖnYüzler_Kaydet.Enabled = Muhatap != null;
 

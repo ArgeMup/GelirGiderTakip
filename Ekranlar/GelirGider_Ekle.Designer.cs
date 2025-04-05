@@ -180,6 +180,7 @@
             Gider.TabStop = true;
             Gider.Text = "Gider";
             Gider.UseVisualStyleBackColor = true;
+            Gider.CheckedChanged += AyarDeğişti;
             // 
             // Gelir
             // 
@@ -193,6 +194,7 @@
             Gelir.TabIndex = 10;
             Gelir.Text = "Gelir";
             Gelir.UseVisualStyleBackColor = true;
+            Gelir.CheckedChanged += AyarDeğişti;
             // 
             // ÖnYüzler_Kaydet
             // 
