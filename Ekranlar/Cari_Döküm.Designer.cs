@@ -981,6 +981,7 @@
             // 
             Düzenle_Tip.Dock = System.Windows.Forms.DockStyle.Fill;
             Düzenle_Tip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            Düzenle_Tip.Enabled = false;
             Düzenle_Tip.Font = new System.Drawing.Font("Segoe UI", 12F);
             Düzenle_Tip.FormattingEnabled = true;
             Düzenle_Tip.Items.AddRange(new object[] { "Gider", "Maaş ödemesi", "Avans verilmesi", "Gelir", "Avans ödemesi" });
